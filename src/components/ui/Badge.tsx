@@ -1,27 +1,129 @@
-import { CheckCircle, Clock, XCircle } from 'lucide-react';
+import { type HTMLAttributes } from "react";
+import { CheckCircle, Clock, XCircle, Shield, Star, Crown } from "lucide-react";
+import { cn } from "@/utils/cn";
 
-const STATUS_CONFIG: Record<string, { color: string; bg: string; label: string; icon?: React.ReactNode }> = {
-  ACTIVE: { color: 'text-green-700', bg: 'bg-green-100', label: 'Active', icon: <CheckCircle size={12} /> },
-  PENDING: { color: 'text-orange-700', bg: 'bg-orange-100', label: 'Pending', icon: <Clock size={12} /> },
-  PENDING_REVIEW: { color: 'text-orange-700', bg: 'bg-orange-100', label: 'Pending Review', icon: <Clock size={12} /> },
-  VERIFIED: { color: 'text-green-700', bg: 'bg-green-100', label: 'Verified', icon: <CheckCircle size={12} /> },
-  UNVERIFIED: { color: 'text-gray-600', bg: 'bg-gray-100', label: 'Unverified' },
-  REJECTED: { color: 'text-red-700', bg: 'bg-red-100', label: 'Rejected', icon: <XCircle size={12} /> },
-  RENTED: { color: 'text-blue-700', bg: 'bg-blue-100', label: 'Rented' },
-  ARCHIVED: { color: 'text-gray-600', bg: 'bg-gray-100', label: 'Archived' },
-  DRAFT: { color: 'text-gray-600', bg: 'bg-gray-100', label: 'Draft' },
-  PAUSED: { color: 'text-yellow-700', bg: 'bg-yellow-100', label: 'Paused' },
-  APPROVED: { color: 'text-green-700', bg: 'bg-green-100', label: 'Approved', icon: <CheckCircle size={12} /> },
-  SUSPENDED: { color: 'text-red-700', bg: 'bg-red-100', label: 'Suspended' },
-};
+type BadgeVariant =
+  | "default"
+  | "primary"
+  | "success"
+  | "warning"
+  | "danger"
+  | "info";
 
-export function StatusBadge({ status }: { status: string }) {
-  const c = STATUS_CONFIG[status] || { color: 'text-gray-600', bg: 'bg-gray-100', label: status };
-  return <span className={`inline-flex items-center gap-1 text-[11px] font-semibold px-2 py-0.5 rounded-full ${c.color} ${c.bg}`}>{c.icon}{c.label}</span>;
+interface BadgeProps extends HTMLAttributes<HTMLSpanElement> {
+  variant?: BadgeVariant;
+  size?: "sm" | "md" | "lg";
 }
 
-const TIER: Record<string, string> = { FREE: 'bg-[#96705B]/10 text-[#96705B]', PRO: 'bg-[#FFD43B]/20 text-[#B8960F]', PREMIUM: 'bg-[#6665DD]/10 text-[#6665DD]' };
+export function Badge({
+  children,
+  variant = "default",
+  size = "md",
+  className,
+  ...props
+}: BadgeProps) {
+  const variants = {
+    default: "bg-gray-100 text-gray-700 border-gray-200",
+    primary: "bg-primary-50 text-primary-700 border-primary-100",
+    success: "bg-success-light/10 text-success-dark border-success-light/20",
+    warning: "bg-warning-light/10 text-warning-dark border-warning-light/20",
+    danger: "bg-danger-light/10 text-danger-dark border-danger-light/20",
+    info: "bg-blue-50 text-blue-700 border-blue-100",
+  };
 
-export function TierBadge({ tier }: { tier: string }) {
-  return <span className={`inline-flex text-[10px] font-bold px-1.5 py-0.5 rounded uppercase tracking-wide ${TIER[tier] || TIER.FREE}`}>{tier}</span>;
+  const sizes = {
+    sm: "px-2 py-0.5 text-[10px]",
+    md: "px-2.5 py-0.5 text-[11px]",
+    lg: "px-3 py-1 text-xs",
+  };
+
+  return (
+    <span
+      className={cn(
+        "inline-flex items-center font-bold uppercase tracking-wider rounded-full border transition-colors",
+        variants[variant],
+        sizes[size],
+        className,
+      )}
+      {...props}
+    >
+      {children}
+    </span>
+  );
+}
+
+const STATUS_CONFIG: Record<
+  string,
+  { variant: BadgeVariant; label: string; icon?: any }
+> = {
+  ACTIVE: { variant: "success", label: "Active", icon: CheckCircle },
+  PENDING: { variant: "warning", label: "Pending", icon: Clock },
+  PENDING_REVIEW: { variant: "warning", label: "In Review", icon: Clock },
+  VERIFIED: { variant: "primary", label: "Verified", icon: Shield },
+  UNVERIFIED: { variant: "default", label: "Unverified" },
+  REJECTED: { variant: "danger", label: "Rejected", icon: XCircle },
+  RENTED: { variant: "info", label: "Rented" },
+  ARCHIVED: { variant: "default", label: "Archived" },
+  DRAFT: { variant: "default", label: "Draft" },
+  PAUSED: { variant: "warning", label: "Paused" },
+  APPROVED: { variant: "success", label: "Approved", icon: CheckCircle },
+  SUSPENDED: { variant: "danger", label: "Suspended", icon: XCircle },
+};
+
+export function StatusBadge({
+  status,
+  className,
+}: {
+  status: string;
+  className?: string;
+}) {
+  const config = STATUS_CONFIG[status] || { variant: "default", label: status };
+  const Icon = config.icon;
+
+  return (
+    <Badge variant={config.variant} className={cn("gap-1.5", className)}>
+      {Icon && <Icon className="h-3 w-3" strokeWidth={3} />}
+      {config.label}
+    </Badge>
+  );
+}
+
+const TIER_CONFIG: Record<string, { className: string; icon: any }> = {
+  FREE: {
+    className: "bg-gray-100 text-gray-500 border-gray-200",
+    icon: Star,
+  },
+  PRO: {
+    className: "bg-primary-500 text-sidebar border-primary-600 shadow-glow-sm",
+    icon: Shield,
+  },
+  PREMIER: {
+    className:
+      "bg-gradient-to-r from-sidebar to-gray-800 text-primary-500 border-sidebar shadow-premium",
+    icon: Crown,
+  },
+};
+
+export function TierBadge({
+  tier,
+  className,
+}: {
+  tier: string;
+  className?: string;
+}) {
+  const config = TIER_CONFIG[tier] || TIER_CONFIG.FREE;
+  const Icon = config.icon;
+
+  return (
+    <span
+      className={cn(
+        "inline-flex items-center gap-1.5 text-[10px] font-extrabold px-2 py-1 rounded-lg uppercase tracking-[0.1em] border transition-all duration-300",
+        config.className,
+        className,
+      )}
+    >
+      <Icon className="h-3 w-3" strokeWidth={3} />
+      {tier}
+    </span>
+  );
 }

@@ -1,6 +1,7 @@
 import { type ButtonHTMLAttributes, forwardRef } from "react";
 import { Loader2, type LucideIcon } from "lucide-react";
 import * as LucideIcons from "lucide-react";
+import { cn } from "@/utils/cn";
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?:
@@ -25,65 +26,54 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 const variants: Record<string, string> = {
   primary: `
-    bg-gradient-to-br from-[#ffda0b] via-[#FFCA08] to-[#ffda0b]
-    hover:from-[#ffda0b] hover:via-[#f4c03d] hover:to-[#ffda0b]
-    text-[#1A1A1A] font-semibold
-    border border-[#ffda0b] hover:border-[#FFdA0B]
-    shadow-md hover:shadow-lg active:shadow-sm
-    active:scale-[0.98]
+    bg-primary-500 hover:bg-primary-600
+    text-sidebar font-bold
+    border border-primary-500 shadow-glow-sm hover:shadow-glow
+    active:scale-[0.98] transition-all duration-200
   `,
   secondary: `
-    bg-gradient-to-br from-[#2A2A2A] via-[#1A1A1A] to-[#1A1A1A]
-    hover:from-[#3A3A3A] hover:via-[#2A2A2A] hover:to-[#2A2A2A]
+    bg-sidebar hover:bg-sidebar-hover
     text-white font-semibold
-    border border-[#2A2A2A]
-    shadow-md hover:shadow-lg active:shadow-sm
-    active:scale-[0.98]
+    border border-sidebar-border
+    shadow-lg active:scale-[0.98] transition-all duration-200
   `,
   outline: `
-    bg-gradient-to-br from-white via-[#FAFAFA] to-[#F5F5F5]
-    hover:from-[#F5F5F5] hover:via-[#F0F0F0] hover:to-[#EDEDED]
-    border border-[#E0E0E0] hover:border-[#FFCA08]/70
-    text-[#1A1A1A] font-semibold
-    shadow-sm hover:shadow-md active:shadow-sm
-    active:scale-[0.98]
+    bg-transparent
+    border-2 border-primary-500 text-primary-500
+    hover:bg-primary-500 hover:text-sidebar
+    font-bold active:scale-[0.98] transition-all duration-200
   `,
   danger: `
-    bg-gradient-to-br from-[#F44336] via-[#E53935] to-[#D32F2F]
-    hover:from-[#E53935] hover:via-[#D32F2F] hover:to-[#C62828]
+    bg-danger hover:bg-danger-dark
     text-white font-semibold
-    border border-[#F44336]
-    shadow-md hover:shadow-lg active:shadow-sm
-    active:scale-[0.98]
+    shadow-md active:scale-[0.98] transition-all duration-200
   `,
   ghost: `
-    bg-transparent hover:bg-[#F5F5F5]
-    text-[#666] hover:text-[#1A1A1A]
+    bg-transparent hover:bg-primary-500/10
+    text-gray-600 hover:text-primary-600
     font-medium
-    active:scale-[0.98]
+    active:scale-[0.98] transition-all duration-200
   `,
   gradient: `
-    bg-gradient-to-br from-[#FAFAFA] via-[#F5F5F5] to-[#EDEDED]
-    hover:from-[#F0F0F0] hover:via-[#E8E8E8] hover:to-[#E0E0E0]
-    text-[#1A1A1A] font-semibold
-    border border-[#E0E0E0] hover:border-[#FFCA08]/70
-    shadow-md hover:shadow-lg active:shadow-sm
-    active:scale-[0.98]
+    bg-gradient-to-br from-primary-400 to-primary-600
+    hover:from-primary-500 hover:to-primary-700
+    text-sidebar font-bold
+    shadow-glow active:scale-[0.98] transition-all duration-200
   `,
 };
 
 const sizes: Record<string, string> = {
-  sm: "px-3 py-2 text-xs rounded-lg gap-1.5",
+  sm: "px-3.5 py-1.5 text-xs rounded-lg gap-1.5",
   md: "px-5 py-2.5 text-sm rounded-xl gap-2",
-  lg: "px-6 py-3 text-base rounded-xl gap-2",
-  xl: "px-8 py-4 text-lg rounded-xl gap-2.5",
+  lg: "px-7 py-3.5 text-base rounded-2xl gap-2.5",
+  xl: "px-10 py-5 text-lg rounded-2xl gap-3",
 };
 
 const iconSizes: Record<string, number> = {
   sm: 14,
-  md: 16,
-  lg: 18,
-  xl: 20,
+  md: 18,
+  lg: 22,
+  xl: 26,
 };
 
 const Button = forwardRef<HTMLButtonElement, ButtonProps>(
@@ -110,32 +100,36 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       ResolvedIcon = (LucideIcons as any)[iconName] as LucideIcon | undefined;
     }
 
-    const defaultIconSize = iconSize || iconSizes[size];
+    const defaultIconSize = iconSize || iconSizes[size] || 18;
 
     return (
       <button
         ref={ref}
         disabled={disabled || loading}
-        className={`
-          relative overflow-hidden
-          inline-flex items-center justify-center
-          font-hubot transition-all duration-200
-          focus:ring-2 focus:ring-offset-2 focus:outline-none
-          disabled:opacity-50 disabled:cursor-not-allowed
-          ${variants[variant]} 
-          ${sizes[size]} 
-          ${fullWidth ? "w-full" : ""}
-          ${className}
-        `}
+        className={cn(
+          "relative overflow-hidden inline-flex items-center justify-center font-sans tracking-tight transition-all duration-300 focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 disabled:opacity-50 disabled:grayscale disabled:cursor-not-allowed",
+          variants[variant],
+          sizes[size],
+          fullWidth && "w-full",
+          className,
+        )}
         {...props}
       >
-        {loading && <Loader2 size={defaultIconSize} className="animate-spin" />}
-        {!loading && ResolvedIcon && iconPosition === "left" && (
-          <ResolvedIcon size={defaultIconSize} />
+        {loading && (
+          <Loader2 size={defaultIconSize} className="animate-spin mr-2" />
         )}
-        {children}
+        {!loading && ResolvedIcon && iconPosition === "left" && (
+          <ResolvedIcon
+            size={defaultIconSize}
+            className={children ? "mr-2" : ""}
+          />
+        )}
+        <span className="relative z-10">{children}</span>
         {!loading && ResolvedIcon && iconPosition === "right" && (
-          <ResolvedIcon size={defaultIconSize} />
+          <ResolvedIcon
+            size={defaultIconSize}
+            className={children ? "ml-2" : ""}
+          />
         )}
       </button>
     );

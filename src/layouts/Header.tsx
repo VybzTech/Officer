@@ -1,10 +1,10 @@
 // ============================================
 // URBAN GRAVITY - HEADER
-// Top navigation with search, notifications, profile
+// Minimal, premium navigation with search & intelligence
 // ============================================
 
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Menu,
   Search,
@@ -15,166 +15,199 @@ import {
   Settings,
   Shield,
   HelpCircle,
-  Sun,
-  Moon,
   Command,
-} from 'lucide-react';
-import { useAuthStore } from '@/stores/auth.store';
-import { cn } from '@/utils/cn';
-import { getInitials } from '@/utils/format';
+  Monitor,
+} from "lucide-react";
+import { useAuthStore } from "@/stores/auth.store";
+import { cn } from "@/utils/cn";
+import { getInitials } from "@/utils/format";
 
 interface HeaderProps {
   onMenuClick: () => void;
-  sidebarCollapsed: boolean;
 }
 
 export function Header({ onMenuClick }: HeaderProps) {
   const [searchFocused, setSearchFocused] = useState(false);
   const [profileMenuOpen, setProfileMenuOpen] = useState(false);
   const [notificationsOpen, setNotificationsOpen] = useState(false);
-  const [darkMode, setDarkMode] = useState(true);
 
   const navigate = useNavigate();
   const { officer, logout } = useAuthStore();
 
   const handleLogout = () => {
     logout();
-    navigate('/');
+    navigate("/");
   };
 
   // Mock notifications
   const notifications = [
-    { id: 1, type: 'verification', message: 'New verification request from John Doe', time: '2 min ago', unread: true },
-    { id: 2, type: 'upgrade', message: 'Subscription upgrade pending approval', time: '15 min ago', unread: true },
-    { id: 3, type: 'dispute', message: 'Dispute #1234 requires attention', time: '1 hour ago', unread: false },
+    {
+      id: 1,
+      type: "verification",
+      message: "New verification request: Janet O.",
+      time: "2m ago",
+      unread: true,
+    },
+    {
+      id: 2,
+      type: "upgrade",
+      message: "Lekki Pro upgrade pending approval",
+      time: "15m ago",
+      unread: true,
+    },
+    {
+      id: 3,
+      type: "dispute",
+      message: "Dispute #TX-891 requires mediation",
+      time: "1h ago",
+      unread: false,
+    },
   ];
 
-  const unreadCount = notifications.filter(n => n.unread).length;
+  const unreadCount = notifications.filter((n) => n.unread).length;
 
   return (
-    <header className="flex h-16 items-center justify-between border-b border-sidebar-border bg-sidebar px-4 lg:px-6">
-      {/* Left Section */}
-      <div className="flex items-center gap-4">
+    <header className="flex h-20 items-center justify-between border-b border-gray-100 bg-white px-6 lg:px-8 sticky top-0 z-40">
+      {/* Left Section: Context & Breadcrumbs */}
+      <div className="flex items-center gap-6">
         {/* Mobile Menu Toggle */}
         <button
           onClick={onMenuClick}
-          className="lg:hidden p-2 text-gray-400 hover:text-white rounded-lg hover:bg-sidebar-hover"
+          className="lg:hidden p-2 text-gray-400 hover:text-primary-500 rounded-xl hover:bg-gray-50 transition-all"
         >
           <Menu className="h-5 w-5" />
         </button>
 
-        {/* Search */}
-        <div className="hidden sm:block relative">
+        {/* Global Search Bar */}
+        <div className="hidden md:block relative group">
           <div
             className={cn(
-              'flex items-center gap-2 rounded-lg border bg-surface-raised px-3 py-2',
-              'transition-all duration-200',
+              "flex items-center gap-3 rounded-2xl border bg-gray-50 px-4 py-2.5 transition-all duration-300",
               searchFocused
-                ? 'border-primary-500 ring-2 ring-primary-500/20 w-80'
-                : 'border-sidebar-border w-64'
+                ? "border-primary-500 ring-4 ring-primary-500/10 w-[400px] bg-white"
+                : "border-gray-100 w-80 hover:border-gray-200",
             )}
           >
-            <Search className="h-4 w-4 text-gray-500" />
+            <Search
+              className={cn(
+                "h-4 w-4 transition-colors",
+                searchFocused ? "text-primary-500" : "text-gray-400",
+              )}
+              strokeWidth={2.5}
+            />
             <input
               type="text"
-              placeholder="Search..."
+              placeholder="Search listings, users or regions..."
               onFocus={() => setSearchFocused(true)}
               onBlur={() => setSearchFocused(false)}
-              className="flex-1 bg-transparent text-sm text-white placeholder:text-gray-500 outline-none"
+              className="flex-1 bg-transparent text-sm font-medium text-gray-900 placeholder:text-gray-400 outline-none"
             />
-            <kbd className="hidden lg:flex items-center gap-1 rounded bg-sidebar-hover px-1.5 py-0.5 text-xs text-gray-500">
-              <Command className="h-3 w-3" />K
-            </kbd>
+            <div className="hidden lg:flex items-center gap-1.5 rounded-lg border border-gray-200 bg-white px-1.5 py-1 text-[10px] font-bold text-gray-400 shadow-sm">
+              <Command className="h-3 w-3" />
+              <span>K</span>
+            </div>
           </div>
         </div>
       </div>
 
-      {/* Right Section */}
-      <div className="flex items-center gap-2">
-        {/* Theme Toggle */}
-        <button
-          onClick={() => setDarkMode(!darkMode)}
-          className="p-2 text-gray-400 hover:text-white rounded-lg hover:bg-sidebar-hover transition-colors"
-          title={darkMode ? 'Light Mode' : 'Dark Mode'}
-        >
-          {darkMode ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+      {/* Right Section: System Actions & Profile */}
+      <div className="flex items-center gap-4">
+        {/* System Intelligence Link */}
+        <button className="hidden xl:flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold text-gray-500 hover:text-primary-600 hover:bg-primary-50 transition-all group">
+          <Monitor className="h-4 w-4 group-hover:scale-110 transition-transform" />
+          <span>Monitor Lagos</span>
         </button>
 
-        {/* Help */}
-        <button
-          className="p-2 text-gray-400 hover:text-white rounded-lg hover:bg-sidebar-hover transition-colors"
-          title="Help & Support"
-        >
-          <HelpCircle className="h-5 w-5" />
-        </button>
+        <div className="h-6 w-px bg-gray-100 mx-2 hidden sm:block"></div>
 
-        {/* Notifications */}
+        {/* Notifications Hub */}
         <div className="relative">
           <button
             onClick={() => {
               setNotificationsOpen(!notificationsOpen);
               setProfileMenuOpen(false);
             }}
-            className="relative p-2 text-gray-400 hover:text-white rounded-lg hover:bg-sidebar-hover transition-colors"
+            className={cn(
+              "relative p-2.5 rounded-xl transition-all duration-300",
+              notificationsOpen
+                ? "bg-primary-50 text-primary-600"
+                : "text-gray-400 hover:text-gray-600 hover:bg-gray-50",
+            )}
             title="Notifications"
           >
-            <Bell className="h-5 w-5" />
+            <Bell className="h-5 w-5" strokeWidth={2.5} />
             {unreadCount > 0 && (
-              <span className="absolute top-1 right-1 flex h-4 w-4 items-center justify-center rounded-full bg-danger text-[10px] font-bold text-white">
+              <span className="absolute top-2.5 right-2.5 flex h-4 w-4 items-center justify-center rounded-full bg-danger ring-2 ring-white text-[9px] font-black text-white shadow-sm">
                 {unreadCount}
               </span>
             )}
           </button>
 
-          {/* Notifications Dropdown */}
+          {/* Premium Notifications Dropdown */}
           {notificationsOpen && (
             <>
               <div
                 className="fixed inset-0 z-40"
                 onClick={() => setNotificationsOpen(false)}
               />
-              <div className="absolute right-0 top-full mt-2 z-50 w-80 rounded-xl border border-sidebar-border bg-surface-raised shadow-xl animate-fade-in">
-                <div className="flex items-center justify-between p-4 border-b border-sidebar-border">
-                  <h3 className="font-semibold text-white">Notifications</h3>
-                  <button className="text-xs text-primary-400 hover:text-primary-300">
-                    Mark all as read
+              <div className="absolute right-0 top-full mt-3 z-50 w-96 rounded-2xl border border-gray-100 bg-white shadow-premium-lg animate-scale-in overflow-hidden">
+                <div className="flex items-center justify-between p-5 border-b border-gray-50 bg-gray-50/50">
+                  <div className="flex items-center gap-2">
+                    <h3 className="font-bold text-gray-900">Notifications</h3>
+                    <span className="bg-primary-500 text-sidebar text-[10px] font-black px-2 py-0.5 rounded-full">
+                      {unreadCount} NEW
+                    </span>
+                  </div>
+                  <button className="text-[11px] font-bold text-primary-600 hover:text-primary-700 uppercase tracking-wider">
+                    Clear All
                   </button>
                 </div>
-                <div className="max-h-80 overflow-y-auto">
+                <div className="max-h-[420px] overflow-y-auto sidebar-scroll">
                   {notifications.map((notification) => (
                     <div
                       key={notification.id}
                       className={cn(
-                        'flex items-start gap-3 p-4 hover:bg-sidebar-hover cursor-pointer transition-colors',
-                        notification.unread && 'bg-primary-500/5'
+                        "flex items-start gap-4 p-5 hover:bg-gray-50 cursor-pointer transition-colors relative group",
+                        notification.unread && "bg-primary-50/30",
                       )}
                     >
-                      <div className={cn(
-                        'flex h-8 w-8 items-center justify-center rounded-lg',
-                        notification.type === 'verification' && 'bg-success/10 text-success',
-                        notification.type === 'upgrade' && 'bg-primary-500/10 text-primary-400',
-                        notification.type === 'dispute' && 'bg-warning/10 text-warning'
-                      )}>
-                        <Bell className="h-4 w-4" />
+                      <div
+                        className={cn(
+                          "flex h-10 w-10 items-center justify-center rounded-xl flex-shrink-0 shadow-sm transition-transform group-hover:scale-110",
+                          notification.type === "verification" &&
+                            "bg-success/10 text-success-dark",
+                          notification.type === "upgrade" &&
+                            "bg-primary-500/10 text-primary-600",
+                          notification.type === "dispute" &&
+                            "bg-danger/10 text-danger-dark",
+                        )}
+                      >
+                        <Bell className="h-5 w-5" strokeWidth={2.5} />
                       </div>
                       <div className="flex-1 min-w-0">
-                        <p className={cn(
-                          'text-sm',
-                          notification.unread ? 'text-white' : 'text-gray-400'
-                        )}>
+                        <p
+                          className={cn(
+                            "text-sm font-semibold leading-relaxed",
+                            notification.unread
+                              ? "text-gray-900"
+                              : "text-gray-500",
+                          )}
+                        >
                           {notification.message}
                         </p>
-                        <p className="text-xs text-gray-500 mt-1">{notification.time}</p>
+                        <p className="text-[11px] font-bold text-gray-400 mt-1.5 uppercase tracking-tighter">
+                          {notification.time}
+                        </p>
                       </div>
                       {notification.unread && (
-                        <div className="h-2 w-2 rounded-full bg-primary-500" />
+                        <div className="h-2 w-2 rounded-full bg-primary-500 mt-2 shadow-glow-sm" />
                       )}
                     </div>
                   ))}
                 </div>
-                <div className="p-3 border-t border-sidebar-border">
-                  <button className="w-full py-2 text-sm text-center text-primary-400 hover:text-primary-300 rounded-lg hover:bg-sidebar-hover transition-colors">
-                    View all notifications
+                <div className="p-4 border-t border-gray-50 bg-gray-50/20">
+                  <button className="w-full py-3 text-xs font-bold text-gray-500 hover:text-primary-600 rounded-xl transition-all hover:bg-white hover:shadow-sm">
+                    VIEW SYSTEM LOGS
                   </button>
                 </div>
               </div>
@@ -182,89 +215,104 @@ export function Header({ onMenuClick }: HeaderProps) {
           )}
         </div>
 
-        {/* Profile Menu */}
+        {/* Professional Profile Menu */}
         <div className="relative">
           <button
             onClick={() => {
               setProfileMenuOpen(!profileMenuOpen);
               setNotificationsOpen(false);
             }}
-            className="flex items-center gap-3 p-1.5 pr-3 rounded-lg hover:bg-sidebar-hover transition-colors"
+            className={cn(
+              "flex items-center gap-3 p-1 rounded-2xl transition-all duration-300",
+              profileMenuOpen ? "bg-gray-100" : "hover:bg-gray-50",
+            )}
           >
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary-600 text-white font-semibold text-sm">
-              {officer ? getInitials(officer.firstName, officer.lastName) : 'UG'}
+            <div className="relative">
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-primary-400 to-primary-600 text-sidebar font-extrabold text-sm shadow-sm ring-2 ring-white">
+                {officer
+                  ? getInitials(officer.firstName, officer.lastName)
+                  : "UG"}
+              </div>
+              <div className="absolute -bottom-1 -right-1 h-4 w-4 rounded-full border-2 border-white bg-success"></div>
             </div>
-            <div className="hidden lg:block text-left">
-              <p className="text-sm font-medium text-white">
-                {officer ? `${officer.firstName} ${officer.lastName}` : 'Officer'}
+            <div className="hidden lg:block text-left mr-1">
+              <p className="text-xs font-bold text-gray-900 uppercase tracking-tight">
+                {officer
+                  ? `${officer.firstName} ${officer.lastName}`
+                  : "Officer"}
               </p>
-              <p className="text-xs text-gray-500">
-                {officer?.role.replace('_', ' ') ?? 'Role'}
+              <p className="text-[10px] font-bold text-primary-500 tracking-widest leading-none mt-1">
+                {officer?.role.replace("_", " ") ?? "OFFICER"}
               </p>
             </div>
-            <ChevronDown className="h-4 w-4 text-gray-500" />
+            <ChevronDown
+              className={cn(
+                "h-4 w-4 text-gray-400 transition-transform duration-300",
+                profileMenuOpen && "rotate-180",
+              )}
+            />
           </button>
 
-          {/* Profile Dropdown */}
+          {/* Premium Account Dropdown */}
           {profileMenuOpen && (
             <>
               <div
                 className="fixed inset-0 z-40"
                 onClick={() => setProfileMenuOpen(false)}
               />
-              <div className="absolute right-0 top-full mt-2 z-50 w-56 rounded-xl border border-sidebar-border bg-surface-raised shadow-xl animate-fade-in">
-                {/* Profile Header */}
-                <div className="p-4 border-b border-sidebar-border">
-                  <p className="font-semibold text-white">
-                    {officer ? `${officer.firstName} ${officer.lastName}` : 'Officer'}
+              <div className="absolute right-0 top-full mt-3 z-50 w-64 rounded-2xl border border-gray-100 bg-white shadow-premium-lg animate-scale-in p-2">
+                <div className="p-4 mb-2 bg-gray-50/50 rounded-xl border border-gray-50">
+                  <p className="text-sm font-extrabold text-gray-900 tracking-tight">
+                    {officer
+                      ? `${officer.firstName} ${officer.lastName}`
+                      : "Officer Account"}
                   </p>
-                  <p className="text-sm text-gray-500">{officer?.email}</p>
+                  <p className="text-xs font-medium text-gray-500 mt-1 truncate">
+                    {officer?.email}
+                  </p>
                 </div>
 
-                {/* Menu Items */}
-                <div className="p-2">
-                  <button
-                    onClick={() => {
-                      setProfileMenuOpen(false);
-                      navigate('/account/profile');
-                    }}
-                    className="flex w-full items-center gap-3 px-3 py-2 text-sm text-gray-300 hover:text-white rounded-lg hover:bg-sidebar-hover transition-colors"
-                  >
-                    <User className="h-4 w-4" />
-                    Profile
-                  </button>
-                  <button
-                    onClick={() => {
-                      setProfileMenuOpen(false);
-                      navigate('/account/security');
-                    }}
-                    className="flex w-full items-center gap-3 px-3 py-2 text-sm text-gray-300 hover:text-white rounded-lg hover:bg-sidebar-hover transition-colors"
-                  >
-                    <Shield className="h-4 w-4" />
-                    Security
-                  </button>
-                  <button
-                    onClick={() => {
-                      setProfileMenuOpen(false);
-                      navigate('/config/app');
-                    }}
-                    className="flex w-full items-center gap-3 px-3 py-2 text-sm text-gray-300 hover:text-white rounded-lg hover:bg-sidebar-hover transition-colors"
-                  >
-                    <Settings className="h-4 w-4" />
-                    Settings
-                  </button>
+                <div className="space-y-1">
+                  {[
+                    {
+                      label: "Profile Settings",
+                      icon: User,
+                      path: "/account/profile",
+                    },
+                    {
+                      label: "Security & 2FA",
+                      icon: Shield,
+                      path: "/account/security",
+                    },
+                    {
+                      label: "Global Config",
+                      icon: Settings,
+                      path: "/config/app",
+                    },
+                  ].map((item) => (
+                    <button
+                      key={item.label}
+                      onClick={() => {
+                        setProfileMenuOpen(false);
+                        navigate(item.path);
+                      }}
+                      className="flex w-full items-center gap-3 px-4 py-3 text-sm font-semibold text-gray-600 hover:text-primary-600 rounded-xl hover:bg-primary-50 transition-all group"
+                    >
+                      <item.icon className="h-4 w-4 group-hover:scale-110 transition-transform" />
+                      {item.label}
+                    </button>
+                  ))}
                 </div>
 
-                {/* Logout */}
-                <div className="p-2 border-t border-sidebar-border">
-                  <button
-                    onClick={handleLogout}
-                    className="flex w-full items-center gap-3 px-3 py-2 text-sm text-danger hover:bg-danger/10 rounded-lg transition-colors"
-                  >
-                    <LogOut className="h-4 w-4" />
-                    Log out
-                  </button>
-                </div>
+                <div className="h-px bg-gray-50 my-2 mx-2"></div>
+
+                <button
+                  onClick={handleLogout}
+                  className="flex w-full items-center gap-3 px-4 py-3 text-sm font-bold text-danger hover:bg-danger/5 rounded-xl transition-all group"
+                >
+                  <LogOut className="h-4 w-4 group-hover:-translate-x-1 transition-transform" />
+                  Safety Logout
+                </button>
               </div>
             </>
           )}
