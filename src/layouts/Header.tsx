@@ -1,43 +1,46 @@
-// ============================================
-// URBAN GRAVITY - HEADER
-// Minimal, premium navigation with search & intelligence
-// ============================================
-
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import {
   Menu,
-  Search,
   Bell,
   ChevronDown,
   LogOut,
   User,
   Settings,
   Shield,
-  HelpCircle,
-  Command,
-  Monitor,
+  Search,
 } from "lucide-react";
 import { useAuthStore } from "@/stores/auth.store";
 import { cn } from "@/utils/cn";
 import { getInitials } from "@/utils/format";
+import Input from "@/components/ui/Input";
+import logoImg from "@/assets/images/ug-logo.png"; // Importing the logo
 
 interface HeaderProps {
   onMenuClick: () => void;
 }
 
 export function Header({ onMenuClick }: HeaderProps) {
-  const [searchFocused, setSearchFocused] = useState(false);
   const [profileMenuOpen, setProfileMenuOpen] = useState(false);
   const [notificationsOpen, setNotificationsOpen] = useState(false);
 
   const navigate = useNavigate();
+  const location = useLocation();
   const { officer, logout } = useAuthStore();
 
   const handleLogout = () => {
     logout();
     navigate("/");
   };
+
+  // derived breadcrumbs
+  const pathSegments = location.pathname.split("/").filter(Boolean);
+  const currentNav = pathSegments[0]
+    ? pathSegments[0].charAt(0).toUpperCase() + pathSegments[0].slice(1)
+    : "Dashboard";
+  const currentSubNav = pathSegments[1]
+    ? pathSegments[1].charAt(0).toUpperCase() + pathSegments[1].slice(1)
+    : "";
 
   // Mock notifications
   const notifications = [
@@ -67,7 +70,7 @@ export function Header({ onMenuClick }: HeaderProps) {
   const unreadCount = notifications.filter((n) => n.unread).length;
 
   return (
-    <header className="flex h-20 items-center justify-between border-b border-gray-100 bg-white px-6 lg:px-8 sticky top-0 z-40">
+    <header className="flex h-20 items-center justify-between border-b border-gray-100 bg-white px-6 lg:px-8 sticky top-0 z-40 font-hubot">
       {/* Left Section: Context & Breadcrumbs */}
       <div className="flex items-center gap-6">
         {/* Mobile Menu Toggle */}
@@ -79,44 +82,30 @@ export function Header({ onMenuClick }: HeaderProps) {
         </button>
 
         {/* Global Search Bar */}
-        <div className="hidden md:block relative group">
-          <div
-            className={cn(
-              "flex items-center gap-3 rounded-2xl border bg-gray-50 px-4 py-2.5 transition-all duration-300",
-              searchFocused
-                ? "border-primary-500 ring-4 ring-primary-500/10 w-[400px] bg-white"
-                : "border-gray-100 w-80 hover:border-gray-200",
-            )}
-          >
-            <Search
-              className={cn(
-                "h-4 w-4 transition-colors",
-                searchFocused ? "text-primary-500" : "text-gray-400",
-              )}
-              strokeWidth={2.5}
-            />
-            <input
-              type="text"
-              placeholder="Search listings, users or regions..."
-              onFocus={() => setSearchFocused(true)}
-              onBlur={() => setSearchFocused(false)}
-              className="flex-1 bg-transparent text-sm font-medium text-gray-900 placeholder:text-gray-400 outline-none"
-            />
-            <div className="hidden lg:flex items-center gap-1.5 rounded-lg border border-gray-200 bg-white px-1.5 py-1 text-[10px] font-bold text-gray-400 shadow-sm">
-              <Command className="h-3 w-3" />
-              <span>K</span>
-            </div>
-          </div>
+        <div className="hidden md:block w-[400px]">
+          <Input
+            placeholder="Search listings, users or regions..."
+            icon={Search}
+            inputSize="sm"
+            className="bg-gray-50 border-transparent hover:bg-white hover:border-gray-200 focus:bg-white focus:border-primary-500 transition-all"
+          />
         </div>
       </div>
 
       {/* Right Section: System Actions & Profile */}
       <div className="flex items-center gap-4">
-        {/* System Intelligence Link */}
-        <button className="hidden xl:flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold text-gray-500 hover:text-primary-600 hover:bg-primary-50 transition-all group">
-          <Monitor className="h-4 w-4 group-hover:scale-110 transition-transform" />
-          <span>Monitor Lagos</span>
-        </button>
+        {/* Breadcrumbs / Welcome Message */}
+        <div className="hidden xl:flex flex-col items-end mr-4">
+          <p className="text-xs font-bold text-gray-400 uppercase tracking-widest">
+            {currentNav}{" "}
+            {currentSubNav && (
+              <span className="text-gray-300">/ {currentSubNav}</span>
+            )}
+          </p>
+          <p className="text-sm font-semibold text-gray-800">
+            Welcome, {officer ? officer.firstName : "Officer"}
+          </p>
+        </div>
 
         <div className="h-6 w-px bg-gray-100 mx-2 hidden sm:block"></div>
 
@@ -228,10 +217,13 @@ export function Header({ onMenuClick }: HeaderProps) {
             )}
           >
             <div className="relative">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-primary-400 to-primary-600 text-sidebar font-extrabold text-sm shadow-sm ring-2 ring-white">
-                {officer
-                  ? getInitials(officer.firstName, officer.lastName)
-                  : "UG"}
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-primary-400 to-primary-600 text-sidebar font-extrabold text-sm shadow-sm ring-2 ring-white overflow-hidden">
+                {/* Use Logo as Avatar for now if no user avatar */}
+                <img
+                  src={logoImg}
+                  alt="UG"
+                  className="h-full w-full object-cover p-1"
+                />
               </div>
               <div className="absolute -bottom-1 -right-1 h-4 w-4 rounded-full border-2 border-white bg-success"></div>
             </div>

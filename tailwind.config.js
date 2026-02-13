@@ -11,26 +11,26 @@ export default {
           200: "#fde68a",
           300: "#fcd34d",
           400: "#fbbf24",
-          500: "#f9c11c", // Brand Primary
+          500: "#FFCA08", // Brand Primary (Fixed to user request)
           600: "#d97706",
           700: "#b45309",
           800: "#92400e",
           900: "#78350f",
           950: "#451a03",
         },
-        // Dashboard specific colors (Supabase style)
+        // Dashboard specific colors (Brown/Black aesthetic)
         sidebar: {
-          DEFAULT: "#111827", // Darker gray-900
-          hover: "#1f2937",
-          active: "#374151",
-          border: "#1f2937",
-          text: "#9ca3af",
+          DEFAULT: "#1A120B", // Deep rich brown-black
+          hover: "#2C1E12", // Lighter warm brown for hover
+          active: "#3E2A1B", // Active state brown
+          border: "#2C1E12",
+          text: "#D0C8C0", // Warm gray/beige for text
         },
         surface: {
           DEFAULT: "#ffffff",
-          raised: "#f9fafb",
+          raised: "#fcfbf9", // Very subtle warm tint
           overlay: "#ffffff",
-          border: "#e5e7eb",
+          border: "#e7e5e4", // Warm gray border
         },
         // Status colors
         success: {
@@ -56,15 +56,17 @@ export default {
       },
       fontFamily: {
         sans: ["Outfit", "Inter", "system-ui", "-apple-system", "sans-serif"],
+        poppins: ["Poppins", "sans-serif"],
+        hubot: ["Hubot", "sans-serif"],
         mono: ["JetBrains Mono", "Fira Code", "monospace"],
       },
       boxShadow: {
         premium:
-          "0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.025)",
+          "0 10px 15px -3px rgba(26, 18, 11, 0.05), 0 4px 6px -2px rgba(26, 18, 11, 0.025)",
         "premium-lg":
-          "0 20px 25px -5px rgba(0, 0, 0, 0.03), 0 10px 10px -5px rgba(0, 0, 0, 0.01)",
-        glow: "0 0 20px rgba(249, 193, 28, 0.2)",
-        "glow-sm": "0 0 10px rgba(249, 193, 28, 0.15)",
+          "0 20px 25px -5px rgba(26, 18, 11, 0.03), 0 10px 10px -5px rgba(26, 18, 11, 0.01)",
+        glow: "0 0 20px rgba(255, 202, 8, 0.2)",
+        "glow-sm": "0 0 10px rgba(255, 202, 8, 0.15)",
       },
       animation: {
         "pulse-slow": "pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite",

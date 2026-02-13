@@ -7,6 +7,7 @@ import { LoginForm, TwoFactorForm } from "@/components/auth";
 import { useAuthStore } from "@/stores/auth.store";
 import { Shield, Landmark, MapPin, Search, Database } from "lucide-react";
 import { cn } from "@/utils/cn";
+import ComboText from "@/components/ui/ComboText";
 
 export function AuthPage() {
   const { authStep } = useAuthStore();
@@ -27,9 +28,18 @@ export function AuthPage() {
               <Landmark className="h-8 w-8 text-sidebar" strokeWidth={2.5} />
             </div>
             <div>
-              <h2 className="text-2xl font-black text-white tracking-tighter">
+              <ComboText
+                firstText={"Urban"}
+                secondText={"Gravity"}
+                fontFamily="hubot"
+                fontWeight="bold"
+                size={28}
+                gap={3}
+                className="tracking-tighter"
+              />
+              {/* <h2 className="text-2xl font-black text-white tracking-tighter">
                 Urban Gravity
-              </h2>
+              </h2> */}
               <div className="flex items-center gap-2 mt-1">
                 <p className="text-[10px] font-black text-gray-500 uppercase tracking-[0.3em]">
                   Lagos, NG

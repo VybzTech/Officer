@@ -1,16 +1,68 @@
+/* ============================================ */
+/* URBAN GRAVITY - HUBOT FONT FAMILY           */
+/* ============================================ */
+@font-face {
+  font-family: 'Hubot';
+  src: url('./assets/fonts/HubotSans-Light.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Hubot';
+  src: url('./assets/fonts/HubotSans-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Hubot';
+  src: url('./assets/fonts/HubotSans-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Hubot';
+  src: url('./assets/fonts/HubotSans-SemiBold.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Hubot';
+  src: url('./assets/fonts/HubotSans-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Hubot';
+  src: url('./assets/fonts/HubotSans-ExtraBold.ttf') format('truetype');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   :root {
-    --primary: 249 193 28;
-    --sidebar-bg: 17 24 39;
+    --primary: 255 202 8;
+    --sidebar-bg: 26 18 11;
     --surface-bg: 255 255 255;
   }
 
   body {
-    @apply bg-gray-50 text-gray-900 font-sans antialiased selection:bg-primary-500/30 selection:text-primary-900;
+    @apply bg-gray-50 text-gray-900 antialiased selection:bg-primary-500/30 selection:text-primary-900;
+    font-family: 'Hubot', 'Outfit', 'Inter', system-ui, -apple-system, sans-serif;
   }
 
   /* Custom scrollbar */
