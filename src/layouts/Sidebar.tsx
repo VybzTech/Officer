@@ -566,7 +566,7 @@ function NavItemComponent({
       >
         <Icon
           className="h-5 w-5 flex-shrink-0"
-          strokeWidth={isActive ? 2.5 : 2}
+          strokeWidth={isActive ? 1.75 : 1.25}
         />
         {isActive && !collapsed && (
           <div className="absolute -left-3 h-4 w-1 bg-primary-500 rounded-r-full"></div>

@@ -31,10 +31,10 @@ export function AuthPage() {
                 Urban Gravity
               </h2>
               <div className="flex items-center gap-2 mt-1">
-                <div className="h-1.5 w-1.5 rounded-full bg-success animate-pulse"></div>
                 <p className="text-[10px] font-black text-gray-500 uppercase tracking-[0.3em]">
-                  Operational Node: Lagos
+                  Lagos, NG
                 </p>
+                <div className="h-1.5 w-1.5 rounded-full bg-success animate-pulse"></div>
               </div>
             </div>
           </div>
