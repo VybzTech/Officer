@@ -19,6 +19,9 @@ import { useAuthStore } from "@/stores/auth.store";
 import { cn } from "@/utils/cn";
 import Button from "@/components/ui/Button";
 import type { Officer } from "@/types";
+import ComboText from "../ui/ComboText";
+import { OptimizedImage } from "../ui/OptimizedImage";
+import logo from "../../assets/images/ug-logo.png";
 
 // ==================== VALIDATION SCHEMA ====================
 const loginSchema = z.object({
@@ -105,6 +108,24 @@ export function LoginForm() {
 
   return (
     <div className="w-full space-y-8 animate-slide-in">
+      <div className="flex gap-5 items-center justify-left">
+        <OptimizedImage
+          src={logo}
+          alt="Urban Gravity"
+          width={70}
+          height={70}
+        />
+
+        <ComboText
+          firstText={"Urban"}
+          secondText={"Gravity"}
+          fontFamily="hubot"
+          fontWeight="bold"
+          size={28}
+          gap={1}
+          className="tracking-tighter"
+        />
+      </div>
       {/* 1. Header with Badge */}
       <div className="space-y-4">
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary-100/50 border border-primary-200">

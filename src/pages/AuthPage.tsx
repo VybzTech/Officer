@@ -23,7 +23,7 @@ export function AuthPage() {
 
         {/* Top: Logo & Status */}
         <div className="relative z-10 animate-fade-in">
-          <div className="flex items-center gap-4">
+          {/* <div className="flex items-center gap-4">
             <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-primary-500 shadow-glow">
               <Landmark className="h-8 w-8 text-sidebar" strokeWidth={2.5} />
             </div>
@@ -37,9 +37,6 @@ export function AuthPage() {
                 gap={3}
                 className="tracking-tighter"
               />
-              {/* <h2 className="text-2xl font-black text-white tracking-tighter">
-                Urban Gravity
-              </h2> */}
               <div className="flex items-center gap-2 mt-1">
                 <p className="text-[10px] font-black text-gray-500 uppercase tracking-[0.3em]">
                   Lagos, NG
@@ -47,11 +44,11 @@ export function AuthPage() {
                 <div className="h-1.5 w-1.5 rounded-full bg-success animate-pulse"></div>
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
 
         {/* Center: Value Propositions (Trust Architecture) */}
-        <div className="relative z-10 space-y-12 animate-slide-in">
+        {/* <div className="relative z-10 space-y-12 animate-slide-in">
           <div className="space-y-4">
             <h1 className="text-6xl font-black text-white leading-[0.9] tracking-tighter">
               The Intelligence <br />
@@ -105,24 +102,7 @@ export function AuthPage() {
               </div>
             ))}
           </div>
-        </div>
-
-        {/* Bottom: Integrity Statement */}
-        <div className="relative z-10 pt-16 border-t border-white/5 animate-fade-in">
-          <div className="flex items-center justify-between">
-            <p className="text-[10px] font-bold text-gray-600 uppercase tracking-[0.3em]">
-              Protected by UG Trust Core © 2026
-            </p>
-            <div className="flex items-center gap-6">
-              <span className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">
-                v1.2.0-STABLE
-              </span>
-              <span className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">
-                ISO 27001 COMPLIANT
-              </span>
-            </div>
-          </div>
-        </div>
+        </div> */}
       </div>
 
       {/* 2. Authentication Interaction Panel */}
@@ -154,15 +134,6 @@ export function AuthPage() {
           >
             {authStep === "LOGIN" && <LoginForm />}
             {authStep === "TWO_FACTOR" && <TwoFactorForm />}
-          </div>
-
-          <div className="mt-12 pt-8 border-t border-gray-100 text-center">
-            <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">
-              Technical Issues?{" "}
-              <button className="text-primary-600 hover:text-primary-700 underline decoration-primary-500/20 underline-offset-4">
-                Emergency Support Protocol
-              </button>
-            </p>
           </div>
         </div>
       </div>

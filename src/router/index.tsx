@@ -259,8 +259,6 @@
 //   },
 // ]);
 
-
-
 // ============================================
 // URBAN GRAVITY - ROUTER CONFIGURATION
 // Protected routes with auth guards
@@ -411,7 +409,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "/reports",
-        element: <ReportsPage />,
+        element: <ComingSoon title="Reports Page" />,
       },
 
       // ========== AI INTELLIGENCE ==========
@@ -493,7 +491,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "/config/roles",
-        element: <RolePermissionsPage />,
+        element: <ComingSoon title="Role Permissions" />,
       },
       {
         path: "/config/features",
