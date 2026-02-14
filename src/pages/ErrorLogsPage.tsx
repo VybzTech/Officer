@@ -20,7 +20,7 @@ import {
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/Card";
 import Button from "@/components/ui/Button";
 import Input from "@/components/ui/Input";
-import Badge from "@/components/ui/Badge";
+import { Badge } from "@/components/ui/Badge";
 import { useDataStore } from "@/stores/dataStore";
 import { cn } from "@/utils/cn";
 import { formatDate, formatRelativeTime } from "@/utils/format";
@@ -61,7 +61,9 @@ export function ErrorLogsPage() {
     return matchesSearch && matchesSeverity && matchesResolved;
   });
 
-  const criticalCount = errorLogs.filter((l) => l.severity === "CRITICAL" && !l.resolved).length;
+  const criticalCount = errorLogs.filter(
+    (l) => l.severity === "CRITICAL" && !l.resolved,
+  ).length;
   const unresolvedCount = errorLogs.filter((l) => !l.resolved).length;
 
   if (isLoading.errorLogs) {
@@ -83,10 +85,7 @@ export function ErrorLogsPage() {
           </p>
         </div>
         <div className="flex gap-2">
-          <Button
-            variant="outline"
-            leftIcon={<Download className="h-4 w-4" />}
-          >
+          <Button variant="outline" leftIcon={<Download className="h-4 w-4" />}>
             Export
           </Button>
           <Button
@@ -106,7 +105,8 @@ export function ErrorLogsPage() {
             <AlertOctagon className="h-6 w-6 text-error" />
             <div>
               <p className="font-semibold text-error">
-                {criticalCount} Critical Error{criticalCount > 1 ? "s" : ""} Detected
+                {criticalCount} Critical Error{criticalCount > 1 ? "s" : ""}{" "}
+                Detected
               </p>
               <p className="text-sm text-gray-600">
                 Immediate attention required for system stability
@@ -122,7 +122,9 @@ export function ErrorLogsPage() {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm text-gray-500">Total Errors</p>
-              <p className="text-2xl font-bold text-gray-900 mt-1">{errorLogs.length}</p>
+              <p className="text-2xl font-bold text-gray-900 mt-1">
+                {errorLogs.length}
+              </p>
             </div>
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gray-100 text-gray-600">
               <AlertOctagon className="h-5 w-5" />
@@ -134,7 +136,9 @@ export function ErrorLogsPage() {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm text-gray-500">Unresolved</p>
-              <p className="text-2xl font-bold text-error mt-1">{unresolvedCount}</p>
+              <p className="text-2xl font-bold text-error mt-1">
+                {unresolvedCount}
+              </p>
             </div>
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-error/10 text-error">
               <AlertTriangle className="h-5 w-5" />
@@ -146,7 +150,9 @@ export function ErrorLogsPage() {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm text-gray-500">Critical</p>
-              <p className="text-2xl font-bold text-error mt-1">{criticalCount}</p>
+              <p className="text-2xl font-bold text-error mt-1">
+                {criticalCount}
+              </p>
             </div>
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-error/10 text-error">
               <AlertOctagon className="h-5 w-5" />
@@ -240,18 +246,27 @@ export function ErrorLogsPage() {
           const SeverityIcon = severityConfig.icon;
 
           return (
-            <Card key={log.id} padding="none" className={cn(
-              log.severity === "CRITICAL" && !log.resolved && "border-error"
-            )}>
+            <Card
+              key={log.id}
+              padding="none"
+              className={cn(
+                log.severity === "CRITICAL" && !log.resolved && "border-error",
+              )}
+            >
               <div className="p-4">
                 <div className="flex items-start gap-4">
-                  <div className={cn(
-                    "flex h-10 w-10 items-center justify-center rounded-xl flex-shrink-0",
-                    log.severity === "CRITICAL" ? "bg-error/10 text-error" :
-                    log.severity === "HIGH" ? "bg-error/10 text-error" :
-                    log.severity === "MEDIUM" ? "bg-warning/10 text-warning" :
-                    "bg-info/10 text-info"
-                  )}>
+                  <div
+                    className={cn(
+                      "flex h-10 w-10 items-center justify-center rounded-xl flex-shrink-0",
+                      log.severity === "CRITICAL"
+                        ? "bg-error/10 text-error"
+                        : log.severity === "HIGH"
+                          ? "bg-error/10 text-error"
+                          : log.severity === "MEDIUM"
+                            ? "bg-warning/10 text-warning"
+                            : "bg-info/10 text-info",
+                    )}
+                  >
                     <SeverityIcon className="h-5 w-5" />
                   </div>
 
@@ -278,9 +293,7 @@ export function ErrorLogsPage() {
                         <Clock className="h-3.5 w-3.5" />
                         {formatRelativeTime(log.timestamp)}
                       </div>
-                      {log.userId && (
-                        <div>User: {log.userId}</div>
-                      )}
+                      {log.userId && <div>User: {log.userId}</div>}
                       {log.resolvedBy && (
                         <div>Resolved by: {log.resolvedBy}</div>
                       )}

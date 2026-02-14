@@ -17,14 +17,24 @@ import {
 } from "lucide-react";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/Card";
 import Button from "@/components/ui/Button";
-import Badge from "@/components/ui/Badge";
+import { Badge } from "@/components/ui/Badge";
 import { useDataStore } from "@/stores/dataStore";
 import { cn } from "@/utils/cn";
 import { formatNumber } from "@/utils/format";
 import Loader from "@/components/ui/Loader";
 
 export function RegionsPage() {
-  const { regions, lgas, listings, users, isLoading, fetchRegions, fetchLgas, fetchListings, fetchUsers } = useDataStore();
+  const {
+    regions,
+    lgas,
+    listings,
+    users,
+    isLoading,
+    fetchRegions,
+    fetchLgas,
+    fetchListings,
+    fetchUsers,
+  } = useDataStore();
 
   useEffect(() => {
     fetchRegions();
@@ -43,7 +53,9 @@ export function RegionsPage() {
       lgaCount: regionLgas.length,
       userCount: regionUsers.length,
       listingCount: regionListings.length,
-      activeListings: regionListings.filter((l) => l.status === "ACTIVE" || l.status === "APPROVED").length,
+      activeListings: regionListings.filter(
+        (l) => l.status === "ACTIVE" || l.status === "APPROVED",
+      ).length,
       totalPopulation: regionLgas.reduce((sum, l) => sum + l.population, 0),
     };
   };
@@ -86,7 +98,9 @@ export function RegionsPage() {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm text-gray-500">Total Regions</p>
-              <p className="text-2xl font-bold text-gray-900 mt-1">{regions.length}</p>
+              <p className="text-2xl font-bold text-gray-900 mt-1">
+                {regions.length}
+              </p>
             </div>
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary-100 text-primary-600">
               <Map className="h-5 w-5" />
@@ -98,7 +112,9 @@ export function RegionsPage() {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm text-gray-500">Total LGAs</p>
-              <p className="text-2xl font-bold text-primary-600 mt-1">{lgas.length}</p>
+              <p className="text-2xl font-bold text-primary-600 mt-1">
+                {lgas.length}
+              </p>
             </div>
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary-100 text-primary-600">
               <MapPin className="h-5 w-5" />
@@ -110,7 +126,9 @@ export function RegionsPage() {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm text-gray-500">Total Users</p>
-              <p className="text-2xl font-bold text-success mt-1">{users.length}</p>
+              <p className="text-2xl font-bold text-success mt-1">
+                {users.length}
+              </p>
             </div>
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-success/10 text-success">
               <Users className="h-5 w-5" />
@@ -122,7 +140,9 @@ export function RegionsPage() {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm text-gray-500">Total Listings</p>
-              <p className="text-2xl font-bold text-info mt-1">{listings.length}</p>
+              <p className="text-2xl font-bold text-info mt-1">
+                {listings.length}
+              </p>
             </div>
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-info/10 text-info">
               <Home className="h-5 w-5" />
@@ -146,7 +166,9 @@ export function RegionsPage() {
                       <Map className="h-6 w-6" />
                     </div>
                     <div>
-                      <h3 className="font-bold text-lg text-gray-900">{region.name}</h3>
+                      <h3 className="font-bold text-lg text-gray-900">
+                        {region.name}
+                      </h3>
                       <Badge variant="default">{region.code}</Badge>
                     </div>
                   </div>
@@ -158,33 +180,43 @@ export function RegionsPage() {
                       <MapPin className="h-4 w-4" />
                       <span className="text-xs">LGAs</span>
                     </div>
-                    <p className="text-xl font-bold text-gray-900">{stats.lgaCount}</p>
+                    <p className="text-xl font-bold text-gray-900">
+                      {stats.lgaCount}
+                    </p>
                   </div>
                   <div className="p-3 bg-gray-50 rounded-lg">
                     <div className="flex items-center gap-2 text-gray-500 mb-1">
                       <Users className="h-4 w-4" />
                       <span className="text-xs">Users</span>
                     </div>
-                    <p className="text-xl font-bold text-gray-900">{stats.userCount}</p>
+                    <p className="text-xl font-bold text-gray-900">
+                      {stats.userCount}
+                    </p>
                   </div>
                   <div className="p-3 bg-gray-50 rounded-lg">
                     <div className="flex items-center gap-2 text-gray-500 mb-1">
                       <Home className="h-4 w-4" />
                       <span className="text-xs">Listings</span>
                     </div>
-                    <p className="text-xl font-bold text-gray-900">{stats.listingCount}</p>
+                    <p className="text-xl font-bold text-gray-900">
+                      {stats.listingCount}
+                    </p>
                   </div>
                   <div className="p-3 bg-gray-50 rounded-lg">
                     <div className="flex items-center gap-2 text-gray-500 mb-1">
                       <Building2 className="h-4 w-4" />
                       <span className="text-xs">Population</span>
                     </div>
-                    <p className="text-xl font-bold text-gray-900">{formatNumber(stats.totalPopulation)}</p>
+                    <p className="text-xl font-bold text-gray-900">
+                      {formatNumber(stats.totalPopulation)}
+                    </p>
                   </div>
                 </div>
 
                 <div className="border-t border-gray-100 pt-4">
-                  <p className="text-xs text-gray-500 mb-2">Local Government Areas:</p>
+                  <p className="text-xs text-gray-500 mb-2">
+                    Local Government Areas:
+                  </p>
                   <div className="flex flex-wrap gap-1">
                     {regionLgas.map((lga) => (
                       <Badge key={lga.id} variant="default" className="text-xs">

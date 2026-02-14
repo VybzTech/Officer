@@ -19,7 +19,7 @@ import {
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/Card";
 import Button from "@/components/ui/Button";
 import Input from "@/components/ui/Input";
-import Badge from "@/components/ui/Badge";
+import { Badge } from "@/components/ui/Badge";
 import { useDataStore } from "@/stores/dataStore";
 import { cn } from "@/utils/cn";
 import { formatNumber } from "@/utils/format";
@@ -29,7 +29,17 @@ export function LgasPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [regionFilter, setRegionFilter] = useState<string | null>(null);
 
-  const { regions, lgas, listings, users, isLoading, fetchRegions, fetchLgas, fetchListings, fetchUsers } = useDataStore();
+  const {
+    regions,
+    lgas,
+    listings,
+    users,
+    isLoading,
+    fetchRegions,
+    fetchLgas,
+    fetchListings,
+    fetchUsers,
+  } = useDataStore();
 
   useEffect(() => {
     fetchRegions();
@@ -39,7 +49,9 @@ export function LgasPage() {
   }, [fetchRegions, fetchLgas, fetchListings, fetchUsers]);
 
   const filteredLgas = lgas.filter((lga) => {
-    const matchesSearch = lga.name.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesSearch = lga.name
+      .toLowerCase()
+      .includes(searchQuery.toLowerCase());
     const matchesRegion = !regionFilter || lga.regionId === regionFilter;
     return matchesSearch && matchesRegion;
   });
@@ -51,7 +63,9 @@ export function LgasPage() {
     return {
       userCount: lgaUsers.length,
       listingCount: lgaListings.length,
-      activeListings: lgaListings.filter((l) => l.status === "ACTIVE" || l.status === "APPROVED").length,
+      activeListings: lgaListings.filter(
+        (l) => l.status === "ACTIVE" || l.status === "APPROVED",
+      ).length,
       pendingListings: lgaListings.filter((l) => l.status === "PENDING").length,
     };
   };
@@ -75,7 +89,9 @@ export function LgasPage() {
       {/* Page Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Local Government Areas</h1>
+          <h1 className="text-2xl font-bold text-gray-900">
+            Local Government Areas
+          </h1>
           <p className="text-gray-500 mt-1">
             View and manage the 20 LGAs of Lagos State
           </p>
@@ -95,7 +111,9 @@ export function LgasPage() {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm text-gray-500">Total LGAs</p>
-              <p className="text-2xl font-bold text-gray-900 mt-1">{lgas.length}</p>
+              <p className="text-2xl font-bold text-gray-900 mt-1">
+                {lgas.length}
+              </p>
             </div>
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary-100 text-primary-600">
               <MapPin className="h-5 w-5" />
@@ -121,7 +139,9 @@ export function LgasPage() {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm text-gray-500">Total Listings</p>
-              <p className="text-2xl font-bold text-success mt-1">{listings.length}</p>
+              <p className="text-2xl font-bold text-success mt-1">
+                {listings.length}
+              </p>
             </div>
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-success/10 text-success">
               <Home className="h-5 w-5" />
@@ -182,40 +202,67 @@ export function LgasPage() {
           <table className="w-full">
             <thead>
               <tr className="border-b border-gray-200 bg-gray-50">
-                <th className="text-left py-3 px-4 font-medium text-gray-500 text-sm">LGA</th>
-                <th className="text-left py-3 px-4 font-medium text-gray-500 text-sm">Region</th>
-                <th className="text-right py-3 px-4 font-medium text-gray-500 text-sm">Population</th>
-                <th className="text-right py-3 px-4 font-medium text-gray-500 text-sm">Users</th>
-                <th className="text-right py-3 px-4 font-medium text-gray-500 text-sm">Listings</th>
-                <th className="text-right py-3 px-4 font-medium text-gray-500 text-sm">Active</th>
-                <th className="text-right py-3 px-4 font-medium text-gray-500 text-sm">Pending</th>
-                <th className="text-center py-3 px-4 font-medium text-gray-500 text-sm">Actions</th>
+                <th className="text-left py-3 px-4 font-medium text-gray-500 text-sm">
+                  LGA
+                </th>
+                <th className="text-left py-3 px-4 font-medium text-gray-500 text-sm">
+                  Region
+                </th>
+                <th className="text-right py-3 px-4 font-medium text-gray-500 text-sm">
+                  Population
+                </th>
+                <th className="text-right py-3 px-4 font-medium text-gray-500 text-sm">
+                  Users
+                </th>
+                <th className="text-right py-3 px-4 font-medium text-gray-500 text-sm">
+                  Listings
+                </th>
+                <th className="text-right py-3 px-4 font-medium text-gray-500 text-sm">
+                  Active
+                </th>
+                <th className="text-right py-3 px-4 font-medium text-gray-500 text-sm">
+                  Pending
+                </th>
+                <th className="text-center py-3 px-4 font-medium text-gray-500 text-sm">
+                  Actions
+                </th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-100">
               {filteredLgas.map((lga) => {
                 const stats = getLgaStats(lga.id);
                 return (
-                  <tr key={lga.id} className="hover:bg-gray-50 transition-colors">
+                  <tr
+                    key={lga.id}
+                    className="hover:bg-gray-50 transition-colors"
+                  >
                     <td className="py-3 px-4">
                       <div className="flex items-center gap-2">
                         <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary-100 text-primary-600">
                           <MapPin className="h-4 w-4" />
                         </div>
-                        <span className="font-medium text-gray-900">{lga.name}</span>
+                        <span className="font-medium text-gray-900">
+                          {lga.name}
+                        </span>
                       </div>
                     </td>
                     <td className="py-3 px-4">
-                      <Badge variant="default">{getRegionName(lga.regionId)}</Badge>
+                      <Badge variant="default">
+                        {getRegionName(lga.regionId)}
+                      </Badge>
                     </td>
                     <td className="py-3 px-4 text-right text-gray-600">
                       {formatNumber(lga.population)}
                     </td>
                     <td className="py-3 px-4 text-right">
-                      <span className="font-medium text-gray-900">{stats.userCount}</span>
+                      <span className="font-medium text-gray-900">
+                        {stats.userCount}
+                      </span>
                     </td>
                     <td className="py-3 px-4 text-right">
-                      <span className="font-medium text-gray-900">{stats.listingCount}</span>
+                      <span className="font-medium text-gray-900">
+                        {stats.listingCount}
+                      </span>
                     </td>
                     <td className="py-3 px-4 text-right">
                       <Badge variant="success">{stats.activeListings}</Badge>

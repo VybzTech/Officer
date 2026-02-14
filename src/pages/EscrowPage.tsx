@@ -22,11 +22,11 @@ import {
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/Card";
 import Button from "@/components/ui/Button";
 import Input from "@/components/ui/Input";
-import Badge from "@/components/ui/Badge";
+import { Badge } from "@/components/ui/Badge";
 import { useDataStore } from "@/stores/dataStore";
 import { useAuthStore } from "@/stores/auth.store";
 import { cn } from "@/utils/cn";
-import { formatCurrency, formatDate } from "@/utils/format";
+import { formatNaira, formatDate } from "@/utils/format";
 import Loader from "@/components/ui/Loader";
 import type { EscrowAccount, EscrowStatus } from "@/data/mockDatabase";
 
@@ -41,9 +41,18 @@ const STATUS_CONFIG = {
 export function EscrowPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState<EscrowStatus | null>(null);
-  const [selectedEscrow, setSelectedEscrow] = useState<EscrowAccount | null>(null);
+  const [selectedEscrow, setSelectedEscrow] = useState<EscrowAccount | null>(
+    null,
+  );
 
-  const { escrowAccounts, isLoading, isActionLoading, fetchEscrowAccounts, releaseEscrow, refundEscrow } = useDataStore();
+  const {
+    escrowAccounts,
+    isLoading,
+    isActionLoading,
+    fetchEscrowAccounts,
+    releaseEscrow,
+    refundEscrow,
+  } = useDataStore();
   const { officer } = useAuthStore();
 
   useEffect(() => {
@@ -52,7 +61,9 @@ export function EscrowPage() {
 
   const filteredAccounts = escrowAccounts.filter((account) => {
     const matchesSearch =
-      account.transactionRef.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      account.transactionRef
+        .toLowerCase()
+        .includes(searchQuery.toLowerCase()) ||
       account.tenantName.toLowerCase().includes(searchQuery.toLowerCase()) ||
       account.landlordName.toLowerCase().includes(searchQuery.toLowerCase()) ||
       account.listingTitle.toLowerCase().includes(searchQuery.toLowerCase());
@@ -66,7 +77,9 @@ export function EscrowPage() {
   const totalReleased = escrowAccounts
     .filter((e) => e.status === "RELEASED")
     .reduce((sum, e) => sum + e.amount, 0);
-  const disputedCount = escrowAccounts.filter((e) => e.status === "DISPUTED").length;
+  const disputedCount = escrowAccounts.filter(
+    (e) => e.status === "DISPUTED",
+  ).length;
 
   const handleRelease = async (id: string) => {
     if (officer) {
@@ -113,7 +126,9 @@ export function EscrowPage() {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm text-gray-500">Total Accounts</p>
-              <p className="text-2xl font-bold text-gray-900 mt-1">{escrowAccounts.length}</p>
+              <p className="text-2xl font-bold text-gray-900 mt-1">
+                {escrowAccounts.length}
+              </p>
             </div>
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gray-100 text-gray-600">
               <Wallet className="h-5 w-5" />
@@ -126,7 +141,7 @@ export function EscrowPage() {
             <div>
               <p className="text-sm text-gray-500">Currently Held</p>
               <p className="text-2xl font-bold text-primary-600 mt-1">
-                {formatCurrency(totalHeld)}
+                {formatNaira(totalHeld)}
               </p>
             </div>
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary-100 text-primary-600">
@@ -140,7 +155,7 @@ export function EscrowPage() {
             <div>
               <p className="text-sm text-gray-500">Total Released</p>
               <p className="text-2xl font-bold text-success mt-1">
-                {formatCurrency(totalReleased)}
+                {formatNaira(totalReleased)}
               </p>
             </div>
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-success/10 text-success">
@@ -153,7 +168,9 @@ export function EscrowPage() {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm text-gray-500">Disputed</p>
-              <p className="text-2xl font-bold text-error mt-1">{disputedCount}</p>
+              <p className="text-2xl font-bold text-error mt-1">
+                {disputedCount}
+              </p>
             </div>
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-error/10 text-error">
               <AlertTriangle className="h-5 w-5" />
@@ -209,20 +226,34 @@ export function EscrowPage() {
               <div className="p-6">
                 <div className="flex items-start justify-between gap-4">
                   <div className="flex items-start gap-4 flex-1">
-                    <div className={cn(
-                      "flex h-12 w-12 items-center justify-center rounded-xl flex-shrink-0",
-                      `bg-${statusConfig.color}/10 text-${statusConfig.color}`
-                    )}
-                    style={{
-                      backgroundColor: statusConfig.color === "warning" ? "rgba(245, 158, 11, 0.1)" :
-                        statusConfig.color === "info" ? "rgba(59, 130, 246, 0.1)" :
-                        statusConfig.color === "success" ? "rgba(16, 185, 129, 0.1)" :
-                        statusConfig.color === "error" ? "rgba(239, 68, 68, 0.1)" : "rgba(156, 163, 175, 0.1)",
-                      color: statusConfig.color === "warning" ? "#D97706" :
-                        statusConfig.color === "info" ? "#2563EB" :
-                        statusConfig.color === "success" ? "#059669" :
-                        statusConfig.color === "error" ? "#DC2626" : "#6B7280"
-                    }}>
+                    <div
+                      className={cn(
+                        "flex h-12 w-12 items-center justify-center rounded-xl flex-shrink-0",
+                        `bg-${statusConfig.color}/10 text-${statusConfig.color}`,
+                      )}
+                      style={{
+                        backgroundColor:
+                          statusConfig.color === "warning"
+                            ? "rgba(245, 158, 11, 0.1)"
+                            : statusConfig.color === "info"
+                              ? "rgba(59, 130, 246, 0.1)"
+                              : statusConfig.color === "success"
+                                ? "rgba(16, 185, 129, 0.1)"
+                                : statusConfig.color === "error"
+                                  ? "rgba(239, 68, 68, 0.1)"
+                                  : "rgba(156, 163, 175, 0.1)",
+                        color:
+                          statusConfig.color === "warning"
+                            ? "#D97706"
+                            : statusConfig.color === "info"
+                              ? "#2563EB"
+                              : statusConfig.color === "success"
+                                ? "#059669"
+                                : statusConfig.color === "error"
+                                  ? "#DC2626"
+                                  : "#6B7280",
+                      }}
+                    >
                       <StatusIcon className="h-6 w-6" />
                     </div>
 
@@ -237,7 +268,7 @@ export function EscrowPage() {
                       </div>
 
                       <p className="text-lg font-bold text-gray-900 mb-2">
-                        {formatCurrency(escrow.amount)}
+                        {formatNaira(escrow.amount)}
                       </p>
 
                       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
@@ -245,19 +276,25 @@ export function EscrowPage() {
                           <p className="text-gray-500 flex items-center gap-1">
                             <User className="h-3.5 w-3.5" /> Tenant
                           </p>
-                          <p className="font-medium text-gray-900">{escrow.tenantName}</p>
+                          <p className="font-medium text-gray-900">
+                            {escrow.tenantName}
+                          </p>
                         </div>
                         <div>
                           <p className="text-gray-500 flex items-center gap-1">
                             <User className="h-3.5 w-3.5" /> Landlord
                           </p>
-                          <p className="font-medium text-gray-900">{escrow.landlordName}</p>
+                          <p className="font-medium text-gray-900">
+                            {escrow.landlordName}
+                          </p>
                         </div>
                         <div>
                           <p className="text-gray-500 flex items-center gap-1">
                             <Home className="h-3.5 w-3.5" /> Property
                           </p>
-                          <p className="font-medium text-gray-900 truncate">{escrow.listingTitle}</p>
+                          <p className="font-medium text-gray-900 truncate">
+                            {escrow.listingTitle}
+                          </p>
                         </div>
                       </div>
                     </div>
@@ -303,7 +340,8 @@ export function EscrowPage() {
                 </div>
                 {escrow.releasedAt && (
                   <div>
-                    Released: {formatDate(escrow.releasedAt)} by {escrow.releasedBy}
+                    Released: {formatDate(escrow.releasedAt)} by{" "}
+                    {escrow.releasedBy}
                   </div>
                 )}
               </div>

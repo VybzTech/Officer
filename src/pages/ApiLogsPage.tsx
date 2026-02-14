@@ -19,7 +19,7 @@ import {
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/Card";
 import Button from "@/components/ui/Button";
 import Input from "@/components/ui/Input";
-import Badge from "@/components/ui/Badge";
+import { Badge } from "@/components/ui/Badge";
 import { useDataStore } from "@/stores/dataStore";
 import { cn } from "@/utils/cn";
 import { formatDate } from "@/utils/format";
@@ -59,10 +59,10 @@ export function ApiLogsPage() {
   });
 
   const avgResponseTime = Math.round(
-    apiLogs.reduce((sum, l) => sum + l.responseTime, 0) / apiLogs.length
+    apiLogs.reduce((sum, l) => sum + l.responseTime, 0) / apiLogs.length,
   );
   const errorRate = Math.round(
-    (apiLogs.filter((l) => l.statusCode >= 400).length / apiLogs.length) * 100
+    (apiLogs.filter((l) => l.statusCode >= 400).length / apiLogs.length) * 100,
   );
 
   if (isLoading.apiLogs) {
@@ -84,10 +84,7 @@ export function ApiLogsPage() {
           </p>
         </div>
         <div className="flex gap-2">
-          <Button
-            variant="outline"
-            leftIcon={<Download className="h-4 w-4" />}
-          >
+          <Button variant="outline" leftIcon={<Download className="h-4 w-4" />}>
             Export
           </Button>
           <Button
@@ -106,7 +103,9 @@ export function ApiLogsPage() {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm text-gray-500">Total Requests</p>
-              <p className="text-2xl font-bold text-gray-900 mt-1">{apiLogs.length}</p>
+              <p className="text-2xl font-bold text-gray-900 mt-1">
+                {apiLogs.length}
+              </p>
             </div>
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gray-100 text-gray-600">
               <Server className="h-5 w-5" />
@@ -118,7 +117,9 @@ export function ApiLogsPage() {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm text-gray-500">Avg Response</p>
-              <p className="text-2xl font-bold text-primary-600 mt-1">{avgResponseTime}ms</p>
+              <p className="text-2xl font-bold text-primary-600 mt-1">
+                {avgResponseTime}ms
+              </p>
             </div>
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary-100 text-primary-600">
               <Zap className="h-5 w-5" />
@@ -130,7 +131,9 @@ export function ApiLogsPage() {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm text-gray-500">Success Rate</p>
-              <p className="text-2xl font-bold text-success mt-1">{100 - errorRate}%</p>
+              <p className="text-2xl font-bold text-success mt-1">
+                {100 - errorRate}%
+              </p>
             </div>
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-success/10 text-success">
               <CheckCircle2 className="h-5 w-5" />
@@ -189,12 +192,24 @@ export function ApiLogsPage() {
           <table className="w-full">
             <thead>
               <tr className="border-b border-gray-200 bg-gray-50">
-                <th className="text-left py-3 px-4 font-medium text-gray-500 text-sm">Timestamp</th>
-                <th className="text-left py-3 px-4 font-medium text-gray-500 text-sm">Method</th>
-                <th className="text-left py-3 px-4 font-medium text-gray-500 text-sm">Endpoint</th>
-                <th className="text-center py-3 px-4 font-medium text-gray-500 text-sm">Status</th>
-                <th className="text-right py-3 px-4 font-medium text-gray-500 text-sm">Response</th>
-                <th className="text-left py-3 px-4 font-medium text-gray-500 text-sm">IP Address</th>
+                <th className="text-left py-3 px-4 font-medium text-gray-500 text-sm">
+                  Timestamp
+                </th>
+                <th className="text-left py-3 px-4 font-medium text-gray-500 text-sm">
+                  Method
+                </th>
+                <th className="text-left py-3 px-4 font-medium text-gray-500 text-sm">
+                  Endpoint
+                </th>
+                <th className="text-center py-3 px-4 font-medium text-gray-500 text-sm">
+                  Status
+                </th>
+                <th className="text-right py-3 px-4 font-medium text-gray-500 text-sm">
+                  Response
+                </th>
+                <th className="text-left py-3 px-4 font-medium text-gray-500 text-sm">
+                  IP Address
+                </th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-100">
@@ -209,7 +224,9 @@ export function ApiLogsPage() {
                     </Badge>
                   </td>
                   <td className="py-3 px-4">
-                    <code className="text-sm font-mono text-gray-700">{log.endpoint}</code>
+                    <code className="text-sm font-mono text-gray-700">
+                      {log.endpoint}
+                    </code>
                   </td>
                   <td className="py-3 px-4 text-center">
                     <Badge variant={getStatusColor(log.statusCode) as any}>
@@ -217,12 +234,16 @@ export function ApiLogsPage() {
                     </Badge>
                   </td>
                   <td className="py-3 px-4 text-right">
-                    <span className={cn(
-                      "text-sm font-medium",
-                      log.responseTime > 1000 ? "text-error" :
-                      log.responseTime > 500 ? "text-warning" :
-                      "text-success"
-                    )}>
+                    <span
+                      className={cn(
+                        "text-sm font-medium",
+                        log.responseTime > 1000
+                          ? "text-error"
+                          : log.responseTime > 500
+                            ? "text-warning"
+                            : "text-success",
+                      )}
+                    >
                       {log.responseTime}ms
                     </span>
                   </td>

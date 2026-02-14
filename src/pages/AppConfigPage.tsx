@@ -20,7 +20,7 @@ import {
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/Card";
 import Button from "@/components/ui/Button";
 import Input from "@/components/ui/Input";
-import Badge from "@/components/ui/Badge";
+import { Badge } from "@/components/ui/Badge";
 import Toggle from "@/components/ui/Toggle";
 import { useDataStore } from "@/stores/dataStore";
 import { useAuthStore } from "@/stores/auth.store";
@@ -51,7 +51,13 @@ export function AppConfigPage() {
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editValue, setEditValue] = useState("");
 
-  const { appConfigs, isLoading, isActionLoading, fetchAppConfigs, updateAppConfig } = useDataStore();
+  const {
+    appConfigs,
+    isLoading,
+    isActionLoading,
+    fetchAppConfigs,
+    updateAppConfig,
+  } = useDataStore();
   const { officer } = useAuthStore();
 
   useEffect(() => {
@@ -64,7 +70,8 @@ export function AppConfigPage() {
     const matchesSearch =
       config.key.toLowerCase().includes(searchQuery.toLowerCase()) ||
       config.description.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesCategory = !selectedCategory || config.category === selectedCategory;
+    const matchesCategory =
+      !selectedCategory || config.category === selectedCategory;
     return matchesSearch && matchesCategory;
   });
 
@@ -98,7 +105,9 @@ export function AppConfigPage() {
       {/* Page Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">App Configuration</h1>
+          <h1 className="text-2xl font-bold text-gray-900">
+            App Configuration
+          </h1>
           <p className="text-gray-500 mt-1">
             Manage system-wide application settings
           </p>
@@ -160,10 +169,12 @@ export function AppConfigPage() {
           return (
             <Card key={config.id} padding="md">
               <div className="flex items-start gap-4">
-                <div className={cn(
-                  "flex h-10 w-10 items-center justify-center rounded-xl flex-shrink-0",
-                  colors.bg
-                )}>
+                <div
+                  className={cn(
+                    "flex h-10 w-10 items-center justify-center rounded-xl flex-shrink-0",
+                    colors.bg,
+                  )}
+                >
                   <Icon className={cn("h-5 w-5", colors.text)} />
                 </div>
 
@@ -177,14 +188,18 @@ export function AppConfigPage() {
                     </Badge>
                   </div>
 
-                  <p className="text-sm text-gray-500 mb-3">{config.description}</p>
+                  <p className="text-sm text-gray-500 mb-3">
+                    {config.description}
+                  </p>
 
                   {isEditing ? (
                     <div className="flex items-center gap-2">
                       {isBoolean ? (
                         <Toggle
                           checked={editValue === "true"}
-                          onChange={(checked) => setEditValue(checked ? "true" : "false")}
+                          onChange={(checked) =>
+                            setEditValue(checked ? "true" : "false")
+                          }
                           label={editValue === "true" ? "Enabled" : "Disabled"}
                         />
                       ) : (
@@ -215,11 +230,17 @@ export function AppConfigPage() {
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2">
                         {isBoolean ? (
-                          <Badge variant={config.value === "true" ? "success" : "default"}>
+                          <Badge
+                            variant={
+                              config.value === "true" ? "success" : "default"
+                            }
+                          >
                             {config.value === "true" ? "Enabled" : "Disabled"}
                           </Badge>
                         ) : (
-                          <span className="font-medium text-gray-900">{config.value}</span>
+                          <span className="font-medium text-gray-900">
+                            {config.value}
+                          </span>
                         )}
                       </div>
                       <Button
@@ -263,8 +284,9 @@ export function AppConfigPage() {
           <div>
             <p className="font-medium text-info-dark">Configuration Changes</p>
             <p className="text-sm text-gray-600 mt-1">
-              Changes to configuration settings are logged in the audit trail and may require
-              application restart to take effect. Critical security settings require 2FA verification.
+              Changes to configuration settings are logged in the audit trail
+              and may require application restart to take effect. Critical
+              security settings require 2FA verification.
             </p>
           </div>
         </div>

@@ -22,7 +22,7 @@ import {
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/Card";
 import Button from "@/components/ui/Button";
 import Input from "@/components/ui/Input";
-import Badge from "@/components/ui/Badge";
+import { Badge } from "@/components/ui/Badge";
 import { useDataStore } from "@/stores/dataStore";
 import { cn } from "@/utils/cn";
 import { formatDate, formatRelativeTime } from "@/utils/format";
@@ -33,7 +33,13 @@ export function SessionsPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [filterActive, setFilterActive] = useState<boolean | null>(null);
 
-  const { sessions, isLoading, isActionLoading, fetchSessions, terminateSession } = useDataStore();
+  const {
+    sessions,
+    isLoading,
+    isActionLoading,
+    fetchSessions,
+    terminateSession,
+  } = useDataStore();
 
   useEffect(() => {
     fetchSessions();
@@ -50,7 +56,9 @@ export function SessionsPage() {
   });
 
   const activeSessions = sessions.filter((s) => s.isActive);
-  const officerSessions = sessions.filter((s) => s.userRole === "OFFICER" || s.userRole === "SUPER_ADMIN");
+  const officerSessions = sessions.filter(
+    (s) => s.userRole === "OFFICER" || s.userRole === "SUPER_ADMIN",
+  );
 
   const handleTerminate = async (id: string) => {
     await terminateSession(id);
@@ -113,7 +121,9 @@ export function SessionsPage() {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm text-gray-500">Total Sessions</p>
-              <p className="text-2xl font-bold text-gray-900 mt-1">{sessions.length}</p>
+              <p className="text-2xl font-bold text-gray-900 mt-1">
+                {sessions.length}
+              </p>
             </div>
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gray-100 text-gray-600">
               <Users className="h-5 w-5" />
@@ -125,7 +135,9 @@ export function SessionsPage() {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm text-gray-500">Active Now</p>
-              <p className="text-2xl font-bold text-success mt-1">{activeSessions.length}</p>
+              <p className="text-2xl font-bold text-success mt-1">
+                {activeSessions.length}
+              </p>
             </div>
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-success/10 text-success">
               <Activity className="h-5 w-5" />
@@ -137,7 +149,9 @@ export function SessionsPage() {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm text-gray-500">Officer Sessions</p>
-              <p className="text-2xl font-bold text-primary-600 mt-1">{officerSessions.length}</p>
+              <p className="text-2xl font-bold text-primary-600 mt-1">
+                {officerSessions.length}
+              </p>
             </div>
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary-100 text-primary-600">
               <Shield className="h-5 w-5" />
@@ -208,16 +222,22 @@ export function SessionsPage() {
           return (
             <Card key={session.id} padding="none">
               <div className="p-4 flex items-center gap-4">
-                <div className={cn(
-                  "flex h-12 w-12 items-center justify-center rounded-xl flex-shrink-0",
-                  session.isActive ? "bg-success/10 text-success" : "bg-gray-100 text-gray-400"
-                )}>
+                <div
+                  className={cn(
+                    "flex h-12 w-12 items-center justify-center rounded-xl flex-shrink-0",
+                    session.isActive
+                      ? "bg-success/10 text-success"
+                      : "bg-gray-100 text-gray-400",
+                  )}
+                >
                   <DeviceIcon className="h-6 w-6" />
                 </div>
 
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 mb-1">
-                    <span className="font-semibold text-gray-900">{session.userName}</span>
+                    <span className="font-semibold text-gray-900">
+                      {session.userName}
+                    </span>
                     <Badge variant={getRoleColor(session.userRole) as any}>
                       {session.userRole}
                     </Badge>
@@ -263,7 +283,9 @@ export function SessionsPage() {
 
               {/* Device Info */}
               <div className="px-4 py-2 bg-gray-50 border-t border-gray-100 text-xs text-gray-500">
-                <span className="font-mono">{session.userAgent.substring(0, 80)}...</span>
+                <span className="font-mono">
+                  {session.userAgent.substring(0, 80)}...
+                </span>
               </div>
             </Card>
           );
@@ -284,8 +306,9 @@ export function SessionsPage() {
           <div>
             <p className="font-medium text-warning-dark">Session Security</p>
             <p className="text-sm text-gray-600 mt-1">
-              Terminating a session will immediately log out the user. This action is logged
-              in the audit trail. Consider notifying users before terminating their sessions.
+              Terminating a session will immediately log out the user. This
+              action is logged in the audit trail. Consider notifying users
+              before terminating their sessions.
             </p>
           </div>
         </div>

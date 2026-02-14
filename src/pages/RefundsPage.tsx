@@ -21,10 +21,10 @@ import {
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/Card";
 import Button from "@/components/ui/Button";
 import Input from "@/components/ui/Input";
-import Badge from "@/components/ui/Badge";
+import { Badge } from "@/components/ui/Badge";
 import { useDataStore } from "@/stores/dataStore";
 import { cn } from "@/utils/cn";
-import { formatCurrency, formatDate } from "@/utils/format";
+import { formatNaira, formatDate } from "@/utils/format";
 import Loader from "@/components/ui/Loader";
 import type { RequestStatus } from "@/data/mockDatabase";
 
@@ -57,7 +57,9 @@ export function RefundsPage() {
   const totalPending = refundRequests
     .filter((r) => r.status === "PENDING")
     .reduce((sum, r) => sum + r.amount, 0);
-  const pendingCount = refundRequests.filter((r) => r.status === "PENDING").length;
+  const pendingCount = refundRequests.filter(
+    (r) => r.status === "PENDING",
+  ).length;
   const totalProcessed = refundRequests
     .filter((r) => r.status === "APPROVED")
     .reduce((sum, r) => sum + r.amount, 0);
@@ -75,7 +77,9 @@ export function RefundsPage() {
       {/* Page Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Refund Management</h1>
+          <h1 className="text-2xl font-bold text-gray-900">
+            Refund Management
+          </h1>
           <p className="text-gray-500 mt-1">
             Process and track refund requests from disputes
           </p>
@@ -95,7 +99,9 @@ export function RefundsPage() {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm text-gray-500">Total Requests</p>
-              <p className="text-2xl font-bold text-gray-900 mt-1">{refundRequests.length}</p>
+              <p className="text-2xl font-bold text-gray-900 mt-1">
+                {refundRequests.length}
+              </p>
             </div>
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gray-100 text-gray-600">
               <RotateCcw className="h-5 w-5" />
@@ -108,7 +114,7 @@ export function RefundsPage() {
             <div>
               <p className="text-sm text-gray-500">Pending ({pendingCount})</p>
               <p className="text-2xl font-bold text-warning mt-1">
-                {formatCurrency(totalPending)}
+                {formatNaira(totalPending)}
               </p>
             </div>
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-warning/10 text-warning">
@@ -122,7 +128,7 @@ export function RefundsPage() {
             <div>
               <p className="text-sm text-gray-500">Total Refunded</p>
               <p className="text-2xl font-bold text-success mt-1">
-                {formatCurrency(totalProcessed)}
+                {formatNaira(totalProcessed)}
               </p>
             </div>
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-success/10 text-success">
@@ -165,21 +171,23 @@ export function RefundsPage() {
           >
             All
           </Button>
-          {(["PENDING", "APPROVED", "REJECTED"] as RequestStatus[]).map((status) => {
-            const config = STATUS_CONFIG[status];
-            const Icon = config.icon;
-            return (
-              <Button
-                key={status}
-                variant={statusFilter === status ? "primary" : "outline"}
-                size="sm"
-                onClick={() => setStatusFilter(status)}
-                leftIcon={<Icon className="h-4 w-4" />}
-              >
-                {config.label}
-              </Button>
-            );
-          })}
+          {(["PENDING", "APPROVED", "REJECTED"] as RequestStatus[]).map(
+            (status) => {
+              const config = STATUS_CONFIG[status];
+              const Icon = config.icon;
+              return (
+                <Button
+                  key={status}
+                  variant={statusFilter === status ? "primary" : "outline"}
+                  size="sm"
+                  onClick={() => setStatusFilter(status)}
+                  leftIcon={<Icon className="h-4 w-4" />}
+                >
+                  {config.label}
+                </Button>
+              );
+            },
+          )}
         </div>
       </div>
 
@@ -194,31 +202,40 @@ export function RefundsPage() {
               <div className="p-6">
                 <div className="flex items-start justify-between gap-4">
                   <div className="flex items-start gap-4 flex-1">
-                    <div className={cn(
-                      "flex h-12 w-12 items-center justify-center rounded-xl flex-shrink-0",
-                      request.status === "PENDING" ? "bg-warning/10 text-warning" :
-                      request.status === "APPROVED" ? "bg-success/10 text-success" :
-                      request.status === "REJECTED" ? "bg-error/10 text-error" :
-                      "bg-gray-100 text-gray-400"
-                    )}>
+                    <div
+                      className={cn(
+                        "flex h-12 w-12 items-center justify-center rounded-xl flex-shrink-0",
+                        request.status === "PENDING"
+                          ? "bg-warning/10 text-warning"
+                          : request.status === "APPROVED"
+                            ? "bg-success/10 text-success"
+                            : request.status === "REJECTED"
+                              ? "bg-error/10 text-error"
+                              : "bg-gray-100 text-gray-400",
+                      )}
+                    >
                       <RotateCcw className="h-6 w-6" />
                     </div>
 
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-3 mb-2">
-                        <span className="font-semibold text-gray-900">{request.userName}</span>
+                        <span className="font-semibold text-gray-900">
+                          {request.userName}
+                        </span>
                         <Badge variant={statusConfig.color as any}>
                           {statusConfig.label}
                         </Badge>
                       </div>
 
                       <p className="text-2xl font-bold text-gray-900 mb-3">
-                        {formatCurrency(request.amount)}
+                        {formatNaira(request.amount)}
                       </p>
 
                       <div className="p-3 bg-gray-50 rounded-lg mb-3">
                         <p className="text-sm text-gray-600">
-                          <span className="font-medium text-gray-700">Reason: </span>
+                          <span className="font-medium text-gray-700">
+                            Reason:{" "}
+                          </span>
                           {request.reason}
                         </p>
                       </div>
@@ -273,7 +290,8 @@ export function RefundsPage() {
                 </div>
                 {request.processedAt && (
                   <div>
-                    Processed: {formatDate(request.processedAt)} by {request.processedBy}
+                    Processed: {formatDate(request.processedAt)} by{" "}
+                    {request.processedBy}
                   </div>
                 )}
               </div>
@@ -296,9 +314,10 @@ export function RefundsPage() {
           <div>
             <p className="font-medium text-info-dark">Refund Policy</p>
             <p className="text-sm text-gray-600 mt-1">
-              Refunds are processed from escrow accounts linked to resolved disputes.
-              Ensure the dispute resolution supports the refund before approval.
-              All refund actions require 2FA verification for amounts over NGN 500,000.
+              Refunds are processed from escrow accounts linked to resolved
+              disputes. Ensure the dispute resolution supports the refund before
+              approval. All refund actions require 2FA verification for amounts
+              over NGN 500,000.
             </p>
           </div>
         </div>

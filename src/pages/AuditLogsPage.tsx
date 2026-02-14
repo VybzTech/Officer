@@ -18,7 +18,7 @@ import {
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/Card";
 import Button from "@/components/ui/Button";
 import Input from "@/components/ui/Input";
-import Badge from "@/components/ui/Badge";
+import { Badge } from "@/components/ui/Badge";
 import { useDataStore } from "@/stores/dataStore";
 import { cn } from "@/utils/cn";
 import { formatDate } from "@/utils/format";
@@ -73,10 +73,7 @@ export function AuditLogsPage() {
           </p>
         </div>
         <div className="flex gap-2">
-          <Button
-            variant="outline"
-            leftIcon={<Download className="h-4 w-4" />}
-          >
+          <Button variant="outline" leftIcon={<Download className="h-4 w-4" />}>
             Export
           </Button>
           <Button
@@ -95,7 +92,9 @@ export function AuditLogsPage() {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm text-gray-500">Total Actions</p>
-              <p className="text-2xl font-bold text-gray-900 mt-1">{auditLogs.length}</p>
+              <p className="text-2xl font-bold text-gray-900 mt-1">
+                {auditLogs.length}
+              </p>
             </div>
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gray-100 text-gray-600">
               <Shield className="h-5 w-5" />
@@ -122,9 +121,13 @@ export function AuditLogsPage() {
             <div>
               <p className="text-sm text-gray-500">Today's Actions</p>
               <p className="text-2xl font-bold text-success mt-1">
-                {auditLogs.filter((l) =>
-                  new Date(l.timestamp).toDateString() === new Date().toDateString()
-                ).length}
+                {
+                  auditLogs.filter(
+                    (l) =>
+                      new Date(l.timestamp).toDateString() ===
+                      new Date().toDateString(),
+                  ).length
+                }
               </p>
             </div>
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-success/10 text-success">
@@ -177,8 +180,12 @@ export function AuditLogsPage() {
 
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-3 mb-1">
-                  <span className="font-semibold text-gray-900">{log.officerName}</span>
-                  <Badge variant={ACTION_COLORS[log.action] as any || "default"}>
+                  <span className="font-semibold text-gray-900">
+                    {log.officerName}
+                  </span>
+                  <Badge
+                    variant={(ACTION_COLORS[log.action] as any) || "default"}
+                  >
                     {log.action.replace(/_/g, " ")}
                   </Badge>
                 </div>
@@ -207,7 +214,11 @@ export function AuditLogsPage() {
                 )}
               </div>
 
-              <Button size="sm" variant="ghost" leftIcon={<Eye className="h-4 w-4" />}>
+              <Button
+                size="sm"
+                variant="ghost"
+                leftIcon={<Eye className="h-4 w-4" />}
+              >
                 View
               </Button>
             </div>

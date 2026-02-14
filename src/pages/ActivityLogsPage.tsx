@@ -24,7 +24,7 @@ import {
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/Card";
 import Button from "@/components/ui/Button";
 import Input from "@/components/ui/Input";
-import Badge from "@/components/ui/Badge";
+import { Badge } from "@/components/ui/Badge";
 import { useDataStore } from "@/stores/dataStore";
 import { cn } from "@/utils/cn";
 import { formatDate, formatRelativeTime } from "@/utils/format";
@@ -71,8 +71,12 @@ export function ActivityLogsPage() {
     return matchesSearch && matchesAction && matchesStatus;
   });
 
-  const successCount = activityLogs.filter((l) => l.status === "SUCCESS").length;
-  const failureCount = activityLogs.filter((l) => l.status === "FAILURE").length;
+  const successCount = activityLogs.filter(
+    (l) => l.status === "SUCCESS",
+  ).length;
+  const failureCount = activityLogs.filter(
+    (l) => l.status === "FAILURE",
+  ).length;
 
   if (isLoading.activityLogs) {
     return (
@@ -93,10 +97,7 @@ export function ActivityLogsPage() {
           </p>
         </div>
         <div className="flex gap-2">
-          <Button
-            variant="outline"
-            leftIcon={<Download className="h-4 w-4" />}
-          >
+          <Button variant="outline" leftIcon={<Download className="h-4 w-4" />}>
             Export
           </Button>
           <Button
@@ -115,7 +116,9 @@ export function ActivityLogsPage() {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm text-gray-500">Total Activities</p>
-              <p className="text-2xl font-bold text-gray-900 mt-1">{activityLogs.length}</p>
+              <p className="text-2xl font-bold text-gray-900 mt-1">
+                {activityLogs.length}
+              </p>
             </div>
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gray-100 text-gray-600">
               <Activity className="h-5 w-5" />
@@ -141,7 +144,9 @@ export function ActivityLogsPage() {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm text-gray-500">Successful</p>
-              <p className="text-2xl font-bold text-success mt-1">{successCount}</p>
+              <p className="text-2xl font-bold text-success mt-1">
+                {successCount}
+              </p>
             </div>
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-success/10 text-success">
               <CheckCircle2 className="h-5 w-5" />
@@ -153,7 +158,9 @@ export function ActivityLogsPage() {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm text-gray-500">Failed</p>
-              <p className="text-2xl font-bold text-error mt-1">{failureCount}</p>
+              <p className="text-2xl font-bold text-error mt-1">
+                {failureCount}
+              </p>
             </div>
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-error/10 text-error">
               <XCircle className="h-5 w-5" />
@@ -231,26 +238,46 @@ export function ActivityLogsPage() {
           <table className="w-full">
             <thead>
               <tr className="border-b border-gray-200 bg-gray-50">
-                <th className="text-left py-3 px-4 font-medium text-gray-500 text-sm">Time</th>
-                <th className="text-left py-3 px-4 font-medium text-gray-500 text-sm">User</th>
-                <th className="text-left py-3 px-4 font-medium text-gray-500 text-sm">Action</th>
-                <th className="text-left py-3 px-4 font-medium text-gray-500 text-sm">Resource</th>
-                <th className="text-center py-3 px-4 font-medium text-gray-500 text-sm">Status</th>
-                <th className="text-left py-3 px-4 font-medium text-gray-500 text-sm">IP Address</th>
+                <th className="text-left py-3 px-4 font-medium text-gray-500 text-sm">
+                  Time
+                </th>
+                <th className="text-left py-3 px-4 font-medium text-gray-500 text-sm">
+                  User
+                </th>
+                <th className="text-left py-3 px-4 font-medium text-gray-500 text-sm">
+                  Action
+                </th>
+                <th className="text-left py-3 px-4 font-medium text-gray-500 text-sm">
+                  Resource
+                </th>
+                <th className="text-center py-3 px-4 font-medium text-gray-500 text-sm">
+                  Status
+                </th>
+                <th className="text-left py-3 px-4 font-medium text-gray-500 text-sm">
+                  IP Address
+                </th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-100">
               {filteredLogs.slice(0, 50).map((log) => {
                 const ActionIcon = ACTION_ICONS[log.action] || Activity;
                 return (
-                  <tr key={log.id} className="hover:bg-gray-50 transition-colors">
+                  <tr
+                    key={log.id}
+                    className="hover:bg-gray-50 transition-colors"
+                  >
                     <td className="py-3 px-4 text-sm text-gray-500">
                       {formatRelativeTime(log.timestamp)}
                     </td>
                     <td className="py-3 px-4">
                       <div className="flex items-center gap-2">
-                        <span className="text-sm font-medium text-gray-900">{log.userName}</span>
-                        <Badge variant={ROLE_COLORS[log.userRole] as any} className="text-xs">
+                        <span className="text-sm font-medium text-gray-900">
+                          {log.userName}
+                        </span>
+                        <Badge
+                          variant={ROLE_COLORS[log.userRole] as any}
+                          className="text-xs"
+                        >
                           {log.userRole}
                         </Badge>
                       </div>
@@ -258,17 +285,23 @@ export function ActivityLogsPage() {
                     <td className="py-3 px-4">
                       <div className="flex items-center gap-2">
                         <ActionIcon className="h-4 w-4 text-gray-400" />
-                        <span className="text-sm">{log.action.replace(/_/g, " ")}</span>
+                        <span className="text-sm">
+                          {log.action.replace(/_/g, " ")}
+                        </span>
                       </div>
                     </td>
                     <td className="py-3 px-4 text-sm text-gray-600">
                       {log.resource}
                       {log.resourceId && (
-                        <span className="text-gray-400 ml-1">({log.resourceId})</span>
+                        <span className="text-gray-400 ml-1">
+                          ({log.resourceId})
+                        </span>
                       )}
                     </td>
                     <td className="py-3 px-4 text-center">
-                      <Badge variant={log.status === "SUCCESS" ? "success" : "error"}>
+                      <Badge
+                        variant={log.status === "SUCCESS" ? "success" : "error"}
+                      >
                         {log.status}
                       </Badge>
                     </td>

@@ -23,11 +23,11 @@ import {
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/Card";
 import Button from "@/components/ui/Button";
 import Input from "@/components/ui/Input";
-import Badge from "@/components/ui/Badge";
+import { Badge } from "@/components/ui/Badge";
 import { useDataStore } from "@/stores/dataStore";
 import { useAuthStore } from "@/stores/auth.store";
 import { cn } from "@/utils/cn";
-import { formatCurrency, formatDate } from "@/utils/format";
+import { formatNaira, formatDate } from "@/utils/format";
 import Loader from "@/components/ui/Loader";
 import type { RequestStatus, SubscriptionTier } from "@/data/mockDatabase";
 
@@ -54,7 +54,14 @@ export function UpgradesPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState<RequestStatus | null>(null);
 
-  const { subscriptionUpgrades, isLoading, isActionLoading, fetchSubscriptionUpgrades, approveUpgrade, rejectUpgrade } = useDataStore();
+  const {
+    subscriptionUpgrades,
+    isLoading,
+    isActionLoading,
+    fetchSubscriptionUpgrades,
+    approveUpgrade,
+    rejectUpgrade,
+  } = useDataStore();
   const { officer } = useAuthStore();
 
   useEffect(() => {
@@ -69,7 +76,9 @@ export function UpgradesPage() {
     return matchesSearch && matchesStatus;
   });
 
-  const pendingCount = subscriptionUpgrades.filter((u) => u.status === "PENDING").length;
+  const pendingCount = subscriptionUpgrades.filter(
+    (u) => u.status === "PENDING",
+  ).length;
   const totalRevenue = subscriptionUpgrades
     .filter((u) => u.status === "APPROVED")
     .reduce((sum, u) => sum + u.amount, 0);
@@ -102,7 +111,9 @@ export function UpgradesPage() {
       {/* Page Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Subscription Upgrades</h1>
+          <h1 className="text-2xl font-bold text-gray-900">
+            Subscription Upgrades
+          </h1>
           <p className="text-gray-500 mt-1">
             Review and approve subscription tier upgrade requests
           </p>
@@ -122,7 +133,9 @@ export function UpgradesPage() {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm text-gray-500">Total Requests</p>
-              <p className="text-2xl font-bold text-gray-900 mt-1">{subscriptionUpgrades.length}</p>
+              <p className="text-2xl font-bold text-gray-900 mt-1">
+                {subscriptionUpgrades.length}
+              </p>
             </div>
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gray-100 text-gray-600">
               <TrendingUp className="h-5 w-5" />
@@ -134,7 +147,9 @@ export function UpgradesPage() {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm text-gray-500">Pending</p>
-              <p className="text-2xl font-bold text-warning mt-1">{pendingCount}</p>
+              <p className="text-2xl font-bold text-warning mt-1">
+                {pendingCount}
+              </p>
             </div>
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-warning/10 text-warning">
               <Clock className="h-5 w-5" />
@@ -147,7 +162,7 @@ export function UpgradesPage() {
             <div>
               <p className="text-sm text-gray-500">Approved Revenue</p>
               <p className="text-2xl font-bold text-success mt-1">
-                {formatCurrency(totalRevenue)}
+                {formatNaira(totalRevenue)}
               </p>
             </div>
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-success/10 text-success">
@@ -161,7 +176,7 @@ export function UpgradesPage() {
             <div>
               <p className="text-sm text-gray-500">Pending Revenue</p>
               <p className="text-2xl font-bold text-primary-600 mt-1">
-                {formatCurrency(pendingRevenue)}
+                {formatNaira(pendingRevenue)}
               </p>
             </div>
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary-100 text-primary-600">
@@ -190,21 +205,23 @@ export function UpgradesPage() {
           >
             All
           </Button>
-          {(["PENDING", "APPROVED", "REJECTED"] as RequestStatus[]).map((status) => {
-            const config = STATUS_CONFIG[status];
-            const Icon = config.icon;
-            return (
-              <Button
-                key={status}
-                variant={statusFilter === status ? "primary" : "outline"}
-                size="sm"
-                onClick={() => setStatusFilter(status)}
-                leftIcon={<Icon className="h-4 w-4" />}
-              >
-                {config.label}
-              </Button>
-            );
-          })}
+          {(["PENDING", "APPROVED", "REJECTED"] as RequestStatus[]).map(
+            (status) => {
+              const config = STATUS_CONFIG[status];
+              const Icon = config.icon;
+              return (
+                <Button
+                  key={status}
+                  variant={statusFilter === status ? "primary" : "outline"}
+                  size="sm"
+                  onClick={() => setStatusFilter(status)}
+                  leftIcon={<Icon className="h-4 w-4" />}
+                >
+                  {config.label}
+                </Button>
+              );
+            },
+          )}
         </div>
       </div>
 
@@ -221,47 +238,65 @@ export function UpgradesPage() {
               <div className="p-6">
                 <div className="flex items-start justify-between gap-4">
                   <div className="flex items-start gap-4 flex-1">
-                    <div className={cn(
-                      "flex h-12 w-12 items-center justify-center rounded-xl flex-shrink-0",
-                      upgrade.status === "PENDING" ? "bg-warning/10 text-warning" :
-                      upgrade.status === "APPROVED" ? "bg-success/10 text-success" :
-                      "bg-gray-100 text-gray-400"
-                    )}>
+                    <div
+                      className={cn(
+                        "flex h-12 w-12 items-center justify-center rounded-xl flex-shrink-0",
+                        upgrade.status === "PENDING"
+                          ? "bg-warning/10 text-warning"
+                          : upgrade.status === "APPROVED"
+                            ? "bg-success/10 text-success"
+                            : "bg-gray-100 text-gray-400",
+                      )}
+                    >
                       <TrendingUp className="h-6 w-6" />
                     </div>
 
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-3 mb-2">
-                        <span className="font-semibold text-gray-900">{upgrade.userName}</span>
+                        <span className="font-semibold text-gray-900">
+                          {upgrade.userName}
+                        </span>
                         <Badge variant={statusConfig.color as any}>
                           {statusConfig.label}
                         </Badge>
                       </div>
 
-                      <p className="text-sm text-gray-500 mb-3">{upgrade.userEmail}</p>
+                      <p className="text-sm text-gray-500 mb-3">
+                        {upgrade.userEmail}
+                      </p>
 
                       {/* Tier Transition */}
                       <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg mb-3">
                         <div className="flex items-center gap-2">
-                          <div className={cn(
-                            "flex h-8 w-8 items-center justify-center rounded-lg",
-                            upgrade.currentTier === "FREE" ? "bg-gray-100 text-gray-600" :
-                            "bg-primary-100 text-primary-600"
-                          )}>
+                          <div
+                            className={cn(
+                              "flex h-8 w-8 items-center justify-center rounded-lg",
+                              upgrade.currentTier === "FREE"
+                                ? "bg-gray-100 text-gray-600"
+                                : "bg-primary-100 text-primary-600",
+                            )}
+                          >
                             <CurrentIcon className="h-4 w-4" />
                           </div>
-                          <span className="font-medium text-gray-700">{upgrade.currentTier}</span>
+                          <span className="font-medium text-gray-700">
+                            {upgrade.currentTier}
+                          </span>
                         </div>
                         <ArrowRight className="h-5 w-5 text-gray-400" />
                         <div className="flex items-center gap-2">
-                          <div className={cn(
-                            "flex h-8 w-8 items-center justify-center rounded-lg",
-                            upgrade.requestedTier === "PRO" ? "bg-primary-100 text-primary-600" :
-                            "bg-gradient-to-br from-primary-500 to-primary-600 text-white"
-                          )}>
+                          <div
+                            className={cn(
+                              "flex h-8 w-8 items-center justify-center rounded-lg",
+                              upgrade.requestedTier === "PRO"
+                                ? "bg-primary-100 text-primary-600"
+                                : "bg-gradient-to-br from-primary-500 to-primary-600 text-white",
+                            )}
+                          >
                             <RequestedIcon className="h-4 w-4" />
                           </div>
-                          <span className="font-medium text-gray-700">{upgrade.requestedTier}</span>
+                          <span className="font-medium text-gray-700">
+                            {upgrade.requestedTier}
+                          </span>
                         </div>
                       </div>
 
@@ -269,7 +304,7 @@ export function UpgradesPage() {
                         <div className="flex items-center gap-1 text-gray-500">
                           <CreditCard className="h-4 w-4" />
                           <span className="font-semibold text-gray-900">
-                            {formatCurrency(upgrade.amount)}
+                            {formatNaira(upgrade.amount)}
                           </span>
                         </div>
                         {upgrade.paymentReference && (
@@ -325,7 +360,8 @@ export function UpgradesPage() {
                 </div>
                 {upgrade.reviewedAt && (
                   <div>
-                    Reviewed: {formatDate(upgrade.reviewedAt)} by {upgrade.reviewedBy}
+                    Reviewed: {formatDate(upgrade.reviewedAt)} by{" "}
+                    {upgrade.reviewedBy}
                   </div>
                 )}
               </div>
@@ -348,8 +384,9 @@ export function UpgradesPage() {
           <div>
             <p className="font-medium text-info-dark">Upgrade Verification</p>
             <p className="text-sm text-gray-600 mt-1">
-              Ensure payment has been verified before approving upgrades. Check the payment
-              reference against the payment gateway records. Approved upgrades take effect immediately.
+              Ensure payment has been verified before approving upgrades. Check
+              the payment reference against the payment gateway records.
+              Approved upgrades take effect immediately.
             </p>
           </div>
         </div>

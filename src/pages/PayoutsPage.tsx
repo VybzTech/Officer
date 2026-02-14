@@ -20,11 +20,11 @@ import {
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/Card";
 import Button from "@/components/ui/Button";
 import Input from "@/components/ui/Input";
-import Badge from "@/components/ui/Badge";
+import { Badge } from "@/components/ui/Badge";
 import { useDataStore } from "@/stores/dataStore";
 import { useAuthStore } from "@/stores/auth.store";
 import { cn } from "@/utils/cn";
-import { formatCurrency, formatDate } from "@/utils/format";
+import { formatNaira, formatDate } from "@/utils/format";
 import Loader from "@/components/ui/Loader";
 import type { RequestStatus } from "@/data/mockDatabase";
 
@@ -39,7 +39,14 @@ export function PayoutsPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState<RequestStatus | null>(null);
 
-  const { payoutRequests, isLoading, isActionLoading, fetchPayoutRequests, approvePayout, rejectPayout } = useDataStore();
+  const {
+    payoutRequests,
+    isLoading,
+    isActionLoading,
+    fetchPayoutRequests,
+    approvePayout,
+    rejectPayout,
+  } = useDataStore();
   const { officer } = useAuthStore();
 
   useEffect(() => {
@@ -58,7 +65,9 @@ export function PayoutsPage() {
   const totalPending = payoutRequests
     .filter((p) => p.status === "PENDING")
     .reduce((sum, p) => sum + p.amount, 0);
-  const pendingCount = payoutRequests.filter((p) => p.status === "PENDING").length;
+  const pendingCount = payoutRequests.filter(
+    (p) => p.status === "PENDING",
+  ).length;
   const totalApproved = payoutRequests
     .filter((p) => p.status === "APPROVED")
     .reduce((sum, p) => sum + p.amount, 0);
@@ -108,7 +117,9 @@ export function PayoutsPage() {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm text-gray-500">Total Requests</p>
-              <p className="text-2xl font-bold text-gray-900 mt-1">{payoutRequests.length}</p>
+              <p className="text-2xl font-bold text-gray-900 mt-1">
+                {payoutRequests.length}
+              </p>
             </div>
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gray-100 text-gray-600">
               <Banknote className="h-5 w-5" />
@@ -121,7 +132,7 @@ export function PayoutsPage() {
             <div>
               <p className="text-sm text-gray-500">Pending ({pendingCount})</p>
               <p className="text-2xl font-bold text-warning mt-1">
-                {formatCurrency(totalPending)}
+                {formatNaira(totalPending)}
               </p>
             </div>
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-warning/10 text-warning">
@@ -135,7 +146,7 @@ export function PayoutsPage() {
             <div>
               <p className="text-sm text-gray-500">Total Approved</p>
               <p className="text-2xl font-bold text-success mt-1">
-                {formatCurrency(totalApproved)}
+                {formatNaira(totalApproved)}
               </p>
             </div>
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-success/10 text-success">
@@ -178,21 +189,23 @@ export function PayoutsPage() {
           >
             All
           </Button>
-          {(["PENDING", "APPROVED", "REJECTED"] as RequestStatus[]).map((status) => {
-            const config = STATUS_CONFIG[status];
-            const Icon = config.icon;
-            return (
-              <Button
-                key={status}
-                variant={statusFilter === status ? "primary" : "outline"}
-                size="sm"
-                onClick={() => setStatusFilter(status)}
-                leftIcon={<Icon className="h-4 w-4" />}
-              >
-                {config.label}
-              </Button>
-            );
-          })}
+          {(["PENDING", "APPROVED", "REJECTED"] as RequestStatus[]).map(
+            (status) => {
+              const config = STATUS_CONFIG[status];
+              const Icon = config.icon;
+              return (
+                <Button
+                  key={status}
+                  variant={statusFilter === status ? "primary" : "outline"}
+                  size="sm"
+                  onClick={() => setStatusFilter(status)}
+                  leftIcon={<Icon className="h-4 w-4" />}
+                >
+                  {config.label}
+                </Button>
+              );
+            },
+          )}
         </div>
       </div>
 
@@ -208,35 +221,45 @@ export function PayoutsPage() {
               <div className="p-6">
                 <div className="flex items-start justify-between gap-4">
                   <div className="flex items-start gap-4 flex-1">
-                    <div className={cn(
-                      "flex h-12 w-12 items-center justify-center rounded-xl flex-shrink-0",
-                      request.status === "PENDING" ? "bg-warning/10 text-warning" :
-                      request.status === "APPROVED" ? "bg-success/10 text-success" :
-                      "bg-gray-100 text-gray-400"
-                    )}>
+                    <div
+                      className={cn(
+                        "flex h-12 w-12 items-center justify-center rounded-xl flex-shrink-0",
+                        request.status === "PENDING"
+                          ? "bg-warning/10 text-warning"
+                          : request.status === "APPROVED"
+                            ? "bg-success/10 text-success"
+                            : "bg-gray-100 text-gray-400",
+                      )}
+                    >
                       <Banknote className="h-6 w-6" />
                     </div>
 
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-3 mb-2">
-                        <span className="font-semibold text-gray-900">{request.userName}</span>
+                        <span className="font-semibold text-gray-900">
+                          {request.userName}
+                        </span>
                         <Badge variant={statusConfig.color as any}>
                           {statusConfig.label}
                         </Badge>
                       </div>
 
                       <p className="text-2xl font-bold text-gray-900 mb-3">
-                        {formatCurrency(request.amount)}
+                        {formatNaira(request.amount)}
                       </p>
 
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
                         <div className="flex items-center gap-2 text-gray-600">
                           <Building2 className="h-4 w-4 text-gray-400" />
-                          <span className="font-medium">{request.bankName}</span>
+                          <span className="font-medium">
+                            {request.bankName}
+                          </span>
                         </div>
                         <div className="flex items-center gap-2 text-gray-600">
                           <CreditCard className="h-4 w-4 text-gray-400" />
-                          <span className="font-mono">{request.accountNumber}</span>
+                          <span className="font-mono">
+                            {request.accountNumber}
+                          </span>
                         </div>
                       </div>
                     </div>
@@ -283,7 +306,8 @@ export function PayoutsPage() {
                 </div>
                 {request.processedAt && (
                   <div>
-                    Processed: {formatDate(request.processedAt)} by {request.approvedBy}
+                    Processed: {formatDate(request.processedAt)} by{" "}
+                    {request.approvedBy}
                   </div>
                 )}
               </div>
@@ -306,8 +330,9 @@ export function PayoutsPage() {
           <div>
             <p className="font-medium text-warning-dark">Payout Processing</p>
             <p className="text-sm text-gray-600 mt-1">
-              Approved payouts are processed within 24-48 hours. Ensure bank details are verified
-              before approval. All payout actions are logged in the audit trail.
+              Approved payouts are processed within 24-48 hours. Ensure bank
+              details are verified before approval. All payout actions are
+              logged in the audit trail.
             </p>
           </div>
         </div>

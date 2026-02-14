@@ -24,10 +24,10 @@ import {
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/Card";
 import Button from "@/components/ui/Button";
 import Input from "@/components/ui/Input";
-import Badge from "@/components/ui/Badge";
+import { Badge } from "@/components/ui/Badge";
 import { useDataStore } from "@/stores/dataStore";
 import { cn } from "@/utils/cn";
-import { formatCurrency, formatDate } from "@/utils/format";
+import { formatNaira, formatDate } from "@/utils/format";
 import Loader from "@/components/ui/Loader";
 import type { Transaction, TransactionType } from "@/data/mockDatabase";
 
@@ -70,9 +70,13 @@ export function TransactionsPage() {
     .filter((t) => t.status === "SUCCESS")
     .reduce((sum, t) => sum + t.amount, 0);
   const successRate = Math.round(
-    (transactions.filter((t) => t.status === "SUCCESS").length / transactions.length) * 100
+    (transactions.filter((t) => t.status === "SUCCESS").length /
+      transactions.length) *
+      100,
   );
-  const pendingCount = transactions.filter((t) => t.status === "PENDING").length;
+  const pendingCount = transactions.filter(
+    (t) => t.status === "PENDING",
+  ).length;
 
   if (isLoading.transactions) {
     return (
@@ -93,10 +97,7 @@ export function TransactionsPage() {
           </p>
         </div>
         <div className="flex gap-2">
-          <Button
-            variant="outline"
-            leftIcon={<Download className="h-4 w-4" />}
-          >
+          <Button variant="outline" leftIcon={<Download className="h-4 w-4" />}>
             Export
           </Button>
           <Button
@@ -115,7 +116,9 @@ export function TransactionsPage() {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm text-gray-500">Total Transactions</p>
-              <p className="text-2xl font-bold text-gray-900 mt-1">{transactions.length}</p>
+              <p className="text-2xl font-bold text-gray-900 mt-1">
+                {transactions.length}
+              </p>
             </div>
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gray-100 text-gray-600">
               <CreditCard className="h-5 w-5" />
@@ -128,7 +131,7 @@ export function TransactionsPage() {
             <div>
               <p className="text-sm text-gray-500">Total Volume</p>
               <p className="text-2xl font-bold text-primary-600 mt-1">
-                {formatCurrency(totalVolume)}
+                {formatNaira(totalVolume)}
               </p>
             </div>
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary-100 text-primary-600">
@@ -141,7 +144,9 @@ export function TransactionsPage() {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm text-gray-500">Success Rate</p>
-              <p className="text-2xl font-bold text-success mt-1">{successRate}%</p>
+              <p className="text-2xl font-bold text-success mt-1">
+                {successRate}%
+              </p>
             </div>
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-success/10 text-success">
               <CheckCircle2 className="h-5 w-5" />
@@ -153,7 +158,9 @@ export function TransactionsPage() {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm text-gray-500">Pending</p>
-              <p className="text-2xl font-bold text-warning mt-1">{pendingCount}</p>
+              <p className="text-2xl font-bold text-warning mt-1">
+                {pendingCount}
+              </p>
             </div>
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-warning/10 text-warning">
               <Clock className="h-5 w-5" />
@@ -240,13 +247,27 @@ export function TransactionsPage() {
           <table className="w-full">
             <thead>
               <tr className="border-b border-gray-200 bg-gray-50">
-                <th className="text-left py-3 px-4 font-medium text-gray-500 text-sm">Reference</th>
-                <th className="text-left py-3 px-4 font-medium text-gray-500 text-sm">Type</th>
-                <th className="text-left py-3 px-4 font-medium text-gray-500 text-sm">User</th>
-                <th className="text-left py-3 px-4 font-medium text-gray-500 text-sm">Description</th>
-                <th className="text-right py-3 px-4 font-medium text-gray-500 text-sm">Amount</th>
-                <th className="text-center py-3 px-4 font-medium text-gray-500 text-sm">Status</th>
-                <th className="text-left py-3 px-4 font-medium text-gray-500 text-sm">Date</th>
+                <th className="text-left py-3 px-4 font-medium text-gray-500 text-sm">
+                  Reference
+                </th>
+                <th className="text-left py-3 px-4 font-medium text-gray-500 text-sm">
+                  Type
+                </th>
+                <th className="text-left py-3 px-4 font-medium text-gray-500 text-sm">
+                  User
+                </th>
+                <th className="text-left py-3 px-4 font-medium text-gray-500 text-sm">
+                  Description
+                </th>
+                <th className="text-right py-3 px-4 font-medium text-gray-500 text-sm">
+                  Amount
+                </th>
+                <th className="text-center py-3 px-4 font-medium text-gray-500 text-sm">
+                  Status
+                </th>
+                <th className="text-left py-3 px-4 font-medium text-gray-500 text-sm">
+                  Date
+                </th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-100">
@@ -257,7 +278,10 @@ export function TransactionsPage() {
                 const StatusIcon = statusConfig.icon;
 
                 return (
-                  <tr key={txn.id} className="hover:bg-gray-50 transition-colors">
+                  <tr
+                    key={txn.id}
+                    className="hover:bg-gray-50 transition-colors"
+                  >
                     <td className="py-3 px-4">
                       <code className="text-xs font-mono bg-gray-100 px-1.5 py-0.5 rounded">
                         {txn.reference}
@@ -269,19 +293,29 @@ export function TransactionsPage() {
                         <span className="text-sm">{typeConfig.label}</span>
                       </div>
                     </td>
-                    <td className="py-3 px-4 text-sm text-gray-900">{txn.userName}</td>
+                    <td className="py-3 px-4 text-sm text-gray-900">
+                      {txn.userName}
+                    </td>
                     <td className="py-3 px-4 text-sm text-gray-500 max-w-xs truncate">
                       {txn.description}
                     </td>
                     <td className="py-3 px-4 text-right">
-                      <span className={cn(
-                        "font-semibold",
-                        txn.type === "DEPOSIT" ? "text-success" :
-                        txn.type === "WITHDRAWAL" || txn.type === "PAYOUT" ? "text-error" :
-                        "text-gray-900"
-                      )}>
-                        {txn.type === "DEPOSIT" ? "+" : txn.type === "WITHDRAWAL" || txn.type === "PAYOUT" ? "-" : ""}
-                        {formatCurrency(txn.amount)}
+                      <span
+                        className={cn(
+                          "font-semibold",
+                          txn.type === "DEPOSIT"
+                            ? "text-success"
+                            : txn.type === "WITHDRAWAL" || txn.type === "PAYOUT"
+                              ? "text-error"
+                              : "text-gray-900",
+                        )}
+                      >
+                        {txn.type === "DEPOSIT"
+                          ? "+"
+                          : txn.type === "WITHDRAWAL" || txn.type === "PAYOUT"
+                            ? "-"
+                            : ""}
+                        {formatNaira(txn.amount)}
                       </span>
                     </td>
                     <td className="py-3 px-4 text-center">

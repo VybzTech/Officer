@@ -19,10 +19,10 @@ import {
 } from "lucide-react";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/Card";
 import Button from "@/components/ui/Button";
-import Badge from "@/components/ui/Badge";
+import { Badge } from "@/components/ui/Badge";
 import { useDataStore } from "@/stores/dataStore";
 import { cn } from "@/utils/cn";
-import { formatCurrency } from "@/utils/format";
+import { formatNaira } from "@/utils/format";
 import Loader from "@/components/ui/Loader";
 import type { TierConfig } from "@/data/mockDatabase";
 
@@ -100,23 +100,48 @@ export function TierSettingsPage() {
             <Card
               key={tier.id}
               padding="md"
-              className={cn(isPremier && "text-white", colors.border, "border-2")}
-              style={isPremier ? { background: "linear-gradient(135deg, #FFCA08, #D4A906)" } : undefined}
+              className={cn(
+                isPremier && "text-white",
+                colors.border,
+                "border-2",
+              )}
+              style={
+                isPremier
+                  ? { background: "linear-gradient(135deg, #FFCA08, #D4A906)" }
+                  : undefined
+              }
             >
               <div className="flex items-center justify-between">
                 <div>
-                  <p className={cn("text-sm", isPremier ? "text-white/80" : "text-gray-500")}>
+                  <p
+                    className={cn(
+                      "text-sm",
+                      isPremier ? "text-white/80" : "text-gray-500",
+                    )}
+                  >
                     {tier.name} Accounts
                   </p>
-                  <p className={cn("text-2xl font-bold mt-1", isPremier ? "text-white" : "text-gray-900")}>
+                  <p
+                    className={cn(
+                      "text-2xl font-bold mt-1",
+                      isPremier ? "text-white" : "text-gray-900",
+                    )}
+                  >
                     {Math.floor(Math.random() * 50) + 10}
                   </p>
                 </div>
-                <div className={cn(
-                  "flex h-10 w-10 items-center justify-center rounded-xl",
-                  isPremier ? "bg-white/20" : colors.bg
-                )}>
-                  <TierIcon className={cn("h-5 w-5", isPremier ? "text-white" : colors.text)} />
+                <div
+                  className={cn(
+                    "flex h-10 w-10 items-center justify-center rounded-xl",
+                    isPremier ? "bg-white/20" : colors.bg,
+                  )}
+                >
+                  <TierIcon
+                    className={cn(
+                      "h-5 w-5",
+                      isPremier ? "text-white" : colors.text,
+                    )}
+                  />
                 </div>
               </div>
             </Card>
@@ -141,9 +166,14 @@ export function TierSettingsPage() {
             <table className="w-full">
               <thead>
                 <tr className="border-b border-gray-200">
-                  <th className="text-left py-3 px-4 font-medium text-gray-500">Feature</th>
+                  <th className="text-left py-3 px-4 font-medium text-gray-500">
+                    Feature
+                  </th>
                   {tierConfigs.map((tier) => (
-                    <th key={tier.id} className="text-center py-3 px-4 font-medium text-gray-900">
+                    <th
+                      key={tier.id}
+                      className="text-center py-3 px-4 font-medium text-gray-900"
+                    >
                       {tier.name}
                     </th>
                   ))}
@@ -156,8 +186,13 @@ export function TierSettingsPage() {
                     Listing Limit
                   </td>
                   {tierConfigs.map((tier) => (
-                    <td key={tier.id} className="text-center py-3 px-4 font-medium text-gray-900">
-                      {tier.listingLimit === -1 ? "Unlimited" : tier.listingLimit}
+                    <td
+                      key={tier.id}
+                      className="text-center py-3 px-4 font-medium text-gray-900"
+                    >
+                      {tier.listingLimit === -1
+                        ? "Unlimited"
+                        : tier.listingLimit}
                     </td>
                   ))}
                 </tr>
@@ -167,8 +202,13 @@ export function TierSettingsPage() {
                     Contacts/Month
                   </td>
                   {tierConfigs.map((tier) => (
-                    <td key={tier.id} className="text-center py-3 px-4 font-medium text-gray-900">
-                      {tier.contactsPerMonth === -1 ? "Unlimited" : tier.contactsPerMonth}
+                    <td
+                      key={tier.id}
+                      className="text-center py-3 px-4 font-medium text-gray-900"
+                    >
+                      {tier.contactsPerMonth === -1
+                        ? "Unlimited"
+                        : tier.contactsPerMonth}
                     </td>
                   ))}
                 </tr>
@@ -179,10 +219,15 @@ export function TierSettingsPage() {
                   </td>
                   {tierConfigs.map((tier) => (
                     <td key={tier.id} className="text-center py-3 px-4">
-                      <Badge variant={
-                        tier.verificationPriority === "HIGH" ? "success" :
-                        tier.verificationPriority === "MEDIUM" ? "warning" : "default"
-                      }>
+                      <Badge
+                        variant={
+                          tier.verificationPriority === "HIGH"
+                            ? "success"
+                            : tier.verificationPriority === "MEDIUM"
+                              ? "warning"
+                              : "default"
+                        }
+                      >
                         {tier.verificationPriority}
                       </Badge>
                     </td>
@@ -195,10 +240,15 @@ export function TierSettingsPage() {
                   </td>
                   {tierConfigs.map((tier) => (
                     <td key={tier.id} className="text-center py-3 px-4">
-                      <Badge variant={
-                        tier.supportLevel === "DEDICATED" ? "success" :
-                        tier.supportLevel === "PRIORITY" ? "warning" : "default"
-                      }>
+                      <Badge
+                        variant={
+                          tier.supportLevel === "DEDICATED"
+                            ? "success"
+                            : tier.supportLevel === "PRIORITY"
+                              ? "warning"
+                              : "default"
+                        }
+                      >
                         {tier.supportLevel}
                       </Badge>
                     </td>
@@ -222,7 +272,7 @@ function TierCard({ tier }: { tier: TierConfig }) {
     <Card
       className={cn(
         "relative overflow-hidden",
-        isPremier && "ring-2 ring-primary-500"
+        isPremier && "ring-2 ring-primary-500",
       )}
     >
       {isPremier && (
@@ -233,10 +283,12 @@ function TierCard({ tier }: { tier: TierConfig }) {
 
       <CardContent className="pt-6">
         <div className="flex items-center gap-3 mb-4">
-          <div className={cn(
-            "flex h-12 w-12 items-center justify-center rounded-xl",
-            colors.bg
-          )}>
+          <div
+            className={cn(
+              "flex h-12 w-12 items-center justify-center rounded-xl",
+              colors.bg,
+            )}
+          >
             <TierIcon className={cn("h-6 w-6", colors.text)} />
           </div>
           <div>
@@ -249,7 +301,7 @@ function TierCard({ tier }: { tier: TierConfig }) {
 
         <div className="mb-6">
           <span className="text-3xl font-bold text-gray-900">
-            {tier.price === 0 ? "Free" : formatCurrency(tier.price)}
+            {tier.price === 0 ? "Free" : formatNaira(tier.price)}
           </span>
           {tier.price > 0 && (
             <span className="text-gray-500 text-sm">/month</span>
@@ -278,7 +330,9 @@ function TierCard({ tier }: { tier: TierConfig }) {
             <div>
               <p className="text-gray-500">Contacts</p>
               <p className="font-semibold text-gray-900">
-                {tier.contactsPerMonth === -1 ? "Unlimited" : `${tier.contactsPerMonth}/mo`}
+                {tier.contactsPerMonth === -1
+                  ? "Unlimited"
+                  : `${tier.contactsPerMonth}/mo`}
               </p>
             </div>
           </div>
