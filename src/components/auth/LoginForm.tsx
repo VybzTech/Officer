@@ -8,10 +8,6 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import {
-  Eye,
-  EyeOff,
-  Lock,
-  Mail,
   AlertCircle,
   ShieldCheck,
 } from "lucide-react";
@@ -22,6 +18,8 @@ import type { Officer } from "@/types";
 import ComboText from "../ui/ComboText";
 import { OptimizedImage } from "../ui/OptimizedImage";
 import logo from "../../assets/images/ug-logo.png";
+import { Input } from "../ui";
+import CTAButton from "../ui/CTAButton";
 
 // ==================== VALIDATION SCHEMA ====================
 const loginSchema = z.object({
@@ -107,45 +105,8 @@ export function LoginForm() {
   };
 
   return (
-    <div className="w-full space-y-8 animate-slide-in">
-      <div className="flex gap-5 items-center justify-left">
-        <OptimizedImage
-          src={logo}
-          alt="Urban Gravity"
-          width={70}
-          height={70}
-        />
-
-        <ComboText
-          firstText={"Urban"}
-          secondText={"Gravity"}
-          fontFamily="hubot"
-          fontWeight="bold"
-          size={28}
-          gap={1}
-          className="tracking-tighter"
-        />
-      </div>
-      {/* 1. Header with Badge */}
-      <div className="space-y-4">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary-100/50 border border-primary-200">
-          <ShieldCheck className="h-3.5 w-3.5 text-primary-600" />
-          <span className="text-[10px] font-black uppercase tracking-[0.2em] text-primary-700">
-            Secured System Access
-          </span>
-        </div>
-        <div>
-          <h1 className="text-4xl font-black text-gray-900 tracking-tight leading-tight">
-            Authorised <span className="text-primary-500">Personnel</span> Only.
-          </h1>
-          <p className="mt-2 text-sm font-medium text-gray-500 leading-relaxed">
-            Enter your official credentials below to access the Urban Gravity
-            administrative environment.
-          </p>
-        </div>
-      </div>
-
-      {/* 2. Error Message */}
+    <div className="w-full h-max space-y-8 animate-slide-in justify-between flex flex-col">
+      {/* Error Message */}
       {error && (
         <div className="flex items-start gap-3 rounded-2xl bg-danger-light/10 border border-danger-light/20 p-5 text-danger-dark animate-pulse">
           <AlertCircle className="h-5 w-5 flex-shrink-0 mt-0.5" />
@@ -156,152 +117,58 @@ export function LoginForm() {
         </div>
       )}
 
-      {/* 3. Formal Form */}
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-        {/* Email Field */}
-        <div className="group space-y-2">
-          <label
-            htmlFor="email"
-            className="block text-xs font-black uppercase tracking-[0.15em] text-gray-400 group-focus-within:text-primary-600 transition-colors"
-          >
-            Official ID / Email
-          </label>
-          <div className="relative">
-            <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4">
-              <Mail
-                className={cn(
-                  "h-5 w-5 transition-colors",
-                  errors.email
-                    ? "text-danger"
-                    : "text-gray-300 group-focus-within:text-primary-500",
-                )}
-              />
-            </div>
-            <input
-              id="email"
-              type="email"
-              placeholder="name@officer.urbangravity.ng"
-              className={cn(
-                "w-full rounded-2xl border bg-gray-50 py-4 pl-12 pr-4 text-gray-900 font-bold",
-                "placeholder:text-gray-300 placeholder:font-medium outline-none ring-offset-2 transition-all duration-300",
-                errors.email
-                  ? "border-danger-light bg-danger-light/5 text-danger focus:ring-4 focus:ring-danger/10"
-                  : "border-gray-100 focus:bg-white focus:border-primary-500 focus:ring-4 focus:ring-primary-500/10",
-              )}
-              {...register("email")}
-            />
-          </div>
-          {errors.email && (
-            <p className="text-[11px] font-bold text-danger px-1 uppercase tracking-tighter transition-all">
-              {errors.email.message}
-            </p>
-          )}
+      {/* Formal Form */}
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+        <div>
+          <Input
+            id="email"
+            {...register("email")}
+            label="Email Address"
+            type="email"
+            placeholder="Enter your official email"
+            required
+            disabled={isLoading}
+            iconName="Mail"
+            iconPosition="right"
+            error={errors.email?.message}
+          />
+          <Input
+            label="Password"
+            type="password"
+            placeholder="Enter your password"
+            helperText="Must be at least 8 characters"
+            error={errors.password?.message}
+            disabled={isLoading}
+            {...register("password")}
+          />
         </div>
-
-        {/* Password Field */}
-        <div className="group space-y-2">
-          <div className="flex items-center justify-between">
-            <label
-              htmlFor="password"
-              className="block text-xs font-black uppercase tracking-[0.15em] text-gray-400 group-focus-within:text-primary-600 transition-colors"
-            >
-              Security Key
-            </label>
-            <button
-              type="button"
-              className="text-[10px] font-bold text-gray-400 hover:text-primary-500 uppercase tracking-widest transition-colors"
-            >
-              Lost Key?
-            </button>
-          </div>
-          <div className="relative">
-            <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4">
-              <Lock
-                className={cn(
-                  "h-5 w-5 transition-colors",
-                  errors.password
-                    ? "text-danger"
-                    : "text-gray-300 group-focus-within:text-primary-500",
-                )}
-              />
-            </div>
-            <input
-              id="password"
-              type={showPassword ? "text" : "password"}
-              placeholder="••••••••••••"
-              className={cn(
-                "w-full rounded-2xl border bg-gray-50 py-4 pl-12 pr-12 text-gray-900 font-bold",
-                "placeholder:text-gray-300 outline-none ring-offset-2 transition-all duration-300",
-                errors.password
-                  ? "border-danger-light bg-danger-light/5 text-danger focus:ring-4 focus:ring-danger/10"
-                  : "border-gray-100 focus:bg-white focus:border-primary-500 focus:ring-4 focus:ring-primary-500/10",
-              )}
-              {...register("password")}
-            />
-            <button
-              type="button"
-              onClick={() => setShowPassword(!showPassword)}
-              className="absolute inset-y-0 right-0 flex items-center pr-4 text-gray-300 hover:text-primary-500 transition-colors"
-            >
-              {showPassword ? (
-                <EyeOff className="h-5 w-5" />
-              ) : (
-                <Eye className="h-5 w-5" />
-              )}
-            </button>
-          </div>
-          {errors.password && (
-            <p className="text-[11px] font-bold text-danger px-1 uppercase tracking-tighter transition-all">
-              {errors.password.message}
-            </p>
-          )}
-        </div>
-
         {/* Remember / Audit Consent */}
-        <label className="flex items-center gap-3 cursor-pointer group select-none">
+        {/* TODO: Add Remember / Audit Consent Functionality */}
+        <label className="flex items-center gap-3 cursor-pointer group select-none py-5">
           <div className="relative flex items-center">
             <input
               type="checkbox"
-              className="peer h-5 w-5 rounded-lg border-2 border-gray-100 bg-gray-50 text-sidebar focus:ring-0 focus:ring-offset-0 transition-all checked:border-primary-500 checked:bg-primary-500"
+              className="peer h-7 w-7 rounded-lg border-2 border-gray-100 bg-gray-50 text-sidebar focus:ring-0 focus:ring-offset-0 transition-all checked:border-primary-500 checked:bg-primary-500 checked:appearance-none"
             />
             <ShieldCheck
-              className="absolute inset-0 m-auto h-3 w-3 text-white opacity-0 peer-checked:opacity-100 transition-opacity pointer-events-none"
-              strokeWidth={3}
+              className="absolute inset-0 m-auto h-3.5 w-3.5 text-white opacity-0 peer-checked:opacity-100 transition-opacity pointer-events-none"
+              strokeWidth={2}
             />
           </div>
-          <span className="text-[11px] font-bold text-gray-400 group-hover:text-gray-500 transition-colors uppercase tracking-widest">
-            Declare session for Lagos region audit
+          <span className="text-[11.5px] font-sans tracking-tighter text-gray-400 group-hover:text-gray-500 transition-colors tracking-widest">
+            Declare session for audit
           </span>
         </label>
-
-        {/* Submit */}
-        <Button
+        <CTAButton
           type="submit"
-          loading={isLoading}
           variant="primary"
-          fullWidth
-          size="lg"
-          className="h-16 shadow-premium shadow-primary-500/20"
-        >
-          {isLoading ? "Decrypting Session..." : "Initiate Secure Access"}
-        </Button>
+          className="h-16 shadow-premium shadow-primary-500/20 w-full"
+          children={isLoading ? "Encrypting Session..." : "Initiate Access"}
+        />
       </form>
 
-      {/* 4. Help / Support Footer */}
-      <div className="pt-8 flex items-center justify-between border-t border-gray-50">
-        <div className="flex items-center gap-2">
-          <div className="h-2 w-2 rounded-full bg-success animate-pulse"></div>
-          <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">
-            Security Core Online
-          </span>
-        </div>
-        <button className="text-[10px] font-bold text-primary-500 hover:underline uppercase tracking-widest">
-          Support Center
-        </button>
-      </div>
-
       {/* Demo Credentials (Mini Card) */}
-      <div className="rounded-2xl bg-sidebar p-5 text-white/90 shadow-premium-lg relative overflow-hidden group">
+      {/* <div className="rounded-2xl bg-sidebar p-5 text-white/90 shadow-premium-lg relative overflow-hidden group">
         <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
           <ShieldCheck className="h-12 w-12" />
         </div>
@@ -324,7 +191,7 @@ export function LoginForm() {
             <span className="font-mono text-primary-200">password123</span>
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }

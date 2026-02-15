@@ -1,6 +1,5 @@
 // ============================================
 // URBAN GRAVITY - DASHBOARD LAYOUT
-// Premium structure with intelligent spacing
 // ============================================
 
 import { useState, type ReactNode } from "react";

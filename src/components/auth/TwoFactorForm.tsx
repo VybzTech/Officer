@@ -125,7 +125,7 @@ export function TwoFactorForm() {
       </div>
 
       {/* 2. Error Display */}
-      {error && (
+      {/* {error && (
         <div className="flex items-start gap-3 rounded-2xl bg-danger-light/10 border border-danger-light/20 p-5 text-danger-dark">
           <AlertCircle className="h-5 w-5 flex-shrink-0 mt-0.5" />
           <div className="space-y-1">
@@ -133,7 +133,7 @@ export function TwoFactorForm() {
             <p className="text-xs font-semibold opacity-80">{error}</p>
           </div>
         </div>
-      )}
+      )} */}
 
       {/* 3. OTP Controller */}
       <div className="space-y-10">
@@ -210,7 +210,7 @@ export function TwoFactorForm() {
       </div>
 
       {/* 4. Security Footnote */}
-      <div className="rounded-2xl bg-sidebar/5 border border-sidebar/10 p-6 space-y-4">
+      {/* <div className="rounded-2xl bg-sidebar/5 border border-sidebar/10 p-6 space-y-4">
         <div className="flex items-center gap-3">
           <div className="h-10 w-10 rounded-xl bg-white shadow-sm flex items-center justify-center text-sidebar">
             <Shield className="h-5 w-5" />
@@ -229,13 +229,7 @@ export function TwoFactorForm() {
           Unauthorised access attempts will be logged with full IP and regional
           tracing.
         </p>
-      </div>
-
-      <div className="pt-4 rounded-xl border-t border-gray-50 flex items-center justify-center gap-4">
-        <span className="text-[10px] font-black text-primary-500 uppercase tracking-[0.2em]">
-          Demo: Any 6 digits
-        </span>
-      </div>
+      </div> */}
     </div>
   );
 }

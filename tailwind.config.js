@@ -20,11 +20,16 @@ export default {
         },
         // Dashboard specific colors (Brown/Black aesthetic)
         sidebar: {
-          DEFAULT: "#1A120B", // Deep rich brown-black
-          hover: "#2C1E12", // Lighter warm brown for hover
-          active: "#3E2A1B", // Active state brown
-          border: "#2C1E12",
-          text: "#D0C8C0", // Warm gray/beige for text
+          DEFAULT: "#fff", // Deep rich brown-black
+          hover: "#eee", // Lighter warm brown for hover
+          active: "#ffed63ff", // Active state brown
+          border: "#ddd",
+          text: "#111", // Warm gray/beige for text
+          // DEFAULT: "#1A120B", // Deep rich brown-black
+          // hover: "#2C1E12", // Lighter warm brown for hover
+          // active: "#3E2A1B", // Active state brown
+          // border: "#2C1E12",
+          // text: "#D0C8C0", // Warm gray/beige for text
         },
         surface: {
           DEFAULT: "#ffffff",

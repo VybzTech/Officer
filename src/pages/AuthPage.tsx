@@ -1,6 +1,5 @@
 // ============================================
 // URBAN GRAVITY - AUTH PAGE
-// Premium cinematic entry for Officers
 // ============================================
 
 import { LoginForm, TwoFactorForm } from "@/components/auth";
@@ -8,44 +7,68 @@ import { useAuthStore } from "@/stores/auth.store";
 import { Shield, Landmark, MapPin, Search, Database } from "lucide-react";
 import { cn } from "@/utils/cn";
 import ComboText from "@/components/ui/ComboText";
+import { OptimizedImage } from "@/components/ui/OptimizedImage";
+import bgImg from "@/assets/images/landing/alex-hUWNPylGE8.jpg";
+import logo from "@/assets/images/ug-logo.png";
+import { useState } from "react";
 
 export function AuthPage() {
   const { authStep } = useAuthStore();
+  const [open, isOpen] = useState<boolean>(false);
 
   return (
-    <div className="min-h-screen bg-white flex overflow-hidden font-sans">
-      {/* 1. Cinematic Left Panel (Hidden on mobile) */}
-      <div className="hidden lg:flex lg:w-3/5 bg-sidebar relative flex-col justify-between p-16 overflow-hidden">
-        {/* Animated Background Mesh & Glows */}
-        <div className="absolute inset-0 bg-mesh opacity-30"></div>
-        <div className="absolute -top-24 -left-24 h-96 w-96 bg-primary-500/10 blur-[100px] rounded-full"></div>
-        <div className="absolute bottom-0 right-0 h-[600px] w-[600px] bg-primary-500/5 blur-[120px] rounded-full translate-x-1/3 translate-y-1/3"></div>
-
-        {/* Top: Logo & Status */}
-        <div className="relative z-10 animate-fade-in">
-          {/* <div className="flex items-center gap-4">
-            <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-primary-500 shadow-glow">
-              <Landmark className="h-8 w-8 text-sidebar" strokeWidth={2.5} />
-            </div>
-            <div>
-              <ComboText
-                firstText={"Urban"}
-                secondText={"Gravity"}
-                fontFamily="hubot"
-                fontWeight="bold"
-                size={28}
-                gap={3}
-                className="tracking-tighter"
-              />
-              <div className="flex items-center gap-2 mt-1">
-                <p className="text-[10px] font-black text-gray-500 uppercase tracking-[0.3em]">
-                  Lagos, NG
-                </p>
-                <div className="h-1.5 w-1.5 rounded-full bg-success animate-pulse"></div>
-              </div>
-            </div>
-          </div> */}
+    <div className="min-h-screen w-screen bg-white flex overflow-hidden font-sans">
+      {/* 1. Authentication Interaction Panel */}
+      <div className="flex-1 flex flex-col items-start justify-evenly p-8 lg:px-24 relative bg-gray-50/30">
+        {/* Subtle decorative glow for mobile/small screens */}
+        <div className="lg:hidden absolute top-0 right-1/2 -translate-x-1/2 h-64 w-64 bg-primary-500/15 blur-[80px] rounded-full pointer-events-none"></div>
+        <div className="flex flex-col gap-3 items-start">
+          <div className="flex items-center gap-4 animate-fade-in">
+            <OptimizedImage
+              src={logo}
+              alt="Urban Gravity"
+              width={70}
+              height={70}
+            />
+            <ComboText
+              firstText={"Urban"}
+              secondText={"Gravity"}
+              fontFamily="hubot"
+              fontWeight="bold"
+              size={28}
+              gap={1}
+              className="tracking-tighter"
+            />
+          </div>
+          {authStep === "LOGIN" && (
+            <p className="text-sm font-medium text-gray-500 leading-relaxed animate-fade-in">
+              Enter your official credentials below to access the Urban Gravity
+              administrative environment.
+            </p>
+          )}
         </div>
+        <div className="w-full relative z-10 min-w-[440px]">
+          <div
+            className={cn(
+              "transition-all duration-500 transform",
+              authStep === "TWO_FACTOR"
+                ? "scale-100 opacity-100"
+                : "scale-100 opacity-100",
+            )}
+          >
+            {authStep === "LOGIN" && <LoginForm />}
+            {authStep === "TWO_FACTOR" && <TwoFactorForm />}
+          </div>
+        </div>
+        <div className="h-10"></div>
+      </div>
+      {/* Old Cinematic Left Panel (Hidden on mobile) */}
+      <div>
+        {/* // className="hidden lg:flex lg:w-3/5 bg-sidebar relative justify-between p-16 overflow-hidden ml-auto"> */}
+        {/* Animated Background Mesh & Glows */}
+        {/* <div className="absolute inset-0 bg-mesh opacity-30"></div>
+        <div className="absolute -top-24 -left-24 h-96 w-96 bg-primary-500/10 blur-[100px] rounded-full"></div>
+        <div className="absolute bottom-0 right-0 h-[600px] w-[600px] bg-primary-500/5 blur-[120px] rounded-full translate-x-1/3 translate-y-1/3"></div> */}
 
         {/* Center: Value Propositions (Trust Architecture) */}
         {/* <div className="relative z-10 space-y-12 animate-slide-in">
@@ -104,38 +127,24 @@ export function AuthPage() {
           </div>
         </div> */}
       </div>
-
-      {/* 2. Authentication Interaction Panel */}
-      <div className="flex-1 flex items-center justify-center p-8 lg:p-24 relative bg-gray-50/30">
-        {/* Subtle decorative glow for mobile/small screens */}
-        <div className="lg:hidden absolute top-0 left-1/2 -translate-x-1/2 h-64 w-64 bg-primary-500/10 blur-[80px] rounded-full pointer-events-none"></div>
-
-        <div className="w-full max-w-[440px] relative z-10">
-          {/* Mobile-only Top Brand Logo */}
-          <div className="lg:hidden mb-12 flex flex-col items-center">
-            <div className="h-16 w-16 rounded-2xl bg-primary-500 flex items-center justify-center shadow-glow mb-4">
-              <Landmark className="h-8 w-8 text-sidebar" strokeWidth={2.5} />
-            </div>
-            <h2 className="text-2xl font-black text-sidebar tracking-tighter">
-              Urban Gravity
-            </h2>
-            <p className="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] mt-1">
-              Lagos Officer Portal
-            </p>
-          </div>
-
-          <div
-            className={cn(
-              "transition-all duration-500 transform",
-              authStep === "TWO_FACTOR"
-                ? "scale-100 opacity-100"
-                : "scale-100 opacity-100",
-            )}
-          >
-            {authStep === "LOGIN" && <LoginForm />}
-            {authStep === "TWO_FACTOR" && <TwoFactorForm />}
-          </div>
-        </div>
+      
+      {/* Cinematic Right Panel */}
+      {/* TODO: Add the cinematic Effect here */}
+      <div
+        className={`relative justify-between overflow-hidden ${!open ? "w-full" : "flex w-3/5"}`}
+      >
+        <div
+          className="absolute inset-0 w-full h-full z-10 bg-overlay backdrop-blur-[2px] top-0 left-0 
+         bg-gradient-to-br from-black/50 via-black/80 to-black/90 opacity-70"
+        />
+        <OptimizedImage
+          src={bgImg}
+          alt={"Intro Background Image"}
+          width={100}
+          height={100}
+          className="w-screen h-screen -to-right bg-tl-black bg-br-white"
+          loaderClassName="bg-primary-100"
+        />
       </div>
     </div>
   );
