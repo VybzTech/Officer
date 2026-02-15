@@ -43,288 +43,12 @@ import {
   ChevronLeft,
   ChevronRight,
   X,
-  type LucideIcon,
 } from "lucide-react";
 import { useAuthStore } from "@/stores/auth.store";
 import { PermissionGate } from "@/components/guards";
 import { cn } from "@/utils/cn";
-import type { Permission } from "@/types";
-
-// ==================== TYPES ====================
-interface NavItem {
-  label: string;
-  path: string;
-  icon: LucideIcon;
-  permission?: Permission;
-  permissions?: Permission[];
-  badge?: string | number;
-  isNew?: boolean;
-}
-
-interface NavGroup {
-  label: string;
-  items: NavItem[];
-  permission?: Permission;
-}
-
-// ==================== NAVIGATION STRUCTURE ====================
-const NAVIGATION: NavGroup[] = [
-  {
-    label: "Overview",
-    items: [
-      {
-        label: "Dashboard",
-        path: "/dashboard",
-        icon: LayoutDashboard,
-        permission: "VIEW_DASHBOARD",
-      },
-      {
-        label: "Regional Metrics",
-        path: "/metrics",
-        icon: BarChart3,
-        permission: "VIEW_REGIONAL_METRICS",
-      },
-      {
-        label: "AI Insights",
-        path: "/ai-insights",
-        icon: Brain,
-        permission: "VIEW_AI_INSIGHTS",
-        isNew: true,
-      },
-    ],
-  },
-  // {
-  //   label: "Market Management",
-  //   items: [
-  //     {
-  //       label: "Listings",
-  //       path: "/listings",
-  //       icon: Building2,
-  //       permission: "VIEW_LISTINGS",
-  //     },
-  //     {
-  //       label: "Landlords",
-  //       path: "/landlords",
-  //       icon: Users,
-  //       permission: "VIEW_LANDLORDS",
-  //     },
-  //     {
-  //       label: "Tenants",
-  //       path: "/tenants",
-  //       icon: UserCheck,
-  //       permission: "VIEW_TENANTS",
-  //     },
-  //     {
-  //       label: "Agents",
-  //       path: "/agents",
-  //       icon: Briefcase,
-  //       permission: "VIEW_AGENTS",
-  //     },
-  //   ],
-  // },
-  // {
-  //   label: "Moderation & Control",
-  //   items: [
-  //     {
-  //       label: "Verification Requests",
-  //       path: "/verifications",
-  //       icon: ShieldCheck,
-  //       permission: "VIEW_VERIFICATION_REQUESTS",
-  //     },
-  //     {
-  //       label: "Subscription Upgrades",
-  //       path: "/upgrades",
-  //       icon: ArrowUpCircle,
-  //       permission: "VIEW_SUBSCRIPTION_UPGRADES",
-  //     },
-  //     {
-  //       label: "Disputes",
-  //       path: "/disputes",
-  //       icon: Scale,
-  //       permission: "VIEW_DISPUTES",
-  //     },
-  //     {
-  //       label: "Reports",
-  //       path: "/reports",
-  //       icon: AlertTriangle,
-  //       permission: "VIEW_REPORTS",
-  //     },
-  //   ],
-  // },
-  // {
-  //   label: "Intelligence",
-  //   permission: "VIEW_AI_INSIGHTS",
-  //   items: [
-  //     {
-  //       label: "AI Match Recommendations",
-  //       path: "/ai/matches",
-  //       icon: Brain,
-  //       permission: "VIEW_AI_INSIGHTS",
-  //     },
-  //     {
-  //       label: "Preference Mapping",
-  //       path: "/ai/preferences",
-  //       icon: Map,
-  //       permission: "VIEW_AI_INSIGHTS",
-  //     },
-  //     {
-  //       label: "Risk Scoring",
-  //       path: "/ai/risk",
-  //       icon: ShieldCheck,
-  //       permission: "VIEW_AI_INSIGHTS",
-  //     },
-  //   ],
-  // },
-  // {
-  //   label: "Regional Control",
-  //   items: [
-  //     {
-  //       label: "Regions",
-  //       path: "/regions",
-  //       icon: MapPin,
-  //       permission: "VIEW_REGIONS",
-  //     },
-  //     { label: "LGAs", path: "/lgas", icon: Map, permission: "VIEW_LGAS" },
-  //     {
-  //       label: "LGA Activity",
-  //       path: "/lga-activity",
-  //       icon: Activity,
-  //       permission: "VIEW_LGA_ACTIVITY",
-  //     },
-  //     {
-  //       label: "Add Official Listing",
-  //       path: "/add-listing",
-  //       icon: PlusSquare,
-  //       permission: "CREATE_OFFICIAL_LISTING",
-  //     },
-  //   ],
-  // },
-  // {
-  //   label: "Financial Control",
-  //   items: [
-  //     {
-  //       label: "Escrow Accounts",
-  //       path: "/escrow",
-  //       icon: Wallet,
-  //       permission: "VIEW_ESCROW",
-  //     },
-  //     {
-  //       label: "Transaction Logs",
-  //       path: "/transactions",
-  //       icon: ListChecks,
-  //       permission: "VIEW_TRANSACTIONS",
-  //     },
-  //     {
-  //       label: "Payout Approvals",
-  //       path: "/payouts",
-  //       icon: CreditCard,
-  //       permission: "APPROVE_PAYOUT",
-  //     },
-  //     {
-  //       label: "Refund Management",
-  //       path: "/refunds",
-  //       icon: RotateCcw,
-  //       permission: "REFUND_ESCROW",
-  //     },
-  //   ],
-  // },
-  // {
-  //   label: "System Observability",
-  //   items: [
-  //     {
-  //       label: "API Logs",
-  //       path: "/logs/api",
-  //       icon: Terminal,
-  //       permission: "VIEW_API_LOGS",
-  //     },
-  //     {
-  //       label: "Audit Logs",
-  //       path: "/logs/audit",
-  //       icon: FileText,
-  //       permission: "VIEW_AUDIT_LOGS",
-  //     },
-  //     {
-  //       label: "Activity Logs",
-  //       path: "/logs/activity",
-  //       icon: History,
-  //       permission: "VIEW_ACTIVITY_LOGS",
-  //     },
-  //     {
-  //       label: "Error Monitoring",
-  //       path: "/logs/errors",
-  //       icon: Bug,
-  //       permission: "VIEW_ERROR_LOGS",
-  //     },
-  //   ],
-  // },
-  // {
-  //   label: "Platform",
-  //   items: [
-  //     {
-  //       label: "App Configuration",
-  //       path: "/config/app",
-  //       icon: Settings,
-  //       permission: "VIEW_APP_CONFIG",
-  //     },
-  //     {
-  //       label: "Tier Settings",
-  //       path: "/config/tiers",
-  //       icon: Sliders,
-  //       permission: "VIEW_TIER_SETTINGS",
-  //     },
-  //     {
-  //       label: "Role & Permissions",
-  //       path: "/config/roles",
-  //       icon: Shield,
-  //       permission: "VIEW_ROLE_MATRIX",
-  //     },
-  //     {
-  //       label: "Feature Flags",
-  //       path: "/config/features",
-  //       icon: ToggleLeft,
-  //       permission: "VIEW_FEATURE_FLAGS",
-  //     },
-  //   ],
-  // },
-  // {
-  //   label: "Documentation",
-  //   items: [
-  //     { label: "API Documentation", path: "/docs/api", icon: BookOpen },
-  //     { label: "Moderation Guide", path: "/docs/moderation", icon: HelpCircle },
-  //     { label: "Escrow Policy", path: "/docs/escrow", icon: FileCheck },
-  //     { label: "Lagos Guidelines", path: "/docs/lagos", icon: Landmark },
-  //   ],
-  // },
-  // {
-  //   label: "Account",
-  //   items: [
-  //     {
-  //       label: "Profile",
-  //       path: "/account/profile",
-  //       icon: User,
-  //       permission: "VIEW_PROFILE",
-  //     },
-  //     {
-  //       label: "Security",
-  //       path: "/account/security",
-  //       icon: Lock,
-  //       permission: "MANAGE_2FA",
-  //     },
-  //     {
-  //       label: "Active Sessions",
-  //       path: "/account/sessions",
-  //       icon: Monitor,
-  //       permission: "VIEW_SESSIONS",
-  //     },
-  //     {
-  //       label: "2FA Settings",
-  //       path: "/account/2fa",
-  //       icon: KeyRound,
-  //       permission: "MANAGE_2FA",
-  //     },
-  //   ],
-  // },
-];
+import { NavGroupComponent } from "./navigation/NavGroup";
+import { NAVIGATION } from "@/utils/nav";
 
 // ==================== PROPS ====================
 interface SidebarProps {
@@ -415,7 +139,7 @@ export function Sidebar({
       </div>
 
       {/* Navigation */}
-      <nav className="flex-1 overflow-y-auto sidebar-scroll py-6 px-4 space-y-8 scroll-smooth">
+      <nav className={`${collapsed ? "px-0" : "px-4"} flex-1 overflow-y-auto sidebar-scroll py-6 space-y-8 scroll-smooth`}>
         {NAVIGATION.map((group) => (
           <NavGroupComponent
             key={group.label}
@@ -424,21 +148,11 @@ export function Sidebar({
             currentPath={location.pathname}
           />
         ))}
-
-        {/* Quick Actions (Only when not collapsed) */}
-        {!collapsed && (
-          <div className="pt-4 px-2">
-            <button className="w-full flex items-center justify-center gap-2 btn-primary shadow-lg shadow-primary-500/10 active:scale-95 group">
-              <PlusSquare className="h-5 w-5 group-hover:rotate-90 transition-transform duration-300" />
-              <span>Create Official Listing</span>
-            </button>
-          </div>
-        )}
       </nav>
 
       {/* Officer Profile & Version */}
-      <div className="mt-auto border-t border-sidebar-border bg-sidebar/50 p-4">
-        {officer && (
+      <div className="mt-auto border-t border-sidebar-border bg-sidebar/50 px-6 py-4 pb-8">
+        {/* {officer && (
           <div
             className={cn(
               "flex items-center gap-3 rounded-xl p-2 transition-colors duration-200",
@@ -466,19 +180,14 @@ export function Sidebar({
               </div>
             )}
           </div>
-        )}
-
+        )} */}
+        {/* Quick Actions (Only when not collapsed) */}
         {!collapsed && (
-          <div className="mt-4 px-2 flex items-center justify-between">
-            <p className="text-[10px] font-medium text-gray-600 uppercase tracking-widest">
-              v1.0.0-lagos
-            </p>
-            <div className="flex items-center gap-2">
-              <div className="h-1 w-1 rounded-full bg-success animate-pulse"></div>
-              <span className="text-[10px] text-gray-500 uppercase tracking-tighter">
-                Online
-              </span>
-            </div>
+          <div className="">
+            <button className="w-full flex items-center justify-center gap-2 btn-primary shadow-lg shadow-primary-500/10 active:scale-95 group">
+              <PlusSquare className="h-5 w-5 group-hover:rotate-90 transition-transform duration-300" />
+              <span>Create Official Listing</span>
+            </button>
           </div>
         )}
       </div>

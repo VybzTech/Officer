@@ -295,6 +295,7 @@ import {
   // RolePermissionsPage,
   SessionsPage,
 } from "@/pages";
+import AiInsightsPage from "@/pages/AiInsightsPage";
 
 // ==================== AUTH GUARD ====================
 function AuthGuard() {
@@ -373,7 +374,8 @@ export const router = createBrowserRouter([
       },
       {
         path: "/ai-insights",
-        element: <ComingSoon title="AI Insights" />,
+        element: <AiInsightsPage />,
+        // element: <ComingSoon title="AI Insights" />,
       },
 
       // ========== MARKET MANAGEMENT ==========

@@ -2,18 +2,7 @@ import { NavLink } from "react-router-dom";
 import { type LucideIcon } from "lucide-react";
 import { PermissionGate } from "@/components/guards";
 import { cn } from "@/utils/cn";
-import type { Permission } from "@/types";
-
-// ==================== TYPES ====================
-interface NavItem {
-  label: string;
-  path: string;
-  icon: LucideIcon;
-  permission?: Permission;
-  permissions?: Permission[];
-  badge?: string | number;
-  isNew?: boolean;
-}
+import type { NavItem, Permission } from "@/types";
 
 // ==================== NAV ITEM COMPONENT ====================
 export function NavItemComponent({
@@ -32,7 +21,7 @@ export function NavItemComponent({
       to={item.path}
       className={cn(
         "group flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all duration-200",
-        collapsed && "justify-center px-0 py-3 mx-2",
+        collapsed && "justify-center px-0 py-3 px-6 w-fit",
         isActive
           ? "bg-primary-500/10 text-primary-500 border border-primary-500/20 shadow-sm"
           : "text-gray-400 hover:text-white hover:bg-sidebar-hover/50",
@@ -48,11 +37,11 @@ export function NavItemComponent({
         )}
       >
         <Icon
-          className="h-5 w-5 flex-shrink-0"
-          strokeWidth={isActive ? 1.75 : 1.25}
+          className={`${isActive ? "h-[22px] w-[22px]" : "h-[21px] w-[21px]"} flex-shrink-0`}
+          strokeWidth={isActive ? 2 : 1.7}
         />
         {isActive && !collapsed && (
-          <div className="absolute -left-3 h-4 w-1 bg-primary-500 rounded-r-full"></div>
+          <div className="absolute -left-3 h-4 w-[3px] bg-primary-500 rounded-r-full"></div>
         )}
       </div>
 

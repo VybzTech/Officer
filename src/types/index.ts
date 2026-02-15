@@ -2,6 +2,26 @@
 // URBAN GRAVITY OFFICER DASHBOARD - TYPE DEFINITIONS
 // ============================================
 
+import type { LucideIcon } from "lucide-react";
+
+// ==================== NAVIGATION TYPES ====================
+export interface NavItem {
+  label: string;
+  path: string;
+  icon: LucideIcon;
+  permission?: Permission;
+  permissions?: Permission[];
+  badge?: string | number;
+  isNew?: boolean;
+}
+
+export interface NavGroup {
+  label: string;
+  items: NavItem[];
+  permission?: Permission;
+}
+
+
 // ==================== ROLES ====================
 export type Role = 'SUPER_ADMIN' | 'OFFICER' | 'REGIONAL_OFFICER' | 'SUPPORT';
 
