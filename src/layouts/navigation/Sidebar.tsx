@@ -2,53 +2,21 @@
 // URBAN GRAVITY - SIDEBAR NAVIGATION
 // ============================================
 
-import { NavLink, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import {
-  LayoutDashboard,
-  BarChart3,
-  Brain,
-  Building2,
-  Users,
-  UserCheck,
-  Briefcase,
-  ShieldCheck,
-  ArrowUpCircle,
-  Scale,
-  AlertTriangle,
-  Wallet,
-  MapPin,
-  Map,
-  Activity,
   PlusSquare,
-  DollarSign,
-  ListChecks,
-  CreditCard,
-  RotateCcw,
-  Terminal,
-  FileText,
-  History,
-  Bug,
-  Settings,
-  Sliders,
-  Shield,
-  ToggleLeft,
-  BookOpen,
-  HelpCircle,
-  FileCheck,
   Landmark,
-  User,
-  Lock,
-  Monitor,
-  KeyRound,
   ChevronLeft,
   ChevronRight,
   X,
 } from "lucide-react";
 import { useAuthStore } from "@/stores/auth.store";
-import { PermissionGate } from "@/components/guards";
 import { cn } from "@/utils/cn";
-import { NavGroupComponent } from "./navigation/NavGroup";
+import { NavGroupComponent } from "./NavGroup";
 import { NAVIGATION } from "@/utils/nav";
+import { OptimizedImage } from "@/components/ui/OptimizedImage";
+import logo from "@/assets/images/ug-logo.png";
+import ComboText from "@/components/ui/ComboText";
 
 // ==================== PROPS ====================
 interface SidebarProps {
@@ -66,7 +34,6 @@ export function Sidebar({
   onMobileClose,
 }: SidebarProps) {
   const location = useLocation();
-  const { officer } = useAuthStore();
 
   return (
     <aside
@@ -88,28 +55,31 @@ export function Sidebar({
         >
           {/* Logo */}
           <div className="relative group">
-            <div className="absolute -inset-1 bg-gradient-to-tr from-primary-500 to-yellow-300 rounded-xl blur opacity-25 group-hover:opacity-50 transition duration-300"></div>
+            <OptimizedImage
+              className="animate-scale-in"
+              src={logo}
+              alt="Urban Gravity"
+              width={55}
+              height={55}
+            />
+            {/* <div className="absolute -inset-1 bg-gradient-to-tr from-primary-500 to-yellow-300 rounded-xl blur opacity-25 group-hover:opacity-50 transition duration-300"></div>
             <div className="relative flex h-10 w-10 items-center justify-center rounded-xl bg-primary-500 shadow-glow-sm">
               <Landmark className="h-6 w-6 text-sidebar" strokeWidth={2.5} />
-            </div>
+            </div> */}
           </div>
 
           {!collapsed && (
-            <div className="overflow-hidden animate-fade-in">
-              <div className="flex items-center gap-1.5">
-                <h1 className="text-lg font-extrabold text-white tracking-tight">
-                  Urban Gravity
-                </h1>
-                <div className="px-1.5 py-0.5 rounded bg-primary-500/10 border border-primary-500/20">
-                  <span className="text-[10px] font-bold text-primary-500 uppercase">
-                    Pro
-                  </span>
-                </div>
-              </div>
-              <p className="text-[11px] font-medium text-gray-500 uppercase tracking-widest leading-none mt-1">
-                Officer Intelligence
-              </p>
-            </div>
+            <ComboText
+              firstText={"Urban"}
+              secondText={"Gravity"}
+              fontFamily="hubot"
+              fontWeight="bold"
+              size={19}
+              gap={1}
+              className="tracking-tighter"
+            />
+            
+            
           )}
         </div>
 
@@ -127,7 +97,7 @@ export function Sidebar({
           className={cn(
             "hidden lg:flex p-1.5 text-gray-400 hover:text-white rounded-lg hover:bg-sidebar-hover transition-all border border-transparent hover:border-sidebar-border",
             collapsed &&
-              "absolute -right-3 top-8 bg-sidebar border border-sidebar-border shadow-lg z-10",
+            "absolute -right-3 top-8 bg-sidebar border border-sidebar-border shadow-lg z-10",
           )}
         >
           {collapsed ? (

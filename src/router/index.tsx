@@ -296,6 +296,19 @@ import {
   SessionsPage,
 } from "@/pages";
 import AiInsightsPage from "@/pages/AiInsightsPage";
+import ReportsPage from "@/pages/ReportsPage";
+import AiMatchRecommendationsPage from "@/pages/AiMatchRecommendationsPage";
+import PreferenceMappingPage from "@/pages/PreferenceMappingPage";
+import RiskScoringPage from "@/pages/RiskScoringPage";
+import RolePermissionsPage from "@/pages/RolePermissionsPage";
+import FeatureFlagsPage from "@/pages/FeatureFlagsPage";
+import ApiDocumentationPage from "@/pages/ApiDocumentationPage";
+import ModerationGuidePage from "@/pages/ModerationGuidePage";
+import EscrowPolicyPage from "@/pages/EscrowPolicyPage";
+import LagosGuidelinesPage from "@/pages/LagosGuidelinesPage";
+import OfficerProfilePage from "@/pages/OfficerProfilePage";
+import SecuritySettingsPage from "@/pages/SecuritySettingsPage";
+import TwoFactorSettingsPage from "@/pages/TwoFactorSettingsPage";
 
 // ==================== AUTH GUARD ====================
 function AuthGuard() {
@@ -411,21 +424,21 @@ export const router = createBrowserRouter([
       },
       {
         path: "/reports",
-        element: <ComingSoon title="Reports Page" />,
+        element: <ReportsPage />,
       },
 
       // ========== AI INTELLIGENCE ==========
       {
         path: "/ai/matches",
-        element: <ComingSoon title="AI Match Recommendations" />,
+        element: <AiMatchRecommendationsPage />,
       },
       {
         path: "/ai/preferences",
-        element: <ComingSoon title="Preference Mapping" />,
+        element: <PreferenceMappingPage />,
       },
       {
         path: "/ai/risk",
-        element: <ComingSoon title="Risk Scoring" />,
+        element: <RiskScoringPage/>,
       },
 
       // ========== REGIONAL CONTROL ==========
@@ -493,39 +506,39 @@ export const router = createBrowserRouter([
       },
       {
         path: "/config/roles",
-        element: <ComingSoon title="Role Permissions" />,
+        element: <RolePermissionsPage />,
       },
       {
         path: "/config/features",
-        element: <ComingSoon title="Feature Flags" />,
+        element: <FeatureFlagsPage />,
       },
 
       // ========== DOCUMENTATION ==========
       {
         path: "/docs/api",
-        element: <ComingSoon title="API Documentation" />,
+        element: <ApiDocumentationPage />,
       },
       {
         path: "/docs/moderation",
-        element: <ComingSoon title="Moderation Guide" />,
+        element: <ModerationGuidePage />,
       },
       {
         path: "/docs/escrow",
-        element: <ComingSoon title="Escrow Policy" />,
+        element: <EscrowPolicyPage />,
       },
       {
         path: "/docs/lagos",
-        element: <ComingSoon title="Lagos Guidelines" />,
+        element: <LagosGuidelinesPage />,
       },
 
       // ========== ACCOUNT SETTINGS ==========
       {
         path: "/account/profile",
-        element: <ComingSoon title="Profile Settings" />,
+        element: <OfficerProfilePage />,
       },
       {
         path: "/account/security",
-        element: <ComingSoon title="Security Settings" />,
+        element: <SecuritySettingsPage/>,
       },
       {
         path: "/account/sessions",
@@ -533,7 +546,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "/account/2fa",
-        element: <ComingSoon title="2FA Settings" />,
+        element: <TwoFactorSettingsPage />,
       },
 
       // ========== 404 ==========

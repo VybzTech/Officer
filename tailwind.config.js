@@ -58,6 +58,10 @@ export default {
           green: "#008751",
           white: "#ffffff",
         },
+        brown: {
+          primary: "#482e1a",
+          dark: "#3E2A1B"
+        }
       },
       fontFamily: {
         sans: ["Outfit", "Inter", "system-ui", "-apple-system", "sans-serif"],

@@ -3,8 +3,8 @@
 // ============================================
 
 import { useState, type ReactNode } from "react";
-import { Sidebar } from "./Sidebar";
-import { Header } from "./Header";
+import { Sidebar } from "./navigation/Sidebar";
+import { Header } from "./navigation/Header";
 import { cn } from "@/utils/cn";
 
 interface DashboardLayoutProps {

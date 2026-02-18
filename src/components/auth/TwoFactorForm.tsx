@@ -193,8 +193,8 @@ export function TwoFactorForm() {
             </button>
 
             {resendTimer > 0 ? (
-              <span className="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em]">
-                Resend in <span className="text-sidebar">{resendTimer}s</span>
+              <span className="text-[10px] font-black text-gray-700 uppercase tracking-[0.2em]">
+                Resend in <span className="text-primary">{resendTimer}s</span>
               </span>
             ) : (
               <button

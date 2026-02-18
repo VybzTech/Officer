@@ -1,3 +1,3 @@
 export * from './DashboardLayout';
-export * from './Sidebar';
-export * from './Header';
+export * from './navigation/Sidebar';
+export * from './navigation/Header';

@@ -127,7 +127,7 @@ export function AuthPage() {
           </div>
         </div> */}
       </div>
-      
+
       {/* Cinematic Right Panel */}
       {/* TODO: Add the cinematic Effect here */}
       <div

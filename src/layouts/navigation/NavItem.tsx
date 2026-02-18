@@ -24,7 +24,7 @@ export function NavItemComponent({
         collapsed && "justify-center px-0 py-3 px-6 w-fit",
         isActive
           ? "bg-primary-500/10 text-primary-500 border border-primary-500/20 shadow-sm"
-          : "text-gray-400 hover:text-white hover:bg-sidebar-hover/50",
+          : "text-gray-400 hover:text-brown-primary/80 hover:bg-sidebar-hover/50",
       )}
       title={collapsed ? item.label : undefined}
     >
@@ -33,12 +33,12 @@ export function NavItemComponent({
           "relative flex items-center justify-center transition-transform duration-200 group-active:scale-95",
           isActive
             ? "text-primary-500"
-            : "group-hover:text-white group-hover:scale-110",
+            : "group-hover:text-brown-primary/80 group-hover:scale-110",
         )}
       >
         <Icon
           className={`${isActive ? "h-[22px] w-[22px]" : "h-[21px] w-[21px]"} flex-shrink-0`}
-          strokeWidth={isActive ? 2 : 1.7}
+          strokeWidth={isActive ? 2 : 1.8}
         />
         {isActive && !collapsed && (
           <div className="absolute -left-3 h-4 w-[3px] bg-primary-500 rounded-r-full"></div>
