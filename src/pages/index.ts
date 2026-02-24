@@ -1,18 +1,6 @@
-// export { AuthPage } from "./AuthPage";
-// export { DashboardPage } from "./DashboardPage";
-// export { ListingsPage } from "./ListingsPage";
-// export { VerificationsPage } from "./VerificationsPage";
-// export { DisputesPage } from "./DisputesPage";
-// export { TenantsPage } from "./TenantsPage";
-// export { LandlordsPage } from "./LandlordsPage";
-// export { AgentsPage } from "./AgentsPage";
-// export { RegionalMetricsPage } from "./RegionalMetricsPage";
-
-// ============================================
+ // ============================================
 // URBAN GRAVITY - PAGE EXPORTS
 // Central export point for all pages
-// ============================================
-
 // Authentication
 export { AuthPage } from "./AuthPage";
 
@@ -54,3 +42,19 @@ export { default as AppConfigPage } from "./AppConfigPage";
 export { default as TierSettingsPage } from "./TierSettingsPage";
 // export { default as RolePermissionsPage } from "./RolePermissionsPage";
 export { default as SessionsPage } from "./SessionsPage";
+export { default as ReportsPage } from "./ReportsPage";
+
+
+export { default as AiInsightsPage } from "@/pages/AiInsightsPage";
+export { default as AiMatchRecommendationsPage } from "@/pages/AiMatchRecommendationsPage";
+export { default as PreferenceMappingPage } from "@/pages/PreferenceMappingPage";
+export { default as RiskScoringPage } from "@/pages/RiskScoringPage";
+export { default as RolePermissionsPage } from "@/pages/RolePermissionsPage";
+export { default as FeatureFlagsPage } from "@/pages/FeatureFlagsPage";
+export { default as ApiDocumentationPage } from "@/pages/ApiDocumentationPage";
+export { default as ModerationGuidePage } from "@/pages/ModerationGuidePage";
+export { default as EscrowPolicyPage } from "@/pages/EscrowPolicyPage";
+export { default as LagosGuidelinesPage } from "@/pages/LagosGuidelinesPage";
+export { default as OfficerProfilePage } from "@/pages/OfficerProfilePage";
+export { default as SecuritySettingsPage } from "@/pages/SecuritySettingsPage";
+export { default as TwoFactorSettingsPage } from "@/pages/TwoFactorSettingsPage";
