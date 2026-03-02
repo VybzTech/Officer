@@ -9,6 +9,7 @@ import {
   ChevronLeft,
   ChevronRight,
   X,
+  Lock,
 } from "lucide-react";
 import { useAuthStore } from "@/stores/auth.store";
 import { cn } from "@/utils/cn";
@@ -41,7 +42,7 @@ export function Sidebar({
         "fixed inset-y-0 left-0 z-50 flex flex-col bg-sidebar border-r border-sidebar-border shadow-xl",
         "transform transition-all duration-300 ease-in-out",
         "lg:relative lg:translate-x-0",
-        collapsed ? "w-20" : "w-72",
+        collapsed ? "w-24" : "w-72",
         mobileOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0",
       )}
     >
@@ -59,8 +60,8 @@ export function Sidebar({
               className="animate-scale-in"
               src={logo}
               alt="Urban Gravity"
-              width={55}
-              height={55}
+              width={50}
+              height={50}
             />
             {/* <div className="absolute -inset-1 bg-gradient-to-tr from-primary-500 to-yellow-300 rounded-xl blur opacity-25 group-hover:opacity-50 transition duration-300"></div>
             <div className="relative flex h-10 w-10 items-center justify-center rounded-xl bg-primary-500 shadow-glow-sm">
@@ -78,8 +79,6 @@ export function Sidebar({
               gap={1}
               className="tracking-tighter"
             />
-            
-            
           )}
         </div>
 
@@ -90,7 +89,6 @@ export function Sidebar({
         >
           <X className="h-5 w-5" />
         </button>
-
         {/* Desktop Toggle */}
         <button
           onClick={onToggle}
@@ -101,6 +99,7 @@ export function Sidebar({
           )}
         >
           {collapsed ? (
+            // <Lock className="h-3.5 w-3.5" />
             <ChevronRight className="h-3.5 w-3.5" />
           ) : (
             <ChevronLeft className="h-3.5 w-3.5" />

@@ -14,7 +14,7 @@ import { useAuthStore } from "@/stores/auth.store";
 import { cn } from "@/utils/cn";
 import { getInitials } from "@/utils/format";
 import Input from "@/components/ui/Input";
-import logoImg from "@/assets/images/ug-logo.png"; // Importing the logo
+import David from "@/assets/images/David.jpg";
 
 interface HeaderProps {
   onMenuClick: () => void;
@@ -70,8 +70,29 @@ export function Header({ onMenuClick }: HeaderProps) {
   const unreadCount = notifications.filter((n) => n.unread).length;
 
   return (
-    <header className="flex h-20 items-center justify-between border-b border-gray-100 bg-white px-6 lg:px-8 sticky top-0 z-40 font-hubot">
-      {/* Left Section: Context & Breadcrumbs */}
+    <header className="flex h-20 items-center justify-between border-b border-gray-100 bg-white px-6 lg:px-8 sticky top-0 z-40">
+      {/* Left  Section: Context & Breadcrumbs */}
+      <div className="flex items-center gap-4">
+        {/* Breadcrumbs / Welcome Message */}
+        <div className="hidden xl:flex flex-col items-end mr-4">
+          <p className="text-sm text-gray-600 uppercase font-semibold font-hubot">
+            {currentNav}{" "}
+            {currentSubNav && (
+              <span className="text-gray-400 font-normal">
+                {" "}
+                / {currentSubNav}
+              </span>
+            )}
+          </p>
+          {/* <p className="text-sm font-semibold text-gray-800">
+            Welcome, {officer ? officer.firstName : "Officer"}
+          </p> */}
+        </div>
+
+        <div className="h-6 w-px bg-gray-100 mx-2 hidden sm:block"></div>
+      </div>
+
+      {/* Right Section: System Actions & Profile */}
       <div className="flex items-center gap-6">
         {/* Mobile Menu Toggle */}
         <button
@@ -80,35 +101,15 @@ export function Header({ onMenuClick }: HeaderProps) {
         >
           <Menu className="h-5 w-5" />
         </button>
-
         {/* Global Search Bar */}
-        <div className="hidden md:block w-[400px]">
+        {/* <div className="hidden md:block w-[400px]">
           <Input
             placeholder="Search listings, users or regions..."
             icon={Search}
             inputSize="sm"
             className="bg-gray-50 border-transparent hover:bg-white hover:border-gray-200 focus:bg-white focus:border-primary-500 transition-all"
           />
-        </div>
-      </div>
-
-      {/* Right Section: System Actions & Profile */}
-      <div className="flex items-center gap-4">
-        {/* Breadcrumbs / Welcome Message */}
-        <div className="hidden xl:flex flex-col items-end mr-4">
-          <p className="text-xs font-bold text-gray-400 uppercase tracking-widest">
-            {currentNav}{" "}
-            {currentSubNav && (
-              <span className="text-gray-300">/ {currentSubNav}</span>
-            )}
-          </p>
-          <p className="text-sm font-semibold text-gray-800">
-            Welcome, {officer ? officer.firstName : "Officer"}
-          </p>
-        </div>
-
-        <div className="h-6 w-px bg-gray-100 mx-2 hidden sm:block"></div>
-
+        </div> */}
         {/* Notifications Hub */}
         <div className="relative">
           <button
@@ -124,9 +125,9 @@ export function Header({ onMenuClick }: HeaderProps) {
             )}
             title="Notifications"
           >
-            <Bell className="h-5 w-5" strokeWidth={2.5} />
+            <Bell className="h-[1.4rem] w-[1.4rem]" strokeWidth={2} />
             {unreadCount > 0 && (
-              <span className="absolute top-2.5 right-2.5 flex h-4 w-4 items-center justify-center rounded-full bg-danger ring-2 ring-white text-[9px] font-black text-white shadow-sm">
+              <span className="absolute top-2 right-2 flex h-3 w-3 items-center justify-center rounded-full bg-danger ring-0.5 ring-white text-[9px] font-semibold text-white shadow-sm">
                 {unreadCount}
               </span>
             )}
@@ -212,37 +213,36 @@ export function Header({ onMenuClick }: HeaderProps) {
               setNotificationsOpen(false);
             }}
             className={cn(
-              "flex items-center gap-3 p-1 rounded-2xl transition-all duration-300",
-              profileMenuOpen ? "bg-gray-100" : "hover:bg-gray-50",
+              "flex items-center justify-end gap-3 p-1 pr-7 rounded-2xl shadow-xs transition-all duration-300 mr-7",
+              profileMenuOpen ? "bg-gray-100" : "hover:bg-gray-50 hover:shadow-sm",
             )}
           >
             <div className="relative">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-primary-400 to-primary-600 text-sidebar font-extrabold text-sm shadow-sm ring-2 ring-white overflow-hidden">
-                {/* Use Logo as Avatar for now if no user avatar */}
+              <div className="w-12 h-12 flex items-center justify-center rounded-xl overflow-hidden bg-gradient-to-br from-gray-100 to-gray-400/35">
                 <img
-                  src={logoImg}
+                  src={David}
                   alt="UG"
-                  className="h-full w-full object-cover p-1"
+                  className="h-full w-full object-cover"
                 />
               </div>
-              <div className="absolute -bottom-1 -right-1 h-4 w-4 rounded-full border-2 border-white bg-success"></div>
+              <div className="absolute -bottom-1 -right-1 h-3.5 w-3.5 rounded-full border-2 border-white bg-gradient-to-br from-green-300 to-green-500 "></div>
             </div>
             <div className="hidden lg:block text-left mr-1">
-              <p className="text-xs font-bold text-gray-900 uppercase tracking-tight">
+              <p className="text-xs font-hubot tracking-[0.35px] font-bold text-gray-900 uppercase">
                 {officer
                   ? `${officer.firstName} ${officer.lastName}`
                   : "Officer"}
               </p>
-              <p className="text-[10px] font-bold text-primary-500 tracking-widest leading-none mt-1">
+              <p className="text-[11px] text-primary-500 font-semibold mt-0.5">
                 {officer?.role.replace("_", " ") ?? "OFFICER"}
               </p>
             </div>
-            <ChevronDown
+            {/* <ChevronDown
               className={cn(
                 "h-4 w-4 text-gray-400 transition-transform duration-300",
                 profileMenuOpen && "rotate-180",
               )}
-            />
+            /> */}
           </button>
 
           {/* Premium Account Dropdown */}
@@ -252,7 +252,7 @@ export function Header({ onMenuClick }: HeaderProps) {
                 className="fixed inset-0 z-40"
                 onClick={() => setProfileMenuOpen(false)}
               />
-              <div className="absolute right-0 top-full mt-3 z-50 w-64 rounded-2xl border border-gray-100 bg-white shadow-premium-lg animate-scale-in p-2">
+              <div className="absolute left-0 top-full mt-3 z-50 w-60 rounded-2xl border border-gray-100 bg-white shadow-premium-lg animate-scale-in p-2">
                 <div className="p-4 mb-2 bg-gray-50/50 rounded-xl border border-gray-50">
                   <p className="text-sm font-extrabold text-gray-900 tracking-tight">
                     {officer
@@ -308,7 +308,7 @@ export function Header({ onMenuClick }: HeaderProps) {
               </div>
             </>
           )}
-        </div>
+        </div>{" "}
       </div>
     </header>
   );
