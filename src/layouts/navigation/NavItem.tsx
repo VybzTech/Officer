@@ -20,7 +20,7 @@ export function NavItemComponent({
     <NavLink
       to={item.path}
       className={cn(
-        "group flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all duration-200",
+        "group flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-normal tracking-tight transition-all duration-200",
         collapsed && "justify-center px-0 py-3 px-6 w-fit",
         isActive
           ? "bg-primary-500/10 text-primary-500 border border-primary-500/20 shadow-sm"

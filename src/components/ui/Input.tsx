@@ -7,7 +7,7 @@ import {
 import { Eye, EyeOff, type LucideIcon } from "lucide-react";
 import * as LucideIcons from "lucide-react";
 
-interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
+interface InputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'prefix'> {
   /** Label text displayed above the input */
   label?: string;
   /** Error message displayed below the input */
@@ -148,14 +148,13 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
               text-[#1A1A1A] 
               placeholder:text-[#999]
               transition-all duration-200
-              outline-none
+              focus:outline-none
               disabled:bg-[#F5F5F5] disabled:cursor-not-allowed disabled:text-[#999]
-              ${
-                error
-                  ? "border-[#F44336] focus:border-[#F44336] focus:ring-2 focus:ring-[#F44336]/20"
-                  : focused
-                    ? "border-[#FFCA08] ring-2 ring-[#FFCA08]/20"
-                    : "border-[#E0E0E0] hover:border-[#FFCA08]/50"
+              ${error
+                ? "border-[#F44336] focus:border-[#F44336]"
+                : focused
+                  ? "border-[#FFCA08]"
+                  : "border-[#E0E0E0] hover:border-[#FFCA08]/50"
               }
               ${className}
             `}
@@ -205,9 +204,8 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
           </div>
           {showCharCount && (
             <p
-              className={`text-xs font-medium ml-2 ${
-                currentLength > maxLength! ? "text-[#F44336]" : "text-[#666]"
-              }`}
+              className={`text-xs font-medium ml-2 ${currentLength > maxLength! ? "text-[#F44336]" : "text-[#666]"
+                }`}
             >
               {currentLength}/{maxLength}
             </p>

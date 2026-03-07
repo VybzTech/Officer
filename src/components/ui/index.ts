@@ -4,4 +4,6 @@ export { default as Input } from './Input';
 export { StatusBadge, TierBadge } from './Badge';
 export { default as Toggle } from './Toggle';
 export { default as Loader } from './Loader';
+export { Tile } from './Tile';
+export { BigHeader, SmallHeader } from './Typography';
 // export { default as Card } from './Card';

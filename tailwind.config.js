@@ -11,12 +11,14 @@ export default {
           200: "#fde68a",
           300: "#fcd34d",
           400: "#fbbf24",
-          500: "#FFCA08", // Brand Primary (Fixed to user request)
-          600: "#d97706",
-          700: "#b45309",
-          800: "#92400e",
-          900: "#78350f",
-          950: "#451a03",
+          500: "#ffd608", // Brand Primary (Fixed to user request)
+          550: "#FFCA08", // Brand Primary (Fixed to user request)
+          600: "#f9bf00",
+          700: "#d99a06",
+          800: "#b45309",
+          900: "#92400e",
+          950: "#78350f",
+          1000: "#451a03",
         },
         // Dashboard specific colors (Brown/Black aesthetic)
         sidebar: {
@@ -46,7 +48,7 @@ export default {
         warning: {
           DEFAULT: "#f59e0b",
           light: "#fbbf24",
-          dark: "#d97706",
+          dark: "#d99a06",
         },
         danger: {
           DEFAULT: "#ef4444",
@@ -58,7 +60,29 @@ export default {
           green: "#008751",
           white: "#ffffff",
         },
+        gold: {
+          50: "#fffdf0",
+          100: "#fff9c4",
+          200: "#fff28a",
+          300: "#ffea4d",
+          400: "#ffe01a",
+          500: "#FFD700", // Solid Gold
+          600: "#cca300",
+          700: "#997a00",
+          800: "#665200",
+          900: "#332900",
+        },
         brown: {
+          50: "#fdf8f6",
+          100: "#f2e8e5",
+          200: "#eaddd7",
+          300: "#e0cec7",
+          400: "#d2bab0",
+          500: "#482e1a", // Deep Brown
+          600: "#3e2a1b",
+          700: "#2f2014",
+          800: "#1f150d",
+          900: "#100a06",
           primary: "#482e1a",
           dark: "#3E2A1B"
         }
