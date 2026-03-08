@@ -3,12 +3,11 @@
 // Manage subscription tier configurations
 // ============================================
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import {
   Crown,
   Star,
   Sparkles,
-  Users,
   Home,
   Phone,
   Shield,
@@ -60,7 +59,7 @@ export function TierSettingsPage() {
     fetchTierConfigs();
   }, [fetchTierConfigs]);
 
-  const totalAccounts = 73; // Mock data - would come from analytics
+  // Mock data - would come from analytics
 
   if (isLoading.tierConfigs) {
     return (
@@ -83,8 +82,8 @@ export function TierSettingsPage() {
         <Button
           variant="outline"
           onClick={() => fetchTierConfigs()}
-          leftIcon={<RefreshCw className="h-4 w-4" />}
         >
+          <RefreshCw className="h-4 w-4 mr-2" />
           Refresh
         </Button>
       </div>
@@ -341,8 +340,8 @@ function TierCard({ tier }: { tier: TierConfig }) {
         <Button
           variant="outline"
           className="w-full mt-4"
-          leftIcon={<Edit3 className="h-4 w-4" />}
         >
+          <Edit3 className="h-4 w-4 mr-2" />
           Edit Tier
         </Button>
       </CardContent>

@@ -1,23 +1,22 @@
 import { type ReactNode } from "react";
 import { cn } from "@/utils/cn";
+import { HubotH1 } from "./HubotText";
 
 interface TypographyProps {
     children: ReactNode;
     className?: string;
     useHubot?: boolean;
+    subtitle?: string;
 }
 
-export function BigHeader({ children, className, useHubot = true }: TypographyProps) {
+export function BigHeader({ children, className, useHubot: _useHubot = true, subtitle }: TypographyProps) {
     return (
-        <h1
-            className={cn(
-                "text-3xl md:text-4xl font-black tracking-tight text-gray-900",
-                useHubot ? "font-hubot" : "font-sans",
-                className
+        <div className="flex flex-col">
+            <HubotH1 size={42} children={children} className={cn("font-extrabold", className)} />
+            {subtitle && (
+                <p className="text-gray-500 font-semibold mt-1">{subtitle}</p>
             )}
-        >
-            {children}
-        </h1>
+        </div>
     );
 }
 
@@ -26,7 +25,7 @@ export function SmallHeader({ children, className, useHubot = false }: Typograph
         <h3
             className={cn(
                 "text-lg font-bold text-gray-800 uppercase tracking-widest",
-                useHubot ? "font-hubot" : "font-sans",
+                useHubot ? "font-hubot" : "font-poppins",
                 className
             )}
         >

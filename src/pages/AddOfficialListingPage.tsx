@@ -329,7 +329,7 @@ export function AddOfficialListingPage() {
               <p className="text-xs text-gray-500 mt-1">
                 Min 4 images, Max 20. JPG, PNG supported
               </p>
-              <Button className="mt-4" leftIcon={<Upload className="h-4 w-4" />}>
+              <Button className="mt-4">
                 Choose Files
               </Button>
             </div>
@@ -455,7 +455,6 @@ export function AddOfficialListingPage() {
             variant="primary"
             loading={isLoading}
             onClick={handleSubmit}
-            leftIcon={<Save className="h-4 w-4" />}
           >
             Publish Listing
           </Button>

@@ -254,4 +254,4 @@ export const useFeatureFlagsStore = create<FeatureFlagsState & FeatureFlagsActio
 
 // ==================== SELECTORS ====================
 export const selectFlags = (state: FeatureFlagsState) => state.flags;
-export const selectIsLoading = (state: FeatureFlagsState) => state.isLoading;
+export const selectFeatureFlagsIsLoading = (state: FeatureFlagsState) => state.isLoading;

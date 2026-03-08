@@ -152,7 +152,7 @@ export function ApiDocumentationPage() {
         <div className="bg-gray-900 text-gray-100 p-4 rounded-lg text-xs font-mono overflow-x-auto mb-4">
           <span className="text-warning-400">Authorization:</span> Bearer YOUR_API_KEY
         </div>
-        <Button variant="primary" size="sm" leftIcon={<Zap className="h-4 w-4" />}>
+        <Button variant="primary" size="sm">
           Get API Key
         </Button>
       </Card>
@@ -286,13 +286,6 @@ export function ApiDocumentationPage() {
                   <Button
                     variant="ghost"
                     size="sm"
-                    leftIcon={
-                      copiedId === "code" ? (
-                        <Check className="h-4 w-4 text-success-600" />
-                      ) : (
-                        <Copy className="h-4 w-4" />
-                      )
-                    }
                     onClick={() =>
                       handleCopy(CODE_EXAMPLES[selectedLanguage], "code")
                     }

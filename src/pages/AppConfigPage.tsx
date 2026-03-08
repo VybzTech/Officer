@@ -115,7 +115,6 @@ export function AppConfigPage() {
         <Button
           variant="outline"
           onClick={() => fetchAppConfigs()}
-          leftIcon={<RefreshCw className="h-4 w-4" />}
         >
           Refresh
         </Button>
@@ -138,7 +137,6 @@ export function AppConfigPage() {
               variant={selectedCategory === cat ? "primary" : "outline"}
               size="sm"
               onClick={() => setSelectedCategory(cat)}
-              leftIcon={<Icon className="h-4 w-4" />}
             >
               {cat.charAt(0) + cat.slice(1).toLowerCase()}
             </Button>
@@ -214,7 +212,6 @@ export function AppConfigPage() {
                         size="sm"
                         onClick={() => handleSave(config.id)}
                         loading={isSaving}
-                        leftIcon={<Save className="h-3 w-3" />}
                       >
                         Save
                       </Button>

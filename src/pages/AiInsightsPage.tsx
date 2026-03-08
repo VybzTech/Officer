@@ -160,7 +160,7 @@ export function AiInsightsPage() {
           </p>
         </div>
         <div className="flex items-center gap-2">
-          <Button variant="outline" size="sm" leftIcon={<Download className="h-4 w-4" />}>
+          <Button variant="outline" size="sm">
             Export Report
           </Button>
         </div>
@@ -242,7 +242,6 @@ export function AiInsightsPage() {
               onClick={() =>
                 setSelectedCategory(selectedCategory === cat.id ? null : cat.id)
               }
-              leftIcon={<cat.icon className="h-3 w-3" />}
             >
               {cat.label}
             </Button>

@@ -15,12 +15,11 @@ import {
   Crown,
   Sparkles,
   ArrowRight,
-  User,
   CreditCard,
   Eye,
   AlertTriangle,
 } from "lucide-react";
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/Card";
+import { Card } from "@/components/ui/Card";
 import Button from "@/components/ui/Button";
 import Input from "@/components/ui/Input";
 import { Badge } from "@/components/ui/Badge";
@@ -29,7 +28,7 @@ import { useAuthStore } from "@/stores/auth.store";
 import { cn } from "@/utils/cn";
 import { formatNaira, formatDate } from "@/utils/format";
 import Loader from "@/components/ui/Loader";
-import type { RequestStatus, SubscriptionTier } from "@/data/mockDatabase";
+import type { RequestStatus } from "@/data/mockDatabase";
 
 const STATUS_CONFIG = {
   PENDING: { color: "warning", icon: Clock, label: "Pending Review" },
@@ -44,11 +43,7 @@ const TIER_ICONS = {
   PREMIER: Sparkles,
 };
 
-const TIER_COLORS = {
-  FREE: "default",
-  PRO: "warning",
-  PREMIER: "success",
-};
+
 
 export function UpgradesPage() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -121,8 +116,8 @@ export function UpgradesPage() {
         <Button
           variant="outline"
           onClick={() => fetchSubscriptionUpgrades()}
-          leftIcon={<RefreshCw className="h-4 w-4" />}
         >
+          <RefreshCw className="h-4 w-4 mr-2" />
           Refresh
         </Button>
       </div>
@@ -215,8 +210,8 @@ export function UpgradesPage() {
                   variant={statusFilter === status ? "primary" : "outline"}
                   size="sm"
                   onClick={() => setStatusFilter(status)}
-                  leftIcon={<Icon className="h-4 w-4" />}
                 >
+                  <Icon className="h-4 w-4 mr-2" />
                   {config.label}
                 </Button>
               );
@@ -325,19 +320,19 @@ export function UpgradesPage() {
                         <Button
                           size="sm"
                           onClick={() => handleApprove(upgrade.id)}
-                          loading={isProcessing}
-                          leftIcon={<CheckCircle2 className="h-4 w-4" />}
+                          loading={!!isProcessing}
                         >
+                          <CheckCircle2 className="h-4 w-4 mr-2" />
                           Approve
                         </Button>
                         <Button
                           size="sm"
                           variant="outline"
                           onClick={() => handleReject(upgrade.id)}
-                          disabled={isProcessing}
+                          disabled={!!isProcessing}
                           className="text-error border-error hover:bg-error/5"
-                          leftIcon={<XCircle className="h-4 w-4" />}
                         >
+                          <XCircle className="h-4 w-4 mr-2" />
                           Reject
                         </Button>
                       </>
@@ -345,8 +340,8 @@ export function UpgradesPage() {
                     <Button
                       size="sm"
                       variant="ghost"
-                      leftIcon={<Eye className="h-4 w-4" />}
                     >
+                      <Eye className="h-4 w-4 mr-2" />
                       View User
                     </Button>
                   </div>

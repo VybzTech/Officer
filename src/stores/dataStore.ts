@@ -28,7 +28,6 @@ import type {
   DisputeStatus,
   EscrowStatus,
 } from "@/data/mockDatabase";
-import { mockDatabase } from "@/data/mockDatabase";
 
 // ==================== STATE INTERFACE ====================
 
@@ -54,9 +53,9 @@ interface DataState {
   featureFlags: FeatureFlag[];
   tierConfigs: TierConfig[];
   appConfigs: AppConfig[];
-  regions: typeof mockDatabase.regions;
-  lgas: typeof mockDatabase.lgas;
-  notifications: typeof mockDatabase.notifications;
+  regions: readonly any[];
+  lgas: readonly any[];
+  notifications: readonly any[];
 
   // Analytics
   analytics: {
@@ -222,7 +221,7 @@ export const useDataStore = create<DataState>((set, get) => ({
     if (response.success) {
       set((s) => ({ users: response.data, isLoading: { ...s.isLoading, users: false } }));
     } else {
-      set((s) => ({ error: response.error, isLoading: { ...s.isLoading, users: false } }));
+      set((s) => ({ error: response.error || null, isLoading: { ...s.isLoading, users: false } }));
     }
   },
 
@@ -232,7 +231,7 @@ export const useDataStore = create<DataState>((set, get) => ({
     if (response.success) {
       set((s) => ({ landlords: response.data, isLoading: { ...s.isLoading, landlords: false } }));
     } else {
-      set((s) => ({ error: response.error, isLoading: { ...s.isLoading, landlords: false } }));
+      set((s) => ({ error: response.error || null, isLoading: { ...s.isLoading, landlords: false } }));
     }
   },
 
@@ -242,7 +241,7 @@ export const useDataStore = create<DataState>((set, get) => ({
     if (response.success) {
       set((s) => ({ tenants: response.data, isLoading: { ...s.isLoading, tenants: false } }));
     } else {
-      set((s) => ({ error: response.error, isLoading: { ...s.isLoading, tenants: false } }));
+      set((s) => ({ error: response.error || null, isLoading: { ...s.isLoading, tenants: false } }));
     }
   },
 
@@ -252,7 +251,7 @@ export const useDataStore = create<DataState>((set, get) => ({
     if (response.success) {
       set((s) => ({ agents: response.data, isLoading: { ...s.isLoading, agents: false } }));
     } else {
-      set((s) => ({ error: response.error, isLoading: { ...s.isLoading, agents: false } }));
+      set((s) => ({ error: response.error || null, isLoading: { ...s.isLoading, agents: false } }));
     }
   },
 
@@ -262,7 +261,7 @@ export const useDataStore = create<DataState>((set, get) => ({
     if (response.success) {
       set((s) => ({ listings: response.data, isLoading: { ...s.isLoading, listings: false } }));
     } else {
-      set((s) => ({ error: response.error, isLoading: { ...s.isLoading, listings: false } }));
+      set((s) => ({ error: response.error || null, isLoading: { ...s.isLoading, listings: false } }));
     }
   },
 
@@ -272,7 +271,7 @@ export const useDataStore = create<DataState>((set, get) => ({
     if (response.success) {
       set((s) => ({ disputes: response.data, isLoading: { ...s.isLoading, disputes: false } }));
     } else {
-      set((s) => ({ error: response.error, isLoading: { ...s.isLoading, disputes: false } }));
+      set((s) => ({ error: response.error || null, isLoading: { ...s.isLoading, disputes: false } }));
     }
   },
 
@@ -282,7 +281,7 @@ export const useDataStore = create<DataState>((set, get) => ({
     if (response.success) {
       set((s) => ({ verificationRequests: response.data, isLoading: { ...s.isLoading, verifications: false } }));
     } else {
-      set((s) => ({ error: response.error, isLoading: { ...s.isLoading, verifications: false } }));
+      set((s) => ({ error: response.error || null, isLoading: { ...s.isLoading, verifications: false } }));
     }
   },
 
@@ -292,7 +291,7 @@ export const useDataStore = create<DataState>((set, get) => ({
     if (response.success) {
       set((s) => ({ subscriptionUpgrades: response.data, isLoading: { ...s.isLoading, upgrades: false } }));
     } else {
-      set((s) => ({ error: response.error, isLoading: { ...s.isLoading, upgrades: false } }));
+      set((s) => ({ error: response.error || null, isLoading: { ...s.isLoading, upgrades: false } }));
     }
   },
 
@@ -302,7 +301,7 @@ export const useDataStore = create<DataState>((set, get) => ({
     if (response.success) {
       set((s) => ({ escrowAccounts: response.data, isLoading: { ...s.isLoading, escrow: false } }));
     } else {
-      set((s) => ({ error: response.error, isLoading: { ...s.isLoading, escrow: false } }));
+      set((s) => ({ error: response.error || null, isLoading: { ...s.isLoading, escrow: false } }));
     }
   },
 
@@ -312,7 +311,7 @@ export const useDataStore = create<DataState>((set, get) => ({
     if (response.success) {
       set((s) => ({ transactions: response.data, isLoading: { ...s.isLoading, transactions: false } }));
     } else {
-      set((s) => ({ error: response.error, isLoading: { ...s.isLoading, transactions: false } }));
+      set((s) => ({ error: response.error || null, isLoading: { ...s.isLoading, transactions: false } }));
     }
   },
 
@@ -322,7 +321,7 @@ export const useDataStore = create<DataState>((set, get) => ({
     if (response.success) {
       set((s) => ({ payoutRequests: response.data, isLoading: { ...s.isLoading, payouts: false } }));
     } else {
-      set((s) => ({ error: response.error, isLoading: { ...s.isLoading, payouts: false } }));
+      set((s) => ({ error: response.error || null, isLoading: { ...s.isLoading, payouts: false } }));
     }
   },
 
@@ -332,7 +331,7 @@ export const useDataStore = create<DataState>((set, get) => ({
     if (response.success) {
       set((s) => ({ refundRequests: response.data, isLoading: { ...s.isLoading, refunds: false } }));
     } else {
-      set((s) => ({ error: response.error, isLoading: { ...s.isLoading, refunds: false } }));
+      set((s) => ({ error: response.error || null, isLoading: { ...s.isLoading, refunds: false } }));
     }
   },
 
@@ -342,7 +341,7 @@ export const useDataStore = create<DataState>((set, get) => ({
     if (response.success) {
       set((s) => ({ activityLogs: response.data, isLoading: { ...s.isLoading, activityLogs: false } }));
     } else {
-      set((s) => ({ error: response.error, isLoading: { ...s.isLoading, activityLogs: false } }));
+      set((s) => ({ error: response.error || null, isLoading: { ...s.isLoading, activityLogs: false } }));
     }
   },
 
@@ -352,7 +351,7 @@ export const useDataStore = create<DataState>((set, get) => ({
     if (response.success) {
       set((s) => ({ auditLogs: response.data, isLoading: { ...s.isLoading, auditLogs: false } }));
     } else {
-      set((s) => ({ error: response.error, isLoading: { ...s.isLoading, auditLogs: false } }));
+      set((s) => ({ error: response.error || null, isLoading: { ...s.isLoading, auditLogs: false } }));
     }
   },
 
@@ -362,7 +361,7 @@ export const useDataStore = create<DataState>((set, get) => ({
     if (response.success) {
       set((s) => ({ apiLogs: response.data, isLoading: { ...s.isLoading, apiLogs: false } }));
     } else {
-      set((s) => ({ error: response.error, isLoading: { ...s.isLoading, apiLogs: false } }));
+      set((s) => ({ error: response.error || null, isLoading: { ...s.isLoading, apiLogs: false } }));
     }
   },
 
@@ -372,7 +371,7 @@ export const useDataStore = create<DataState>((set, get) => ({
     if (response.success) {
       set((s) => ({ errorLogs: response.data, isLoading: { ...s.isLoading, errorLogs: false } }));
     } else {
-      set((s) => ({ error: response.error, isLoading: { ...s.isLoading, errorLogs: false } }));
+      set((s) => ({ error: response.error || null, isLoading: { ...s.isLoading, errorLogs: false } }));
     }
   },
 
@@ -382,7 +381,7 @@ export const useDataStore = create<DataState>((set, get) => ({
     if (response.success) {
       set((s) => ({ sessions: response.data, isLoading: { ...s.isLoading, sessions: false } }));
     } else {
-      set((s) => ({ error: response.error, isLoading: { ...s.isLoading, sessions: false } }));
+      set((s) => ({ error: response.error || null, isLoading: { ...s.isLoading, sessions: false } }));
     }
   },
 
@@ -392,7 +391,7 @@ export const useDataStore = create<DataState>((set, get) => ({
     if (response.success) {
       set((s) => ({ featureFlags: response.data, isLoading: { ...s.isLoading, featureFlags: false } }));
     } else {
-      set((s) => ({ error: response.error, isLoading: { ...s.isLoading, featureFlags: false } }));
+      set((s) => ({ error: response.error || null, isLoading: { ...s.isLoading, featureFlags: false } }));
     }
   },
 
@@ -402,7 +401,7 @@ export const useDataStore = create<DataState>((set, get) => ({
     if (response.success) {
       set((s) => ({ tierConfigs: response.data, isLoading: { ...s.isLoading, tierConfigs: false } }));
     } else {
-      set((s) => ({ error: response.error, isLoading: { ...s.isLoading, tierConfigs: false } }));
+      set((s) => ({ error: response.error || null, isLoading: { ...s.isLoading, tierConfigs: false } }));
     }
   },
 
@@ -412,7 +411,7 @@ export const useDataStore = create<DataState>((set, get) => ({
     if (response.success) {
       set((s) => ({ appConfigs: response.data, isLoading: { ...s.isLoading, appConfigs: false } }));
     } else {
-      set((s) => ({ error: response.error, isLoading: { ...s.isLoading, appConfigs: false } }));
+      set((s) => ({ error: response.error || null, isLoading: { ...s.isLoading, appConfigs: false } }));
     }
   },
 
@@ -422,7 +421,7 @@ export const useDataStore = create<DataState>((set, get) => ({
     if (response.success) {
       set((s) => ({ analytics: response.data, isLoading: { ...s.isLoading, analytics: false } }));
     } else {
-      set((s) => ({ error: response.error, isLoading: { ...s.isLoading, analytics: false } }));
+      set((s) => ({ error: response.error || null, isLoading: { ...s.isLoading, analytics: false } }));
     }
   },
 
@@ -432,7 +431,7 @@ export const useDataStore = create<DataState>((set, get) => ({
     if (response.success) {
       set((s) => ({ notifications: response.data, isLoading: { ...s.isLoading, notifications: false } }));
     } else {
-      set((s) => ({ error: response.error, isLoading: { ...s.isLoading, notifications: false } }));
+      set((s) => ({ error: response.error || null, isLoading: { ...s.isLoading, notifications: false } }));
     }
   },
 
@@ -464,7 +463,7 @@ export const useDataStore = create<DataState>((set, get) => ({
       }));
       return true;
     }
-    set({ error: response.error });
+    set({ error: response.error || null });
     return false;
   },
 
@@ -480,7 +479,7 @@ export const useDataStore = create<DataState>((set, get) => ({
       }));
       return true;
     }
-    set({ error: response.error });
+    set({ error: response.error || null });
     return false;
   },
 
@@ -496,7 +495,7 @@ export const useDataStore = create<DataState>((set, get) => ({
       }));
       return true;
     }
-    set({ error: response.error });
+    set({ error: response.error || null });
     return false;
   },
 
@@ -512,7 +511,7 @@ export const useDataStore = create<DataState>((set, get) => ({
       }));
       return true;
     }
-    set({ error: response.error });
+    set({ error: response.error || null });
     return false;
   },
 
@@ -526,7 +525,7 @@ export const useDataStore = create<DataState>((set, get) => ({
       }));
       return true;
     }
-    set({ error: response.error });
+    set({ error: response.error || null });
     return false;
   },
 
@@ -540,7 +539,7 @@ export const useDataStore = create<DataState>((set, get) => ({
       }));
       return true;
     }
-    set({ error: response.error });
+    set({ error: response.error || null });
     return false;
   },
 
@@ -554,7 +553,7 @@ export const useDataStore = create<DataState>((set, get) => ({
       }));
       return true;
     }
-    set({ error: response.error });
+    set({ error: response.error || null });
     return false;
   },
 
@@ -568,7 +567,7 @@ export const useDataStore = create<DataState>((set, get) => ({
       }));
       return true;
     }
-    set({ error: response.error });
+    set({ error: response.error || null });
     return false;
   },
 
@@ -582,7 +581,7 @@ export const useDataStore = create<DataState>((set, get) => ({
       }));
       return true;
     }
-    set({ error: response.error });
+    set({ error: response.error || null });
     return false;
   },
 
@@ -596,7 +595,7 @@ export const useDataStore = create<DataState>((set, get) => ({
       }));
       return true;
     }
-    set({ error: response.error });
+    set({ error: response.error || null });
     return false;
   },
 
@@ -610,7 +609,7 @@ export const useDataStore = create<DataState>((set, get) => ({
       }));
       return true;
     }
-    set({ error: response.error });
+    set({ error: response.error || null });
     return false;
   },
 
@@ -624,7 +623,7 @@ export const useDataStore = create<DataState>((set, get) => ({
       }));
       return true;
     }
-    set({ error: response.error });
+    set({ error: response.error || null });
     return false;
   },
 
@@ -641,7 +640,7 @@ export const useDataStore = create<DataState>((set, get) => ({
       }));
       return true;
     }
-    set({ error: response.error });
+    set({ error: response.error || null });
     return false;
   },
 
@@ -658,7 +657,7 @@ export const useDataStore = create<DataState>((set, get) => ({
       }));
       return true;
     }
-    set({ error: response.error });
+    set({ error: response.error || null });
     return false;
   },
 
@@ -672,7 +671,7 @@ export const useDataStore = create<DataState>((set, get) => ({
       }));
       return true;
     }
-    set({ error: response.error });
+    set({ error: response.error || null });
     return false;
   },
 
@@ -686,7 +685,7 @@ export const useDataStore = create<DataState>((set, get) => ({
       }));
       return true;
     }
-    set({ error: response.error });
+    set({ error: response.error || null });
     return false;
   },
 

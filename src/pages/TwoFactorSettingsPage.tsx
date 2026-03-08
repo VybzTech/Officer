@@ -33,7 +33,7 @@ const TRUSTED_DEVICES = [
 
 // --- Sub-components ---
 
-const MethodCard = ({ id, name, desc, icon: Icon, isActive, onSetup }: any) => (
+const MethodCard = ({ name, desc, icon: Icon, isActive, onSetup }: any) => (
   <Card
     padding="md"
     className={cn(
@@ -96,17 +96,17 @@ export function TwoFactorSettingsPage() {
         <div className="lg:col-span-3 space-y-6">
           <section className="space-y-3">
             <h2 className="text-sm font-bold text-slate-400 uppercase tracking-widest px-1">Primary Methods</h2>
-            <MethodCard 
-              name="Authenticator App" 
-              desc="Google Authenticator, Authy, or Microsoft Authenticator" 
-              icon={Smartphone} 
-              isActive={true} 
+            <MethodCard
+              name="Authenticator App"
+              desc="Google Authenticator, Authy, or Microsoft Authenticator"
+              icon={Smartphone}
+              isActive={true}
             />
-            <MethodCard 
-              name="SMS Verification" 
-              desc="Receive a 6-digit code via text message" 
-              icon={Mail} 
-              isActive={false} 
+            <MethodCard
+              name="SMS Verification"
+              desc="Receive a 6-digit code via text message"
+              icon={Mail}
+              isActive={false}
             />
           </section>
 
@@ -121,8 +121,8 @@ export function TwoFactorSettingsPage() {
                 <p className="text-xs text-slate-500 mt-1">Scan the QR code or use the secret key: <code className="text-primary-600 font-bold bg-white px-1">UG-992-KLA</code></p>
               </div>
               <div className="w-full max-w-[240px]">
-                <Input 
-                  placeholder="Enter 6-digit code" 
+                <Input
+                  placeholder="Enter 6-digit code"
                   className="text-center text-xl tracking-[0.5em] font-bold h-12"
                   maxLength={6}
                   value={otp}
@@ -160,10 +160,11 @@ export function TwoFactorSettingsPage() {
                   </div>
                 ))}
               </div>
-              
+
               {!revealCodes && (
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <Button variant="outline" size="sm" className="bg-white" leftIcon={<Eye className="h-4 w-4"/>} onClick={() => setRevealCodes(true)}>
+                  <Button variant="outline" size="sm" className="bg-white" onClick={() => setRevealCodes(true)}>
+                    <Eye className="h-4 w-4 mr-2" />
                     Reveal Codes
                   </Button>
                 </div>
@@ -182,7 +183,7 @@ export function TwoFactorSettingsPage() {
                   <p className="text-sm font-bold text-slate-700">{device.name}</p>
                   <p className="text-[10px] text-slate-400">{device.lastUsed}</p>
                 </div>
-                <button className="text-slate-300 hover:text-red-500 transition-colors"><Trash2 className="h-4 w-4"/></button>
+                <button className="text-slate-300 hover:text-red-500 transition-colors"><Trash2 className="h-4 w-4" /></button>
               </div>
             ))}
           </section>

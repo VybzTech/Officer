@@ -11,19 +11,16 @@ import {
   Users,
   Home,
   TrendingUp,
-  Building2,
-  Filter,
   Eye,
-  ChevronRight,
 } from "lucide-react";
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/Card";
+import { Card } from "@/components/ui/Card";
 import Button from "@/components/ui/Button";
 import Input from "@/components/ui/Input";
 import { Badge } from "@/components/ui/Badge";
 import { useDataStore } from "@/stores/dataStore";
-import { cn } from "@/utils/cn";
 import { formatNumber } from "@/utils/format";
 import Loader from "@/components/ui/Loader";
+import { BigHeader } from "@/components/ui/Typography";
 
 export function LgasPage() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -89,17 +86,14 @@ export function LgasPage() {
       {/* Page Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">
+          <BigHeader useHubot subtitle="View and manage the 20 LGAs of Lagos State" className="text-3xl text-gray-900">
             Local Government Areas
-          </h1>
-          <p className="text-gray-500 mt-1">
-            View and manage the 20 LGAs of Lagos State
-          </p>
+          </BigHeader>
         </div>
         <Button
           variant="outline"
           onClick={() => fetchLgas()}
-          leftIcon={<RefreshCw className="h-4 w-4" />}
+          icon={RefreshCw}
         >
           Refresh
         </Button>
@@ -278,7 +272,7 @@ export function LgasPage() {
                       <Button
                         size="sm"
                         variant="ghost"
-                        leftIcon={<Eye className="h-4 w-4" />}
+                        icon={Eye}
                       >
                         View
                       </Button>

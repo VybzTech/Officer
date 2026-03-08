@@ -68,7 +68,6 @@ export function FeatureFlagsPage() {
         <Button
           variant="outline"
           onClick={() => fetchFeatureFlags()}
-          leftIcon={<RefreshCw className="h-4 w-4" />}
         >
           Refresh
         </Button>

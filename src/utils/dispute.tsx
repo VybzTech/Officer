@@ -1,5 +1,5 @@
 import { Input, Button } from "@/components";
-import type { Card } from "@/components/ui/Card";
+import { Card } from "@/components/ui/Card";
 import { AlertTriangle } from "lucide-react";
 import { useState } from "react";
 

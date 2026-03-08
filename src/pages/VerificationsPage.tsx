@@ -16,14 +16,11 @@ import {
   User,
   Briefcase,
   Building,
-  ChevronLeft,
-  ChevronRight,
   Download,
-  ExternalLink,
 } from "lucide-react";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/Card";
 import Button from "@/components/ui/Button";
-import { Badge, StatusBadge, TierBadge } from "@/components/ui/Badge";
+import { StatusBadge, TierBadge } from "@/components/ui/Badge";
 import { PermissionGate } from "@/components/guards";
 import { cn } from "@/utils/cn";
 import { formatDate, formatRelativeTime } from "@/utils/format";
@@ -154,7 +151,7 @@ export function VerificationsPage() {
                 className={cn(
                   "flex h-10 w-10 items-center justify-center rounded-lg",
                   stat.color === "primary" &&
-                    "bg-primary-500/10 text-primary-400",
+                  "bg-primary-500/10 text-primary-400",
                   stat.color === "warning" && "bg-warning/10 text-warning",
                   stat.color === "success" && "bg-success/10 text-success",
                   stat.color === "danger" && "bg-danger/10 text-danger",
@@ -179,7 +176,8 @@ export function VerificationsPage() {
             className="w-full h-10 rounded-lg border border-sidebar-border bg-surface-raised pl-10 pr-4 text-white placeholder:text-gray-500 focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500/20"
           />
         </div>
-        <Button variant="outline" leftIcon={<Filter className="h-4 w-4" />}>
+        <Button variant="outline">
+          <Filter className="h-4 w-4 mr-2" />
           Filters
         </Button>
       </div>
@@ -221,7 +219,7 @@ export function VerificationsPage() {
                 onClick={() => setSelectedVerification(verification)}
                 className={cn(
                   selectedVerification?.id === verification.id &&
-                    "border-primary-500",
+                  "border-primary-500",
                 )}
               >
                 <div className="flex items-start gap-4">
@@ -230,11 +228,11 @@ export function VerificationsPage() {
                     className={cn(
                       "flex h-12 w-12 items-center justify-center rounded-lg",
                       verification.userType === "TENANT" &&
-                        "bg-blue-500/10 text-blue-400",
+                      "bg-blue-500/10 text-blue-400",
                       verification.userType === "LANDLORD" &&
-                        "bg-success/10 text-success",
+                      "bg-success/10 text-success",
                       verification.userType === "AGENT" &&
-                        "bg-warning/10 text-warning",
+                      "bg-warning/10 text-warning",
                     )}
                   >
                     <TypeIcon className="h-6 w-6" />
@@ -273,7 +271,7 @@ export function VerificationsPage() {
                       {verification.status === "PENDING" && (
                         <div className="flex items-center gap-2">
                           <PermissionGate permission="APPROVE_VERIFICATION">
-                            <Button size="sm" variant="success">
+                            <Button size="sm" variant="primary">
                               <CheckCircle2 className="h-4 w-4 mr-1" />
                               Approve
                             </Button>
@@ -439,7 +437,7 @@ export function VerificationsPage() {
                 {selectedVerification.status === "PENDING" && (
                   <div className="flex gap-3 pt-4 border-t border-sidebar-border">
                     <PermissionGate permission="APPROVE_VERIFICATION">
-                      <Button variant="success" className="flex-1">
+                      <Button variant="primary" className="flex-1">
                         <CheckCircle2 className="h-4 w-4 mr-2" />
                         Approve
                       </Button>

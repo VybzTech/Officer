@@ -8,20 +8,16 @@ import {
   ArrowUpRight,
   ArrowDownLeft,
   ArrowLeftRight,
-  RefreshCw as RefreshIcon,
   CreditCard,
   Search,
   RefreshCw,
   Clock,
   CheckCircle2,
   XCircle,
-  AlertCircle,
-  Filter,
   Download,
   TrendingUp,
-  TrendingDown,
 } from "lucide-react";
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/Card";
+import { Card } from "@/components/ui/Card";
 import Button from "@/components/ui/Button";
 import Input from "@/components/ui/Input";
 import { Badge } from "@/components/ui/Badge";
@@ -29,13 +25,13 @@ import { useDataStore } from "@/stores/dataStore";
 import { cn } from "@/utils/cn";
 import { formatNaira, formatDate } from "@/utils/format";
 import Loader from "@/components/ui/Loader";
-import type { Transaction, TransactionType } from "@/data/mockDatabase";
+import type { TransactionType } from "@/data/mockDatabase";
 
 const TYPE_CONFIG = {
   DEPOSIT: { icon: ArrowDownLeft, color: "success", label: "Deposit" },
   WITHDRAWAL: { icon: ArrowUpRight, color: "warning", label: "Withdrawal" },
   TRANSFER: { icon: ArrowLeftRight, color: "info", label: "Transfer" },
-  REFUND: { icon: RefreshIcon, color: "default", label: "Refund" },
+  REFUND: { icon: RefreshCw, color: "default", label: "Refund" },
   PAYOUT: { icon: CreditCard, color: "primary", label: "Payout" },
 };
 
@@ -72,7 +68,7 @@ export function TransactionsPage() {
   const successRate = Math.round(
     (transactions.filter((t) => t.status === "SUCCESS").length /
       transactions.length) *
-      100,
+    100,
   );
   const pendingCount = transactions.filter(
     (t) => t.status === "PENDING",
@@ -97,14 +93,15 @@ export function TransactionsPage() {
           </p>
         </div>
         <div className="flex gap-2">
-          <Button variant="outline" leftIcon={<Download className="h-4 w-4" />}>
+          <Button variant="outline">
+            <Download className="h-4 w-4 mr-2" />
             Export
           </Button>
           <Button
             variant="outline"
             onClick={() => fetchTransactions()}
-            leftIcon={<RefreshCw className="h-4 w-4" />}
           >
+            <RefreshCw className="h-4 w-4 mr-2" />
             Refresh
           </Button>
         </div>
@@ -197,8 +194,8 @@ export function TransactionsPage() {
                 variant={typeFilter === type ? "primary" : "outline"}
                 size="sm"
                 onClick={() => setTypeFilter(type)}
-                leftIcon={<Icon className="h-4 w-4" />}
               >
+                <Icon className="h-4 w-4 mr-2" />
                 {config.label}
               </Button>
             );
@@ -219,24 +216,24 @@ export function TransactionsPage() {
           variant={statusFilter === "SUCCESS" ? "secondary" : "ghost"}
           size="sm"
           onClick={() => setStatusFilter("SUCCESS")}
-          leftIcon={<CheckCircle2 className="h-4 w-4 text-success" />}
         >
+          <CheckCircle2 className="h-4 w-4 text-success mr-2" />
           Success
         </Button>
         <Button
           variant={statusFilter === "PENDING" ? "secondary" : "ghost"}
           size="sm"
           onClick={() => setStatusFilter("PENDING")}
-          leftIcon={<Clock className="h-4 w-4 text-warning" />}
         >
+          <Clock className="h-4 w-4 text-warning mr-2" />
           Pending
         </Button>
         <Button
           variant={statusFilter === "FAILED" ? "secondary" : "ghost"}
           size="sm"
           onClick={() => setStatusFilter("FAILED")}
-          leftIcon={<XCircle className="h-4 w-4 text-error" />}
         >
+          <XCircle className="h-4 w-4 text-error mr-2" />
           Failed
         </Button>
       </div>
@@ -275,7 +272,6 @@ export function TransactionsPage() {
                 const typeConfig = TYPE_CONFIG[txn.type];
                 const statusConfig = STATUS_CONFIG[txn.status];
                 const TypeIcon = typeConfig.icon;
-                const StatusIcon = statusConfig.icon;
 
                 return (
                   <tr

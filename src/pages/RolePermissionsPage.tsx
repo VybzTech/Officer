@@ -169,7 +169,7 @@ export function RolePermissionsPage() {
             Manage role-based access control and permissions
           </p>
         </div>
-        <Button variant="primary" leftIcon={<Plus className="h-4 w-4" />}>
+        <Button variant="primary">
           Create New Role
         </Button>
       </div>
@@ -214,7 +214,6 @@ export function RolePermissionsPage() {
                   variant="outline"
                   size="sm"
                   className="w-full"
-                  leftIcon={<Edit2 className="h-3 w-3" />}
                   onClick={(e) => {
                     e.stopPropagation();
                     handleEditRole(role.id);
@@ -280,7 +279,6 @@ export function RolePermissionsPage() {
             </Button>
             <Button
               variant="ghost"
-              leftIcon={<Copy className="h-4 w-4" />}
             />
           </div>
         </Card>

@@ -85,13 +85,12 @@ export function ErrorLogsPage() {
           </p>
         </div>
         <div className="flex gap-2">
-          <Button variant="outline" leftIcon={<Download className="h-4 w-4" />}>
+          <Button variant="outline">
             Export
           </Button>
           <Button
             variant="outline"
             onClick={() => fetchErrorLogs()}
-            leftIcon={<RefreshCw className="h-4 w-4" />}
           >
             Refresh
           </Button>
@@ -198,7 +197,6 @@ export function ErrorLogsPage() {
             variant={resolvedFilter === false ? "secondary" : "ghost"}
             size="sm"
             onClick={() => setResolvedFilter(false)}
-            leftIcon={<AlertTriangle className="h-4 w-4 text-error" />}
           >
             Unresolved
           </Button>
@@ -206,7 +204,6 @@ export function ErrorLogsPage() {
             variant={resolvedFilter === true ? "secondary" : "ghost"}
             size="sm"
             onClick={() => setResolvedFilter(true)}
-            leftIcon={<CheckCircle2 className="h-4 w-4 text-success" />}
           >
             Resolved
           </Button>
@@ -231,7 +228,6 @@ export function ErrorLogsPage() {
               variant={severityFilter === severity ? "primary" : "outline"}
               size="sm"
               onClick={() => setSeverityFilter(severity)}
-              leftIcon={<Icon className="h-4 w-4" />}
             >
               {severity}
             </Button>
@@ -304,7 +300,6 @@ export function ErrorLogsPage() {
                     {!log.resolved && (
                       <Button
                         size="sm"
-                        leftIcon={<Check className="h-4 w-4" />}
                       >
                         Resolve
                       </Button>
@@ -312,7 +307,6 @@ export function ErrorLogsPage() {
                     <Button
                       size="sm"
                       variant="ghost"
-                      leftIcon={<Eye className="h-4 w-4" />}
                     >
                       Details
                     </Button>

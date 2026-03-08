@@ -337,7 +337,6 @@ export function RiskScoringPage() {
                 <Button
                   variant="ghost"
                   size="sm"
-                  leftIcon={<Eye className="h-4 w-4" />}
                 />
                 <Button
                   variant="primary"

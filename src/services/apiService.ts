@@ -31,7 +31,7 @@ import type {
 
 // ==================== AXIOS INSTANCE ====================
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || "/api";
+const API_BASE_URL = import.meta.env['VITE_API_URL'] || "/api";
 
 export const apiClient: AxiosInstance = axios.create({
   baseURL: API_BASE_URL,
@@ -88,7 +88,7 @@ interface ApiResponse<T> {
 const success = <T>(data: T, meta?: ApiResponse<T>["meta"]): ApiResponse<T> => ({
   success: true,
   data,
-  meta,
+  ...(meta && { meta }),
 });
 
 const error = <T>(message: string): ApiResponse<T> => ({
@@ -619,7 +619,7 @@ export const regionsApi = {
     if (regionId) {
       lgas = lgas.filter((l) => l.regionId === regionId);
     }
-    return success(lgas);
+    return success(lgas as any);
   },
 };
 
@@ -650,8 +650,8 @@ export const analyticsApi = {
     const metrics = mockDatabase.regions.map((region) => {
       const regionLgas = mockDatabase.lgas.filter((l) => l.regionId === region.id);
       const lgaIds = regionLgas.map((l) => l.id);
-      const regionUsers = mockDatabase.users.filter((u) => lgaIds.includes(u.lgaId));
-      const regionListings = mockDatabase.listings.filter((l) => lgaIds.includes(l.lgaId));
+      const regionUsers = mockDatabase.users.filter((u) => lgaIds.includes(u.lgaId as any));
+      const regionListings = mockDatabase.listings.filter((l) => lgaIds.includes(l.lgaId as any));
 
       return {
         region,

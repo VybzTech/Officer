@@ -14,9 +14,7 @@ import {
   Wallet,
   MapPin,
   Map,
-  Activity,
   PlusSquare,
-  DollarSign,
   ListChecks,
   CreditCard,
   RotateCcw,
@@ -36,9 +34,6 @@ import {
   Lock,
   Monitor,
   KeyRound,
-  ChevronLeft,
-  ChevronRight,
-  X,
 } from "lucide-react";
 // ==================== NAVIGATION STRUCTURE ====================
 
@@ -97,6 +92,25 @@ export const NAVIGATION: NavGroup[] = [
     ],
   },
   {
+    label: "Regional Control",
+    items: [
+      {
+        label: "Regions",
+        path: "/regions",
+        icon: MapPin,
+        permission: "VIEW_REGIONS",
+      },
+      { label: "LGAs", path: "/lgas", icon: Map, permission: "VIEW_LGAS" },
+
+      {
+        label: "Add Official Listing",
+        path: "/add-listing",
+        icon: PlusSquare,
+        permission: "CREATE_OFFICIAL_LISTING",
+      },
+    ],
+  },
+  {
     label: "Moderation & Control",
     items: [
       {
@@ -146,30 +160,6 @@ export const NAVIGATION: NavGroup[] = [
         path: "/ai/risk",
         icon: ShieldCheck,
         permission: "VIEW_AI_INSIGHTS",
-      },
-    ],
-  },
-  {
-    label: "Regional Control",
-    items: [
-      {
-        label: "Regions",
-        path: "/regions",
-        icon: MapPin,
-        permission: "VIEW_REGIONS",
-      },
-      { label: "LGAs", path: "/lgas", icon: Map, permission: "VIEW_LGAS" },
-      {
-        label: "LGA Activity",
-        path: "/lga-activity",
-        icon: Activity,
-        permission: "VIEW_LGA_ACTIVITY",
-      },
-      {
-        label: "Add Official Listing",
-        path: "/add-listing",
-        icon: PlusSquare,
-        permission: "CREATE_OFFICIAL_LISTING",
       },
     ],
   },

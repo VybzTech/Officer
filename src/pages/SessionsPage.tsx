@@ -19,15 +19,15 @@ import {
   Users,
   Activity,
 } from "lucide-react";
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/Card";
+import { Card } from "@/components/ui/Card";
 import Button from "@/components/ui/Button";
 import Input from "@/components/ui/Input";
 import { Badge } from "@/components/ui/Badge";
 import { useDataStore } from "@/stores/dataStore";
 import { cn } from "@/utils/cn";
-import { formatDate, formatRelativeTime } from "@/utils/format";
+import { formatRelativeTime } from "@/utils/format";
 import Loader from "@/components/ui/Loader";
-import type { Session } from "@/data/mockDatabase";
+
 
 export function SessionsPage() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -109,8 +109,8 @@ export function SessionsPage() {
         <Button
           variant="outline"
           onClick={() => fetchSessions()}
-          leftIcon={<RefreshCw className="h-4 w-4" />}
         >
+          <RefreshCw className="h-4 w-4 mr-2" />
           Refresh
         </Button>
       </div>
@@ -197,16 +197,16 @@ export function SessionsPage() {
             variant={filterActive === true ? "primary" : "outline"}
             size="sm"
             onClick={() => setFilterActive(true)}
-            leftIcon={<CheckCircle2 className="h-4 w-4" />}
           >
+            <CheckCircle2 className="h-4 w-4 mr-2" />
             Active
           </Button>
           <Button
             variant={filterActive === false ? "primary" : "outline"}
             size="sm"
             onClick={() => setFilterActive(false)}
-            leftIcon={<XCircle className="h-4 w-4" />}
           >
+            <XCircle className="h-4 w-4 mr-2" />
             Expired
           </Button>
         </div>
@@ -217,7 +217,6 @@ export function SessionsPage() {
         {filteredSessions.map((session) => {
           const DeviceIcon = getDeviceIcon(session.userAgent);
           const isTerminating = isActionLoading[`session-${session.id}`];
-          const isExpired = new Date(session.expiresAt) < new Date();
 
           return (
             <Card key={session.id} padding="none">
@@ -272,7 +271,7 @@ export function SessionsPage() {
                       size="sm"
                       variant="outline"
                       onClick={() => handleTerminate(session.id)}
-                      loading={isTerminating}
+                      loading={!!isTerminating}
                       className="text-error border-error hover:bg-error/5"
                     >
                       Terminate

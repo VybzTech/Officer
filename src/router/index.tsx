@@ -271,6 +271,7 @@ import {
   AuthPage,
   DashboardPage,
   ListingsPage,
+  ListingDetailsPage,
   VerificationsPage,
   DisputesPage,
   TenantsPage,
@@ -281,7 +282,6 @@ import {
   // ReportsPage,
   RegionsPage,
   LgasPage,
-  LgaActivityPage,
   EscrowPage,
   TransactionsPage,
   PayoutsPage,
@@ -397,6 +397,10 @@ export const router = createBrowserRouter([
         element: <ListingsPage />,
       },
       {
+        path: "/listings/:id",
+        element: <ListingDetailsPage />,
+      },
+      {
         path: "/landlords",
         element: <LandlordsPage />,
       },
@@ -407,6 +411,27 @@ export const router = createBrowserRouter([
       {
         path: "/agents",
         element: <AgentsPage />,
+      },
+
+      {
+        path: "/regions",
+        element: <RegionsPage />,
+      },
+      {
+        path: "/regions/:id/info",
+        element: <ComingSoon title="Region Details" />,
+      },
+      {
+        path: "/regions/:id/reassign",
+        element: <ComingSoon title="Reassign LGA" />,
+      },
+      {
+        path: "/lgas",
+        element: <LgasPage />,
+      },
+      {
+        path: "/add-listing",
+        element: <ComingSoon title="Add Official Listing" />,
       },
 
       // ========== MODERATION & CONTROL ==========
@@ -438,26 +463,10 @@ export const router = createBrowserRouter([
       },
       {
         path: "/ai/risk",
-        element: <RiskScoringPage/>,
+        element: <RiskScoringPage />,
       },
 
-      // ========== REGIONAL CONTROL ==========
-      {
-        path: "/regions",
-        element: <RegionsPage />,
-      },
-      {
-        path: "/lgas",
-        element: <LgasPage />,
-      },
-      {
-        path: "/lga-activity",
-        element: <LgaActivityPage />,
-      },
-      {
-        path: "/add-listing",
-        element: <ComingSoon title="Add Official Listing" />,
-      },
+
 
       // ========== FINANCIAL CONTROL ==========
       {
@@ -538,7 +547,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "/account/security",
-        element: <SecuritySettingsPage/>,
+        element: <SecuritySettingsPage />,
       },
       {
         path: "/account/sessions",

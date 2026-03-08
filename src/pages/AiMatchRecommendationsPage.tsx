@@ -198,12 +198,11 @@ export function AiMatchRecommendationsPage() {
                 <p className="text-2xl font-bold text-gray-900">
                   {metric.value}
                 </p>
-                <p className={`text-xs font-bold ${
-                  metric.color === "success" ? "text-success-600" :
-                  metric.color === "primary" ? "text-primary-600" :
-                  metric.color === "info" ? "text-info-600" :
-                  "text-warning-600"
-                }`}>
+                <p className={`text-xs font-bold ${metric.color === "success" ? "text-success-600" :
+                    metric.color === "primary" ? "text-primary-600" :
+                      metric.color === "info" ? "text-info-600" :
+                        "text-warning-600"
+                  }`}>
                   {metric.trend}
                 </p>
               </div>
@@ -309,35 +308,19 @@ export function AiMatchRecommendationsPage() {
                 <Button
                   variant="ghost"
                   size="sm"
-                  leftIcon={
-                    <ThumbsUp
-                      className={cn(
-                        "h-4 w-4",
-                        feedbackLoading?.includes("positive")
-                          ? "text-success-600"
-                          : ""
-                      )}
-                    />
-                  }
                   onClick={() => handleFeedback(match.id, "positive")}
-                  loading={feedbackLoading === `${match.id}-positive`}
-                />
+                  loading={!!feedbackLoading}
+                >
+                  <ThumbsUp className="h-4 w-4 text-success" />
+                </Button>
                 <Button
                   variant="ghost"
                   size="sm"
-                  leftIcon={
-                    <ThumbsDown
-                      className={cn(
-                        "h-4 w-4",
-                        feedbackLoading?.includes("negative")
-                          ? "text-danger-600"
-                          : ""
-                      )}
-                    />
-                  }
                   onClick={() => handleFeedback(match.id, "negative")}
-                  loading={feedbackLoading === `${match.id}-negative`}
-                />
+                  loading={!!feedbackLoading}
+                >
+                  <ThumbsDown className="h-4 w-4 text-danger" />
+                </Button>
               </div>
             </div>
 

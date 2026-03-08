@@ -48,7 +48,7 @@ export const useDataStore = create<DataState>()(
       isLoadingMetrics: false,
       error: null,
 
-      fetchUsers: async (role?: string) => {
+      fetchUsers: async (_role?: string) => {
         set({ isLoadingUsers: true, error: null });
         try {
           // In a real app, we might want to append or merge, but for now we replace

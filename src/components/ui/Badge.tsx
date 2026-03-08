@@ -1,5 +1,5 @@
 import { type HTMLAttributes } from "react";
-import { CheckCircle, Clock, XCircle, Shield, Star, Crown } from "lucide-react";
+import { CheckCircle, Clock, XCircle, Shield, Star } from "lucide-react";
 import { cn } from "@/utils/cn";
 
 type BadgeVariant =
@@ -88,20 +88,24 @@ export function StatusBadge({
   );
 }
 
-const TIER_CONFIG: Record<string, { className: string; icon: any }> = {
+const TIER_CONFIG: Record<string, any> = {
   FREE: {
-    className: "bg-gray-100 text-gray-500 border-gray-200",
+    className: "bg-[#8B4513]/10 text-[#8B4513] border-[#8B4513]/20",
     icon: Star,
   },
   PRO: {
-    className: "bg-primary-500 text-sidebar border-primary-600 shadow-glow-sm",
-    icon: Shield,
+    className: "bg-[#FFCA08]/10 text-[#d99a06] border-[#FFCA08]/30 shadow-glow-sm",
+    icon: Star,
   },
   PREMIER: {
     className:
-      "bg-gradient-to-r from-sidebar to-gray-800 text-primary-500 border-sidebar shadow-premium",
-    icon: Crown,
+      "bg-gradient-to-r from-purple-100 to-indigo-100 text-purple-700 border-purple-200 shadow-premium",
+    icon: Star,
   },
+  OFFICIAL: {
+    className: "bg-primary-500 text-black border-primary-600 shadow-glow",
+    icon: Star,
+  }
 };
 
 export function TierBadge({
@@ -111,7 +115,7 @@ export function TierBadge({
   tier: string;
   className?: string;
 }) {
-  const config = TIER_CONFIG[tier] || TIER_CONFIG.FREE;
+  const config = TIER_CONFIG[tier] || TIER_CONFIG['FREE'];
   const Icon = config.icon;
 
   return (

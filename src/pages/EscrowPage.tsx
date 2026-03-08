@@ -114,7 +114,6 @@ export function EscrowPage() {
         <Button
           variant="outline"
           onClick={() => fetchEscrowAccounts()}
-          leftIcon={<RefreshCw className="h-4 w-4" />}
         >
           Refresh
         </Button>
@@ -307,7 +306,6 @@ export function EscrowPage() {
                           size="sm"
                           onClick={() => handleRelease(escrow.id)}
                           loading={isReleasing}
-                          leftIcon={<CheckCircle2 className="h-4 w-4" />}
                         >
                           Release
                         </Button>
@@ -316,7 +314,6 @@ export function EscrowPage() {
                           variant="outline"
                           onClick={() => handleRefund(escrow.id)}
                           disabled={isReleasing}
-                          leftIcon={<ArrowRight className="h-4 w-4" />}
                         >
                           Refund
                         </Button>
@@ -325,7 +322,6 @@ export function EscrowPage() {
                     <Button
                       size="sm"
                       variant="ghost"
-                      leftIcon={<Eye className="h-4 w-4" />}
                     >
                       View
                     </Button>

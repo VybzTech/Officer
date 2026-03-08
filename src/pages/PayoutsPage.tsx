@@ -105,7 +105,6 @@ export function PayoutsPage() {
         <Button
           variant="outline"
           onClick={() => fetchPayoutRequests()}
-          leftIcon={<RefreshCw className="h-4 w-4" />}
         >
           Refresh
         </Button>
@@ -199,7 +198,6 @@ export function PayoutsPage() {
                   variant={statusFilter === status ? "primary" : "outline"}
                   size="sm"
                   onClick={() => setStatusFilter(status)}
-                  leftIcon={<Icon className="h-4 w-4" />}
                 >
                   {config.label}
                 </Button>
@@ -272,7 +270,6 @@ export function PayoutsPage() {
                           size="sm"
                           onClick={() => handleApprove(request.id)}
                           loading={isProcessing}
-                          leftIcon={<CheckCircle2 className="h-4 w-4" />}
                         >
                           Approve
                         </Button>
@@ -282,7 +279,6 @@ export function PayoutsPage() {
                           onClick={() => handleReject(request.id)}
                           disabled={isProcessing}
                           className="text-error border-error hover:bg-error/5"
-                          leftIcon={<XCircle className="h-4 w-4" />}
                         >
                           Reject
                         </Button>
@@ -291,7 +287,6 @@ export function PayoutsPage() {
                     <Button
                       size="sm"
                       variant="ghost"
-                      leftIcon={<Eye className="h-4 w-4" />}
                     >
                       Details
                     </Button>

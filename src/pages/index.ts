@@ -22,6 +22,7 @@ export { RegionalMetricsPage } from "./RegionalMetricsPage";
 
 // Market Management
 export { ListingsPage } from "./ListingsPage";
+export { default as ListingDetailsPage } from "./ListingDetailsPage";
 export { LandlordsPage } from "./LandlordsPage";
 export { TenantsPage } from "./TenantsPage";
 export { AgentsPage } from "./AgentsPage";

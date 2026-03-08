@@ -166,7 +166,7 @@ export function ReportsPage() {
             Generate and manage comprehensive platform reports
           </p>
         </div>
-        <Button variant="primary" leftIcon={<Plus className="h-4 w-4" />}>
+        <Button variant="primary">
           New Custom Report
         </Button>
       </div>
@@ -280,7 +280,6 @@ export function ReportsPage() {
                 <Button
                   variant="outline"
                   size="sm"
-                  leftIcon={<Eye className="h-4 w-4" />}
                 >
                   Preview
                 </Button>
@@ -289,19 +288,16 @@ export function ReportsPage() {
                   size="sm"
                   loading={generatingId === report.id}
                   onClick={() => handleGenerateReport(report.id)}
-                  leftIcon={<Download className="h-4 w-4" />}
                 >
                   {generatingId === report.id ? "Generating..." : "Download"}
                 </Button>
                 <Button
                   variant="ghost"
                   size="sm"
-                  leftIcon={<Share2 className="h-4 w-4" />}
                 />
                 <Button
                   variant="ghost"
                   size="sm"
-                  leftIcon={<Trash2 className="h-4 w-4 text-danger-500" />}
                 />
               </div>
             </div>

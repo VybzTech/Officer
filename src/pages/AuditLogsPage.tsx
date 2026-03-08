@@ -73,13 +73,12 @@ export function AuditLogsPage() {
           </p>
         </div>
         <div className="flex gap-2">
-          <Button variant="outline" leftIcon={<Download className="h-4 w-4" />}>
+          <Button variant="outline">
             Export
           </Button>
           <Button
             variant="outline"
             onClick={() => fetchAuditLogs()}
-            leftIcon={<RefreshCw className="h-4 w-4" />}
           >
             Refresh
           </Button>
@@ -217,7 +216,6 @@ export function AuditLogsPage() {
               <Button
                 size="sm"
                 variant="ghost"
-                leftIcon={<Eye className="h-4 w-4" />}
               >
                 View
               </Button>

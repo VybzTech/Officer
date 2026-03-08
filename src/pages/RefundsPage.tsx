@@ -87,7 +87,6 @@ export function RefundsPage() {
         <Button
           variant="outline"
           onClick={() => fetchRefundRequests()}
-          leftIcon={<RefreshCw className="h-4 w-4" />}
         >
           Refresh
         </Button>
@@ -181,7 +180,6 @@ export function RefundsPage() {
                   variant={statusFilter === status ? "primary" : "outline"}
                   size="sm"
                   onClick={() => setStatusFilter(status)}
-                  leftIcon={<Icon className="h-4 w-4" />}
                 >
                   {config.label}
                 </Button>
@@ -258,7 +256,6 @@ export function RefundsPage() {
                       <>
                         <Button
                           size="sm"
-                          leftIcon={<CheckCircle2 className="h-4 w-4" />}
                         >
                           Approve
                         </Button>
@@ -266,7 +263,6 @@ export function RefundsPage() {
                           size="sm"
                           variant="outline"
                           className="text-error border-error hover:bg-error/5"
-                          leftIcon={<XCircle className="h-4 w-4" />}
                         >
                           Reject
                         </Button>
@@ -275,7 +271,6 @@ export function RefundsPage() {
                     <Button
                       size="sm"
                       variant="ghost"
-                      leftIcon={<Eye className="h-4 w-4" />}
                     >
                       View Dispute
                     </Button>

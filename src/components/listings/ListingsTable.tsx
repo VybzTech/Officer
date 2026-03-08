@@ -2,7 +2,7 @@ import { useState } from "react";
 import { formatNaira } from "@/utils/format";
 import { StatusBadge, TierBadge } from "@/components/ui/Badge";
 import Button from "@/components/ui/Button";
-import { Eye, ShieldAlert, CheckCircle2, XCircle, Ban, ArrowUpDown } from "lucide-react";
+import { Eye, ShieldAlert, CheckCircle2, XCircle, Ban, ArrowUpDown, RefreshCw, Trash2 } from "lucide-react";
 import { PermissionGate } from "@/components/guards";
 import toast from "react-hot-toast";
 
@@ -15,6 +15,9 @@ export function ListingsTable({
     onApprove,
     onReject,
     onSuspend,
+    onUnsuspend,
+    onReinstate,
+    onDelete,
     onFlagRisk,
     onSort,
     sortConfig
@@ -31,19 +34,31 @@ export function ListingsTable({
         // Execute the action
         switch (confirmModal.action) {
             case 'approve':
-                onApprove(confirmModal.listingId);
+                onApprove?.(confirmModal.listingId);
                 toast.success("Listing approved successfully");
                 break;
             case 'reject':
-                onReject(confirmModal.listingId);
+                onReject?.(confirmModal.listingId);
                 toast.error("Listing rejected");
                 break;
             case 'suspend':
-                onSuspend(confirmModal.listingId);
+                onSuspend?.(confirmModal.listingId);
                 toast.success("Listing suspended");
                 break;
+            case 'unsuspend':
+                onUnsuspend?.(confirmModal.listingId);
+                toast.success("Listing unsuspended");
+                break;
+            case 'reinstate':
+                onReinstate?.(confirmModal.listingId);
+                toast.success("Listing reinstated to pending");
+                break;
+            case 'delete':
+                onDelete?.(confirmModal.listingId);
+                toast.success("Listing archived successfully");
+                break;
             case 'flag':
-                onFlagRisk(confirmModal.listingId);
+                onFlagRisk?.(confirmModal.listingId);
                 toast.success("Listing flagged for risk");
                 break;
         }
@@ -120,7 +135,7 @@ export function ListingsTable({
                                 <StatusBadge status={listing.status} />
                             </td>
                             <td className="p-4 flex items-center justify-center gap-2">
-                                <Button variant="ghost" size="sm" onClick={() => onViewDetails(listing)} className="!px-2 h-8" title="View Details">
+                                <Button variant="ghost" size="sm" onClick={() => onViewDetails(listing)} className="!px-2 h-8 text-gray-400 hover:text-primary-600" title="View Details">
                                     <Eye className="h-4 w-4" />
                                 </Button>
 
@@ -147,7 +162,30 @@ export function ListingsTable({
                                     </PermissionGate>
                                 )}
 
-                                <Button variant="ghost" size="sm" onClick={() => openConfirm('flag', listing.id)} className="!px-2 h-8 text-danger hover:text-danger hover:bg-danger/10" title="Flag Risk">
+                                {listing.status === "SUSPENDED" && (
+                                    <PermissionGate permission="APPROVE_LISTING">
+                                        <Button variant="ghost" size="sm" onClick={() => openConfirm('unsuspend', listing.id)} className="!px-2 h-8 text-success-dark hover:text-success-dark hover:bg-success-light/20" title="Unsuspend">
+                                            <CheckCircle2 className="h-4 w-4" />
+                                        </Button>
+                                    </PermissionGate>
+                                )}
+
+                                {listing.status === "REJECTED" && (
+                                    <>
+                                        <PermissionGate permission="APPROVE_LISTING">
+                                            <Button variant="ghost" size="sm" onClick={() => openConfirm('reinstate', listing.id)} className="!px-2 h-8 text-primary-600 hover:text-primary-600 hover:bg-primary-50" title="Re-instate">
+                                                <RefreshCw className="h-4 w-4" />
+                                            </Button>
+                                        </PermissionGate>
+                                        <PermissionGate permission="REJECT_LISTING">
+                                            <Button variant="ghost" size="sm" onClick={() => openConfirm('delete', listing.id)} className="!px-2 h-8 text-danger hover:text-danger hover:bg-danger/10" title="Delete">
+                                                <Trash2 className="h-4 w-4" />
+                                            </Button>
+                                        </PermissionGate>
+                                    </>
+                                )}
+
+                                <Button variant="ghost" size="sm" onClick={() => openConfirm('flag', listing.id)} className="!px-2 h-8 text-gray-400 hover:text-danger hover:bg-danger/10" title="Flag Risk">
                                     <ShieldAlert className="h-4 w-4" />
                                 </Button>
                             </td>
@@ -165,8 +203,14 @@ export function ListingsTable({
 
             {/* Confirmation Modal */}
             {confirmModal.isOpen && (
-                <div className="fixed inset-0 z-[110] flex items-center justify-center bg-black/40 backdrop-blur-sm p-4 animate-fade-in">
-                    <div className="bg-white rounded-2xl w-full max-w-sm overflow-hidden shadow-2xl scale-100 transition-transform">
+                <div
+                    className="fixed inset-0 z-[110] flex items-center justify-center bg-black/40 backdrop-blur-sm p-4 animate-fade-in"
+                    onClick={() => setConfirmModal({ isOpen: false, action: '', listingId: null })}
+                >
+                    <div
+                        className="bg-white rounded-2xl w-full max-w-sm overflow-hidden shadow-2xl scale-100 transition-transform"
+                        onClick={(e) => e.stopPropagation()}
+                    >
                         <div className="p-5 border-b border-gray-100 flex justify-between items-center">
                             <h3 className="font-bold text-lg text-gray-900 capitalize text-center w-full">Confirm Action</h3>
                         </div>
@@ -178,7 +222,7 @@ export function ListingsTable({
                                 <Button fullWidth variant="outline" onClick={() => setConfirmModal({ isOpen: false, action: '', listingId: null })} className="!border-gray-200">
                                     Cancel
                                 </Button>
-                                <Button fullWidth className={confirmModal.action === 'reject' || confirmModal.action === 'flag' ? 'bg-danger hover:bg-danger-dark text-white shadow-none border-none' : 'bg-primary-500 text-white shadow-none border-none'} onClick={handleConfirm}>
+                                <Button fullWidth className={confirmModal.action === 'reject' || confirmModal.action === 'delete' || confirmModal.action === 'flag' ? 'bg-danger hover:bg-danger-dark text-white shadow-none border-none' : 'bg-primary-500 text-white shadow-none border-none'} onClick={handleConfirm}>
                                     Yes, {confirmModal.action}
                                 </Button>
                             </div>

@@ -97,13 +97,12 @@ export function ActivityLogsPage() {
           </p>
         </div>
         <div className="flex gap-2">
-          <Button variant="outline" leftIcon={<Download className="h-4 w-4" />}>
+          <Button variant="outline">
             Export
           </Button>
           <Button
             variant="outline"
             onClick={() => fetchActivityLogs()}
-            leftIcon={<RefreshCw className="h-4 w-4" />}
           >
             Refresh
           </Button>
@@ -192,7 +191,6 @@ export function ActivityLogsPage() {
             variant={statusFilter === "SUCCESS" ? "secondary" : "ghost"}
             size="sm"
             onClick={() => setStatusFilter("SUCCESS")}
-            leftIcon={<CheckCircle2 className="h-4 w-4 text-success" />}
           >
             Success
           </Button>
@@ -200,7 +198,6 @@ export function ActivityLogsPage() {
             variant={statusFilter === "FAILURE" ? "secondary" : "ghost"}
             size="sm"
             onClick={() => setStatusFilter("FAILURE")}
-            leftIcon={<XCircle className="h-4 w-4 text-error" />}
           >
             Failed
           </Button>
@@ -224,7 +221,6 @@ export function ActivityLogsPage() {
               variant={actionFilter === action ? "primary" : "outline"}
               size="sm"
               onClick={() => setActionFilter(action)}
-              leftIcon={<Icon className="h-4 w-4" />}
             >
               {action.replace(/_/g, " ")}
             </Button>

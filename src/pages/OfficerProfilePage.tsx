@@ -77,7 +77,6 @@ export function OfficerProfilePage() {
           <Button
             variant="outline"
             className="rounded-xl border-slate-200"
-            leftIcon={<Edit2 className="h-4 w-4" />}
             onClick={() => setIsEditMode(true)}
           >
             Edit Profile
@@ -160,8 +159,8 @@ export function OfficerProfilePage() {
 
             {isEditMode && (
               <div className="mt-8 flex gap-3 justify-end border-t border-slate-50 pt-6">
-                <Button variant="outline" onClick={() => setIsEditMode(false)} leftIcon={<X className="h-4 w-4" />}>Cancel</Button>
-                <Button variant="primary" loading={isSaving} onClick={handleSave} leftIcon={<Save className="h-4 w-4" />}>Save Changes</Button>
+                <Button variant="outline" onClick={() => setIsEditMode(false)}>Cancel</Button>
+                <Button variant="primary" loading={isSaving} onClick={handleSave}>Save Changes</Button>
               </div>
             )}
           </Card>
