@@ -3,7 +3,15 @@
 // ============================================
 
 import { useLocation } from "react-router-dom";
-import { Lock, Unlock, X } from "lucide-react";
+import {
+  PlusSquare,
+  Landmark,
+  ChevronLeft,
+  ChevronRight,
+  X,
+  Lock,
+} from "lucide-react";
+import { useAuthStore } from "@/stores/auth.store";
 import { cn } from "@/utils/cn";
 import { NavGroupComponent } from "./NavGroup";
 import { NAVIGATION } from "@/utils/nav";
